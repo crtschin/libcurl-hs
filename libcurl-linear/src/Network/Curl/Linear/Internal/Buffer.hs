@@ -118,7 +118,7 @@ writePtr src len buf
         copyBytes (bufPtr buf `plusPtr` offset) src n
       pure (len - n)
 
--- | Safety: No references to a bytestring that is returned from this function,
+-- | SAFETY: No references to a bytestring that is returned from this function,
 -- when it is called again. It is _only_ safe when it is used linearly. Under
 -- the hood, every bytestring returned from this function comes from the same
 -- buffer.

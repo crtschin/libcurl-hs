@@ -21,7 +21,7 @@ import Streaming.Linear qualified as Linear
 import System.IO.Linear qualified as Linear
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
-import qualified Control.Functor.Linear.Internal.Class as L
+import qualified Data.ByteString.Unsafe as BS
 
 -- | Perform the CURL request.
 perform_ :: CurlEasy %1 -> Linear.IO CurlEasy
@@ -51,7 +51,7 @@ data StreamBuffer = StreamBuffer
   }
 
 newtype StreamResult = StreamResult
-  { getStreamResult :: Ur (Linear.IO CurlEasyResult)
+  { getStreamResult :: CurlEasyResult
   }
 
 instance Consumable StreamResult where
@@ -69,15 +69,15 @@ instance Movable StreamResult where
 -- message will be used to derive the result. Will overwrite `CurloptWritedata`
 -- and `CurloptWritefunction`, using a relatively simple buffer
 performStream
-  :: CurlEasy
-  %1 -> StreamOptions
+  :: StreamOptions
+  -> CurlEasy
   %1 -> ( Ur CurlHeaders
           %1 -> Linear.Stream (Linear.Of BS.ByteString) Linear.IO StreamResult
           %1 -> Linear.IO (Ur r)
         )
   %1 -> Linear.IO (CurlEasy, Ur r)
-performStream = do
-  Unsafe.toLinear3 doPerform
+performStream streamOption = do
+  Unsafe.toLinear2 (doPerform streamOption)
  where
   createStream
     :: Async C.CURLcode
@@ -100,11 +100,10 @@ performStream = do
     -- print (shouldStop, isEmpty)
     if shouldStop
       then do
+        code <- wait curlThread
+        result <- Linear.withLinearIO $ curlResult code curlErrorBuffer
+        N.pure $ Left $ StreamResult result
         -- print "stop"
-        N.pure $ Left $ StreamResult $ Ur $ L.do
-          code <- Linear.fromSystemIO $ wait curlThread
-          result <- curlResult code curlErrorBuffer
-          L.pure $ unur result
       else do
         -- print "step"
         contents <- Buffer.toByteString (getStreamBuffer performBuffer)
@@ -113,14 +112,14 @@ performStream = do
         N.pure $ Right (contents Linear.:> performBuffer)
 
   doPerform
-    :: CurlEasy
-    -> StreamOptions
+    :: StreamOptions
+    -> CurlEasy
     -> ( Ur CurlHeaders
          %1 -> Linear.Stream (Linear.Of BS.ByteString) Linear.IO StreamResult
          %1 -> Linear.IO (Ur r)
        )
     -> Linear.IO (CurlEasy, Ur r)
-  doPerform handle streamOptions act = Linear.fromSystemIO $ do
+  doPerform streamOptions handle act = Linear.fromSystemIO $ do
     -- print "starting"
     Buffer.new (bufferSizeBytes streamOptions) $ \payloadBuffer -> do
       buffer <-
@@ -144,7 +143,7 @@ performStream = do
           headers <- Linear.fromSystemIO $ atomically $ do
             isFinished <- readTVar (requestFinished buffer)
             headers <- readTVar (responseHeaders buffer)
-            let checkWait = if isFinished then N.pure (Ur (CurlHeaders N.mempty)) else retry
+            let checkWait = if isFinished then N.pure (move (CurlHeaders N.mempty)) else retry
             N.maybe checkWait N.pure $ N.sequence headers
 
           result <-
@@ -173,7 +172,9 @@ performStreamWriteFunction handle = CurlWriteFunction $ \content _ bsLen innerBu
       atomically $ writeTVar (responseHeaders buffer) $ move (Just h)
     Just _ -> N.pure ()
 
-  next <- BS.packCStringLen (content, fromIntegral bsLen)
+  -- SAFETY: Writing entails copying over the bytes from the given pointer to
+  -- the destination buffer. We do not keep references to the buffer around
+  next <- BS.unsafePackCStringLen (content, fromIntegral bsLen)
   let
     continueWriting toWrite = do
       atomically $ writeTVar (bufferIsEmpty buffer) False
@@ -188,7 +189,7 @@ performStreamWriteFunction handle = CurlWriteFunction $ \content _ bsLen innerBu
 
   continueWriting next
   -- print "write finished"
-  N.pure $ fromIntegral $ BS.length next
+  N.pure bsLen
 
 curlResult :: C.CURLcode %1 -> CurlErrorBuffer %1 -> Linear.IO (Ur CurlEasyResult)
 curlResult = Unsafe.toLinear2 helper
