@@ -15006,7 +15006,7 @@ pattern CURLSHOPT_LAST = CURLSHoption 6
 
 {-| __C declaration:__ @CURLversion@
 
-    __defined at:__ @curl\/curl.h:3090:9@
+    __defined at:__ @curl\/curl.h:3092:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15089,7 +15089,7 @@ instance Read CURLversion where
 
 {-| __C declaration:__ @CURLVERSION_FIRST@
 
-    __defined at:__ @curl\/curl.h:3091:3@
+    __defined at:__ @curl\/curl.h:3093:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15098,7 +15098,7 @@ pattern CURLVERSION_FIRST = CURLversion 0
 
 {-| __C declaration:__ @CURLVERSION_SECOND@
 
-    __defined at:__ @curl\/curl.h:3092:3@
+    __defined at:__ @curl\/curl.h:3094:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15107,7 +15107,7 @@ pattern CURLVERSION_SECOND = CURLversion 1
 
 {-| __C declaration:__ @CURLVERSION_THIRD@
 
-    __defined at:__ @curl\/curl.h:3093:3@
+    __defined at:__ @curl\/curl.h:3095:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15116,7 +15116,7 @@ pattern CURLVERSION_THIRD = CURLversion 2
 
 {-| __C declaration:__ @CURLVERSION_FOURTH@
 
-    __defined at:__ @curl\/curl.h:3094:3@
+    __defined at:__ @curl\/curl.h:3096:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15125,7 +15125,7 @@ pattern CURLVERSION_FOURTH = CURLversion 3
 
 {-| __C declaration:__ @CURLVERSION_FIFTH@
 
-    __defined at:__ @curl\/curl.h:3095:3@
+    __defined at:__ @curl\/curl.h:3097:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15134,7 +15134,7 @@ pattern CURLVERSION_FIFTH = CURLversion 4
 
 {-| __C declaration:__ @CURLVERSION_SIXTH@
 
-    __defined at:__ @curl\/curl.h:3096:3@
+    __defined at:__ @curl\/curl.h:3098:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15143,7 +15143,7 @@ pattern CURLVERSION_SIXTH = CURLversion 5
 
 {-| __C declaration:__ @CURLVERSION_SEVENTH@
 
-    __defined at:__ @curl\/curl.h:3097:3@
+    __defined at:__ @curl\/curl.h:3099:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15152,7 +15152,7 @@ pattern CURLVERSION_SEVENTH = CURLversion 6
 
 {-| __C declaration:__ @CURLVERSION_EIGHTH@
 
-    __defined at:__ @curl\/curl.h:3098:3@
+    __defined at:__ @curl\/curl.h:3100:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15161,7 +15161,7 @@ pattern CURLVERSION_EIGHTH = CURLversion 7
 
 {-| __C declaration:__ @CURLVERSION_NINTH@
 
-    __defined at:__ @curl\/curl.h:3099:3@
+    __defined at:__ @curl\/curl.h:3101:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15170,7 +15170,7 @@ pattern CURLVERSION_NINTH = CURLversion 8
 
 {-| __C declaration:__ @CURLVERSION_TENTH@
 
-    __defined at:__ @curl\/curl.h:3100:3@
+    __defined at:__ @curl\/curl.h:3102:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15179,7 +15179,7 @@ pattern CURLVERSION_TENTH = CURLversion 9
 
 {-| __C declaration:__ @CURLVERSION_ELEVENTH@
 
-    __defined at:__ @curl\/curl.h:3101:3@
+    __defined at:__ @curl\/curl.h:3103:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15188,7 +15188,7 @@ pattern CURLVERSION_ELEVENTH = CURLversion 10
 
 {-| __C declaration:__ @CURLVERSION_TWELFTH@
 
-    __defined at:__ @curl\/curl.h:3102:3@
+    __defined at:__ @curl\/curl.h:3104:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15197,7 +15197,7 @@ pattern CURLVERSION_TWELFTH = CURLversion 11
 
 {-| __C declaration:__ @CURLVERSION_LAST@
 
-    __defined at:__ @curl\/curl.h:3103:3@
+    __defined at:__ @curl\/curl.h:3105:3@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15206,7 +15206,7 @@ pattern CURLVERSION_LAST = CURLversion 12
 
 {-| __C declaration:__ @curl_version_info_data@
 
-    __defined at:__ @curl\/curl.h:3113:8@
+    __defined at:__ @curl\/curl.h:3115:8@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15214,189 +15214,189 @@ data Curl_version_info_data = Curl_version_info_data
   { curl_version_info_data_age :: CURLversion
     {- ^ __C declaration:__ @age@
 
-         __defined at:__ @curl\/curl.h:3114:15@
+         __defined at:__ @curl\/curl.h:3116:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @version@
 
-         __defined at:__ @curl\/curl.h:3115:15@
+         __defined at:__ @curl\/curl.h:3117:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_version_num :: FC.CUInt
     {- ^ __C declaration:__ @version_num@
 
-         __defined at:__ @curl\/curl.h:3116:16@
+         __defined at:__ @curl\/curl.h:3118:16@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_host :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @host@
 
-         __defined at:__ @curl\/curl.h:3117:15@
+         __defined at:__ @curl\/curl.h:3119:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_features :: FC.CInt
     {- ^ __C declaration:__ @features@
 
-         __defined at:__ @curl\/curl.h:3118:7@
+         __defined at:__ @curl\/curl.h:3120:7@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_ssl_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @ssl_version@
 
-         __defined at:__ @curl\/curl.h:3119:15@
+         __defined at:__ @curl\/curl.h:3121:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_ssl_version_num :: FC.CLong
     {- ^ __C declaration:__ @ssl_version_num@
 
-         __defined at:__ @curl\/curl.h:3120:8@
+         __defined at:__ @curl\/curl.h:3122:8@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_libz_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @libz_version@
 
-         __defined at:__ @curl\/curl.h:3121:15@
+         __defined at:__ @curl\/curl.h:3123:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_protocols :: HsBindgen.Runtime.ConstPtr.ConstPtr (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar)
     {- ^ __C declaration:__ @protocols@
 
-         __defined at:__ @curl\/curl.h:3123:23@
+         __defined at:__ @curl\/curl.h:3125:23@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_ares :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @ares@
 
-         __defined at:__ @curl\/curl.h:3126:15@
+         __defined at:__ @curl\/curl.h:3128:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_ares_num :: FC.CInt
     {- ^ __C declaration:__ @ares_num@
 
-         __defined at:__ @curl\/curl.h:3127:7@
+         __defined at:__ @curl\/curl.h:3129:7@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_libidn :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @libidn@
 
-         __defined at:__ @curl\/curl.h:3130:15@
+         __defined at:__ @curl\/curl.h:3132:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_iconv_ver_num :: FC.CInt
     {- ^ __C declaration:__ @iconv_ver_num@
 
-         __defined at:__ @curl\/curl.h:3135:7@
+         __defined at:__ @curl\/curl.h:3137:7@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_libssh_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @libssh_version@
 
-         __defined at:__ @curl\/curl.h:3137:15@
+         __defined at:__ @curl\/curl.h:3139:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_brotli_ver_num :: FC.CUInt
     {- ^ __C declaration:__ @brotli_ver_num@
 
-         __defined at:__ @curl\/curl.h:3140:16@
+         __defined at:__ @curl\/curl.h:3142:16@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_brotli_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @brotli_version@
 
-         __defined at:__ @curl\/curl.h:3142:15@
+         __defined at:__ @curl\/curl.h:3144:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_nghttp2_ver_num :: FC.CUInt
     {- ^ __C declaration:__ @nghttp2_ver_num@
 
-         __defined at:__ @curl\/curl.h:3145:16@
+         __defined at:__ @curl\/curl.h:3147:16@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_nghttp2_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @nghttp2_version@
 
-         __defined at:__ @curl\/curl.h:3147:15@
+         __defined at:__ @curl\/curl.h:3149:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_quic_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @quic_version@
 
-         __defined at:__ @curl\/curl.h:3148:15@
+         __defined at:__ @curl\/curl.h:3150:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_cainfo :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @cainfo@
 
-         __defined at:__ @curl\/curl.h:3152:15@
+         __defined at:__ @curl\/curl.h:3154:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_capath :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @capath@
 
-         __defined at:__ @curl\/curl.h:3154:15@
+         __defined at:__ @curl\/curl.h:3156:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_zstd_ver_num :: FC.CUInt
     {- ^ __C declaration:__ @zstd_ver_num@
 
-         __defined at:__ @curl\/curl.h:3158:16@
+         __defined at:__ @curl\/curl.h:3160:16@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_zstd_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @zstd_version@
 
-         __defined at:__ @curl\/curl.h:3160:15@
+         __defined at:__ @curl\/curl.h:3162:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_hyper_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @hyper_version@
 
-         __defined at:__ @curl\/curl.h:3163:15@
+         __defined at:__ @curl\/curl.h:3165:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_gsasl_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @gsasl_version@
 
-         __defined at:__ @curl\/curl.h:3166:15@
+         __defined at:__ @curl\/curl.h:3168:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_feature_names :: HsBindgen.Runtime.ConstPtr.ConstPtr (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar)
     {- ^ __C declaration:__ @feature_names@
 
-         __defined at:__ @curl\/curl.h:3170:23@
+         __defined at:__ @curl\/curl.h:3172:23@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
   , curl_version_info_data_rtmp_version :: HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
     {- ^ __C declaration:__ @rtmp_version@
 
-         __defined at:__ @curl\/curl.h:3173:15@
+         __defined at:__ @curl\/curl.h:3175:15@
 
          __exported by:__ @curl\/curl.h@, @curl\/curl.h@
     -}
@@ -15853,7 +15853,7 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_version_info_da
 
 {-| __C declaration:__ @CURL_VERSION_IPV6@
 
-    __defined at:__ @curl\/curl.h:3177:9@
+    __defined at:__ @curl\/curl.h:3179:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15863,7 +15863,7 @@ cURL_VERSION_IPV6 =
 
 {-| __C declaration:__ @CURL_VERSION_KERBEROS4@
 
-    __defined at:__ @curl\/curl.h:3178:9@
+    __defined at:__ @curl\/curl.h:3180:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15873,7 +15873,7 @@ cURL_VERSION_KERBEROS4 =
 
 {-| __C declaration:__ @CURL_VERSION_SSL@
 
-    __defined at:__ @curl\/curl.h:3180:9@
+    __defined at:__ @curl\/curl.h:3182:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15883,7 +15883,7 @@ cURL_VERSION_SSL =
 
 {-| __C declaration:__ @CURL_VERSION_LIBZ@
 
-    __defined at:__ @curl\/curl.h:3181:9@
+    __defined at:__ @curl\/curl.h:3183:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15893,7 +15893,7 @@ cURL_VERSION_LIBZ =
 
 {-| __C declaration:__ @CURL_VERSION_NTLM@
 
-    __defined at:__ @curl\/curl.h:3182:9@
+    __defined at:__ @curl\/curl.h:3184:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15903,7 +15903,7 @@ cURL_VERSION_NTLM =
 
 {-| __C declaration:__ @CURL_VERSION_GSSNEGOTIATE@
 
-    __defined at:__ @curl\/curl.h:3183:9@
+    __defined at:__ @curl\/curl.h:3185:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15913,7 +15913,7 @@ cURL_VERSION_GSSNEGOTIATE =
 
 {-| __C declaration:__ @CURL_VERSION_DEBUG@
 
-    __defined at:__ @curl\/curl.h:3185:9@
+    __defined at:__ @curl\/curl.h:3187:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15923,7 +15923,7 @@ cURL_VERSION_DEBUG =
 
 {-| __C declaration:__ @CURL_VERSION_ASYNCHDNS@
 
-    __defined at:__ @curl\/curl.h:3186:9@
+    __defined at:__ @curl\/curl.h:3188:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15933,7 +15933,7 @@ cURL_VERSION_ASYNCHDNS =
 
 {-| __C declaration:__ @CURL_VERSION_SPNEGO@
 
-    __defined at:__ @curl\/curl.h:3187:9@
+    __defined at:__ @curl\/curl.h:3189:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15943,7 +15943,7 @@ cURL_VERSION_SPNEGO =
 
 {-| __C declaration:__ @CURL_VERSION_LARGEFILE@
 
-    __defined at:__ @curl\/curl.h:3188:9@
+    __defined at:__ @curl\/curl.h:3190:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15953,7 +15953,7 @@ cURL_VERSION_LARGEFILE =
 
 {-| __C declaration:__ @CURL_VERSION_IDN@
 
-    __defined at:__ @curl\/curl.h:3189:9@
+    __defined at:__ @curl\/curl.h:3191:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15963,7 +15963,7 @@ cURL_VERSION_IDN =
 
 {-| __C declaration:__ @CURL_VERSION_SSPI@
 
-    __defined at:__ @curl\/curl.h:3191:9@
+    __defined at:__ @curl\/curl.h:3193:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15973,7 +15973,7 @@ cURL_VERSION_SSPI =
 
 {-| __C declaration:__ @CURL_VERSION_CONV@
 
-    __defined at:__ @curl\/curl.h:3192:9@
+    __defined at:__ @curl\/curl.h:3194:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15983,7 +15983,7 @@ cURL_VERSION_CONV =
 
 {-| __C declaration:__ @CURL_VERSION_CURLDEBUG@
 
-    __defined at:__ @curl\/curl.h:3193:9@
+    __defined at:__ @curl\/curl.h:3195:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -15993,7 +15993,7 @@ cURL_VERSION_CURLDEBUG =
 
 {-| __C declaration:__ @CURL_VERSION_TLSAUTH_SRP@
 
-    __defined at:__ @curl\/curl.h:3194:9@
+    __defined at:__ @curl\/curl.h:3196:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16003,7 +16003,7 @@ cURL_VERSION_TLSAUTH_SRP =
 
 {-| __C declaration:__ @CURL_VERSION_NTLM_WB@
 
-    __defined at:__ @curl\/curl.h:3195:9@
+    __defined at:__ @curl\/curl.h:3197:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16013,7 +16013,7 @@ cURL_VERSION_NTLM_WB =
 
 {-| __C declaration:__ @CURL_VERSION_HTTP2@
 
-    __defined at:__ @curl\/curl.h:3197:9@
+    __defined at:__ @curl\/curl.h:3199:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16023,7 +16023,7 @@ cURL_VERSION_HTTP2 =
 
 {-| __C declaration:__ @CURL_VERSION_GSSAPI@
 
-    __defined at:__ @curl\/curl.h:3198:9@
+    __defined at:__ @curl\/curl.h:3200:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16033,7 +16033,7 @@ cURL_VERSION_GSSAPI =
 
 {-| __C declaration:__ @CURL_VERSION_KERBEROS5@
 
-    __defined at:__ @curl\/curl.h:3199:9@
+    __defined at:__ @curl\/curl.h:3201:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16043,7 +16043,7 @@ cURL_VERSION_KERBEROS5 =
 
 {-| __C declaration:__ @CURL_VERSION_UNIX_SOCKETS@
 
-    __defined at:__ @curl\/curl.h:3200:9@
+    __defined at:__ @curl\/curl.h:3202:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16053,7 +16053,7 @@ cURL_VERSION_UNIX_SOCKETS =
 
 {-| __C declaration:__ @CURL_VERSION_PSL@
 
-    __defined at:__ @curl\/curl.h:3201:9@
+    __defined at:__ @curl\/curl.h:3203:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16063,7 +16063,7 @@ cURL_VERSION_PSL =
 
 {-| __C declaration:__ @CURL_VERSION_HTTPS_PROXY@
 
-    __defined at:__ @curl\/curl.h:3203:9@
+    __defined at:__ @curl\/curl.h:3205:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16073,7 +16073,7 @@ cURL_VERSION_HTTPS_PROXY =
 
 {-| __C declaration:__ @CURL_VERSION_MULTI_SSL@
 
-    __defined at:__ @curl\/curl.h:3204:9@
+    __defined at:__ @curl\/curl.h:3206:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16083,7 +16083,7 @@ cURL_VERSION_MULTI_SSL =
 
 {-| __C declaration:__ @CURL_VERSION_BROTLI@
 
-    __defined at:__ @curl\/curl.h:3205:9@
+    __defined at:__ @curl\/curl.h:3207:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16093,7 +16093,7 @@ cURL_VERSION_BROTLI =
 
 {-| __C declaration:__ @CURL_VERSION_ALTSVC@
 
-    __defined at:__ @curl\/curl.h:3206:9@
+    __defined at:__ @curl\/curl.h:3208:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16103,7 +16103,7 @@ cURL_VERSION_ALTSVC =
 
 {-| __C declaration:__ @CURL_VERSION_HTTP3@
 
-    __defined at:__ @curl\/curl.h:3207:9@
+    __defined at:__ @curl\/curl.h:3209:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16113,7 +16113,7 @@ cURL_VERSION_HTTP3 =
 
 {-| __C declaration:__ @CURL_VERSION_ZSTD@
 
-    __defined at:__ @curl\/curl.h:3208:9@
+    __defined at:__ @curl\/curl.h:3210:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16123,7 +16123,7 @@ cURL_VERSION_ZSTD =
 
 {-| __C declaration:__ @CURL_VERSION_UNICODE@
 
-    __defined at:__ @curl\/curl.h:3209:9@
+    __defined at:__ @curl\/curl.h:3211:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16133,7 +16133,7 @@ cURL_VERSION_UNICODE =
 
 {-| __C declaration:__ @CURL_VERSION_HSTS@
 
-    __defined at:__ @curl\/curl.h:3210:9@
+    __defined at:__ @curl\/curl.h:3212:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16143,7 +16143,7 @@ cURL_VERSION_HSTS =
 
 {-| __C declaration:__ @CURL_VERSION_GSASL@
 
-    __defined at:__ @curl\/curl.h:3211:9@
+    __defined at:__ @curl\/curl.h:3213:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16153,7 +16153,7 @@ cURL_VERSION_GSASL =
 
 {-| __C declaration:__ @CURL_VERSION_THREADSAFE@
 
-    __defined at:__ @curl\/curl.h:3212:9@
+    __defined at:__ @curl\/curl.h:3214:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16163,7 +16163,7 @@ cURL_VERSION_THREADSAFE =
 
 {-| __C declaration:__ @CURLPAUSE_RECV@
 
-    __defined at:__ @curl\/curl.h:3257:9@
+    __defined at:__ @curl\/curl.h:3259:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16172,7 +16172,7 @@ cURLPAUSE_RECV = (C.<<) (1 :: FC.CInt) (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURLPAUSE_RECV_CONT@
 
-    __defined at:__ @curl\/curl.h:3258:9@
+    __defined at:__ @curl\/curl.h:3260:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16181,7 +16181,7 @@ cURLPAUSE_RECV_CONT = (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURLPAUSE_SEND@
 
-    __defined at:__ @curl\/curl.h:3260:9@
+    __defined at:__ @curl\/curl.h:3262:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16190,7 +16190,7 @@ cURLPAUSE_SEND = (C.<<) (1 :: FC.CInt) (2 :: FC.CInt)
 
 {-| __C declaration:__ @CURLPAUSE_SEND_CONT@
 
-    __defined at:__ @curl\/curl.h:3261:9@
+    __defined at:__ @curl\/curl.h:3263:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16199,7 +16199,7 @@ cURLPAUSE_SEND_CONT = (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURLPAUSE_ALL@
 
-    __defined at:__ @curl\/curl.h:3263:9@
+    __defined at:__ @curl\/curl.h:3265:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16208,7 +16208,7 @@ cURLPAUSE_ALL = (C..|.) cURLPAUSE_RECV cURLPAUSE_SEND
 
 {-| __C declaration:__ @CURLPAUSE_CONT@
 
-    __defined at:__ @curl\/curl.h:3264:9@
+    __defined at:__ @curl\/curl.h:3266:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -16218,7 +16218,7 @@ cURLPAUSE_CONT =
 
 {-| __C declaration:__ @curl_ssls_export_cb@
 
-    __defined at:__ @curl\/curl.h:3283:18@
+    __defined at:__ @curl\/curl.h:3285:18@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}

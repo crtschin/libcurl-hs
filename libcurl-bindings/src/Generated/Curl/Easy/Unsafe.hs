@@ -81,7 +81,7 @@ foreign import ccall unsafe "hs_bindgen_162bd7902d7f128c" curl_easy_init ::
 
 {-| __C declaration:__ @curl_easy_perform@
 
-    __defined at:__ @easy.h:42:22@
+    __defined at:__ @easy.h:43:22@
 
     __exported by:__ @curl\/curl.h@
 
@@ -94,7 +94,7 @@ foreign import ccall unsafe "hs_bindgen_9dee6d0b0b9f91ca" curl_easy_perform ::
 
 {-| __C declaration:__ @curl_easy_cleanup@
 
-    __defined at:__ @easy.h:43:18@
+    __defined at:__ @easy.h:44:18@
 
     __exported by:__ @curl\/curl.h@
 
@@ -107,7 +107,7 @@ foreign import ccall unsafe "hs_bindgen_9e059f051febca55" curl_easy_cleanup ::
 
 {-| __C declaration:__ @curl_easy_duphandle@
 
-    __defined at:__ @easy.h:72:19@
+    __defined at:__ @easy.h:74:19@
 
     __exported by:__ @curl\/curl.h@
 
@@ -120,7 +120,7 @@ foreign import ccall unsafe "hs_bindgen_eee2cd204e0d2e9c" curl_easy_duphandle ::
 
 {-| __C declaration:__ @curl_easy_reset@
 
-    __defined at:__ @easy.h:85:18@
+    __defined at:__ @easy.h:87:18@
 
     __exported by:__ @curl\/curl.h@
 
@@ -133,7 +133,7 @@ foreign import ccall unsafe "hs_bindgen_ec22e7dbc613a109" curl_easy_reset ::
 
 {-| __C declaration:__ @curl_easy_recv@
 
-    __defined at:__ @easy.h:95:22@
+    __defined at:__ @easy.h:97:22@
 
     __exported by:__ @curl\/curl.h@
 
@@ -152,7 +152,7 @@ foreign import ccall unsafe "hs_bindgen_66cf49a04aee7002" curl_easy_recv ::
 
 {-| __C declaration:__ @curl_easy_send@
 
-    __defined at:__ @easy.h:106:22@
+    __defined at:__ @easy.h:108:22@
 
     __exported by:__ @curl\/curl.h@
 
@@ -171,7 +171,7 @@ foreign import ccall unsafe "hs_bindgen_c140a5a055716718" curl_easy_send ::
 
 {-| __C declaration:__ @curl_easy_upkeep@
 
-    __defined at:__ @easy.h:117:22@
+    __defined at:__ @easy.h:119:22@
 
     __exported by:__ @curl\/curl.h@
 

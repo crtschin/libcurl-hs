@@ -433,7 +433,7 @@ foreign import ccall unsafe "hs_bindgen_eada4e2798b72d8c" hs_bindgen_eada4e2798b
 
 {-| __C declaration:__ @curl_multi_assign@
 
-    __defined at:__ @multi.h:439:23@
+    __defined at:__ @multi.h:441:23@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -449,7 +449,7 @@ foreign import ccall unsafe "hs_bindgen_5585760bc5a80f7a" hs_bindgen_5585760bc5a
 
 {-| __C declaration:__ @curl_multi_get_handles@
 
-    __defined at:__ @multi.h:452:20@
+    __defined at:__ @multi.h:454:20@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -465,7 +465,7 @@ foreign import ccall unsafe "hs_bindgen_a04013fffe387b21" hs_bindgen_a04013fffe3
 
 {-| __C declaration:__ @curl_multi_get_offt@
 
-    __defined at:__ @multi.h:482:23@
+    __defined at:__ @multi.h:484:23@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -481,7 +481,7 @@ foreign import ccall unsafe "hs_bindgen_78f0278359f0ba83" hs_bindgen_78f0278359f
 
 {-| __C declaration:__ @curl_pushheader_bynum@
 
-    __defined at:__ @multi.h:501:19@
+    __defined at:__ @multi.h:503:19@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -497,7 +497,7 @@ foreign import ccall unsafe "hs_bindgen_b5949b3d7874a6ec" hs_bindgen_b5949b3d787
 
 {-| __C declaration:__ @curl_pushheader_byname@
 
-    __defined at:__ @multi.h:503:19@
+    __defined at:__ @multi.h:505:19@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -513,7 +513,7 @@ foreign import ccall unsafe "hs_bindgen_f396ffd54bc568cc" hs_bindgen_f396ffd54bc
 
 {-| __C declaration:__ @curl_multi_waitfds@
 
-    __defined at:__ @multi.h:521:23@
+    __defined at:__ @multi.h:523:23@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -529,7 +529,7 @@ foreign import ccall unsafe "hs_bindgen_bb641f0ca3cd3686" hs_bindgen_bb641f0ca3c
 
 {-| __C declaration:__ @curl_multi_notify_disable@
 
-    __defined at:__ @multi.h:540:23@
+    __defined at:__ @multi.h:542:23@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -545,7 +545,7 @@ foreign import ccall unsafe "hs_bindgen_92fab89caae2237c" hs_bindgen_92fab89caae
 
 {-| __C declaration:__ @curl_multi_notify_enable@
 
-    __defined at:__ @multi.h:543:23@
+    __defined at:__ @multi.h:545:23@
 
     __exported by:__ @curl\/curl.h@
 -}

@@ -1262,7 +1262,7 @@ cURLMNWC_CLEAR_DNS =
 
 {-| __C declaration:__ @CURLMinfo_offt@
 
-    __defined at:__ @multi.h:455:9@
+    __defined at:__ @multi.h:457:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1339,7 +1339,7 @@ instance Read CURLMinfo_offt where
 
 {-| __C declaration:__ @CURLMINFO_NONE@
 
-    __defined at:__ @multi.h:456:3@
+    __defined at:__ @multi.h:458:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1348,7 +1348,7 @@ pattern CURLMINFO_NONE = CURLMinfo_offt 0
 
 {-| __C declaration:__ @CURLMINFO_XFERS_CURRENT@
 
-    __defined at:__ @multi.h:459:3@
+    __defined at:__ @multi.h:461:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1357,7 +1357,7 @@ pattern CURLMINFO_XFERS_CURRENT = CURLMinfo_offt 1
 
 {-| __C declaration:__ @CURLMINFO_XFERS_RUNNING@
 
-    __defined at:__ @multi.h:461:3@
+    __defined at:__ @multi.h:463:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1366,7 +1366,7 @@ pattern CURLMINFO_XFERS_RUNNING = CURLMinfo_offt 2
 
 {-| __C declaration:__ @CURLMINFO_XFERS_PENDING@
 
-    __defined at:__ @multi.h:465:3@
+    __defined at:__ @multi.h:467:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1375,7 +1375,7 @@ pattern CURLMINFO_XFERS_PENDING = CURLMinfo_offt 3
 
 {-| __C declaration:__ @CURLMINFO_XFERS_DONE@
 
-    __defined at:__ @multi.h:468:3@
+    __defined at:__ @multi.h:470:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1384,7 +1384,7 @@ pattern CURLMINFO_XFERS_DONE = CURLMinfo_offt 4
 
 {-| __C declaration:__ @CURLMINFO_XFERS_ADDED@
 
-    __defined at:__ @multi.h:470:3@
+    __defined at:__ @multi.h:472:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1393,7 +1393,7 @@ pattern CURLMINFO_XFERS_ADDED = CURLMinfo_offt 5
 
 {-| __C declaration:__ @CURLMINFO_LASTENTRY@
 
-    __defined at:__ @multi.h:472:3@
+    __defined at:__ @multi.h:474:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1402,7 +1402,7 @@ pattern CURLMINFO_LASTENTRY = CURLMinfo_offt 6
 
 {-| __C declaration:__ @CURL_PUSH_OK@
 
-    __defined at:__ @multi.h:495:9@
+    __defined at:__ @multi.h:497:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1411,7 +1411,7 @@ cURL_PUSH_OK = (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_PUSH_DENY@
 
-    __defined at:__ @multi.h:496:9@
+    __defined at:__ @multi.h:498:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1420,7 +1420,7 @@ cURL_PUSH_DENY = (1 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_PUSH_ERROROUT@
 
-    __defined at:__ @multi.h:497:9@
+    __defined at:__ @multi.h:499:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1429,7 +1429,7 @@ cURL_PUSH_ERROROUT = (2 :: FC.CInt)
 
 {-| __C declaration:__ @curl_pushheaders@
 
-    __defined at:__ @multi.h:499:8@
+    __defined at:__ @multi.h:501:8@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1437,7 +1437,7 @@ data Curl_pushheaders
 
 {-| Auxiliary type used by 'Curl_push_callback'
 
-__defined at:__ @multi.h:506:15@
+__defined at:__ @multi.h:508:15@
 
 __exported by:__ @curl\/curl.h@
 -}
@@ -1477,7 +1477,7 @@ instance HsBindgen.Runtime.HasCField.HasCField Curl_push_callback_Deref "un_Curl
 
 {-| __C declaration:__ @curl_push_callback@
 
-    __defined at:__ @multi.h:506:15@
+    __defined at:__ @multi.h:508:15@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1502,7 +1502,7 @@ instance HsBindgen.Runtime.HasCField.HasCField Curl_push_callback "un_Curl_push_
 
 {-| __C declaration:__ @CURLMNOTIFY_INFO_READ@
 
-    __defined at:__ @multi.h:529:9@
+    __defined at:__ @multi.h:531:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1511,7 +1511,7 @@ cURLMNOTIFY_INFO_READ = (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURLMNOTIFY_EASY_DONE@
 
-    __defined at:__ @multi.h:530:9@
+    __defined at:__ @multi.h:532:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1520,7 +1520,7 @@ cURLMNOTIFY_EASY_DONE = (1 :: FC.CInt)
 
 {-| Auxiliary type used by 'Curl_notify_callback'
 
-__defined at:__ @multi.h:535:16@
+__defined at:__ @multi.h:537:16@
 
 __exported by:__ @curl\/curl.h@
 -}
@@ -1560,7 +1560,7 @@ instance HsBindgen.Runtime.HasCField.HasCField Curl_notify_callback_Deref "un_Cu
 
 {-| __C declaration:__ @curl_notify_callback@
 
-    __defined at:__ @multi.h:535:16@
+    __defined at:__ @multi.h:537:16@
 
     __exported by:__ @curl\/curl.h@
 -}

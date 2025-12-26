@@ -791,7 +791,7 @@ foreign import ccall safe "hs_bindgen_b6af684889de7d89" curl_share_init ::
 
 {-| __C declaration:__ @curl_share_cleanup@
 
-    __defined at:__ @curl\/curl.h:3084:24@
+    __defined at:__ @curl\/curl.h:3086:24@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -804,7 +804,7 @@ foreign import ccall safe "hs_bindgen_27d1051c1527a8de" curl_share_cleanup ::
 
 {-| __C declaration:__ @curl_version_info@
 
-    __defined at:__ @curl\/curl.h:3222:37@
+    __defined at:__ @curl\/curl.h:3224:37@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -816,7 +816,7 @@ foreign import ccall safe "hs_bindgen_44646990d3d0a6a3" curl_version_info ::
 
 {-| __C declaration:__ @curl_easy_strerror@
 
-    __defined at:__ @curl\/curl.h:3233:25@
+    __defined at:__ @curl\/curl.h:3235:25@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -828,7 +828,7 @@ foreign import ccall safe "hs_bindgen_4c92e431b87cb4e1" curl_easy_strerror ::
 
 {-| __C declaration:__ @curl_share_strerror@
 
-    __defined at:__ @curl\/curl.h:3244:25@
+    __defined at:__ @curl\/curl.h:3246:25@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -840,7 +840,7 @@ foreign import ccall safe "hs_bindgen_27350554c5b1f351" curl_share_strerror ::
 
 {-| __C declaration:__ @curl_easy_pause@
 
-    __defined at:__ @curl\/curl.h:3255:22@
+    __defined at:__ @curl\/curl.h:3257:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -855,7 +855,7 @@ foreign import ccall safe "hs_bindgen_46bffba4fb398c62" curl_easy_pause ::
 
 {-| __C declaration:__ @curl_easy_ssls_import@
 
-    __defined at:__ @curl\/curl.h:3274:22@
+    __defined at:__ @curl\/curl.h:3276:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -878,7 +878,7 @@ foreign import ccall safe "hs_bindgen_e8c301cb68d9a569" curl_easy_ssls_import ::
 
 {-| __C declaration:__ @curl_easy_ssls_export@
 
-    __defined at:__ @curl\/curl.h:3305:22@
+    __defined at:__ @curl\/curl.h:3307:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 

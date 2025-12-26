@@ -894,7 +894,7 @@ foreign import ccall unsafe "hs_bindgen_0b087d981f95ca1c" hs_bindgen_0b087d981f9
 
 {-| __C declaration:__ @curl_share_cleanup@
 
-    __defined at:__ @curl\/curl.h:3084:24@
+    __defined at:__ @curl\/curl.h:3086:24@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -910,7 +910,7 @@ foreign import ccall unsafe "hs_bindgen_6d7ee1b20876fb9e" hs_bindgen_6d7ee1b2087
 
 {-| __C declaration:__ @curl_version_info@
 
-    __defined at:__ @curl\/curl.h:3222:37@
+    __defined at:__ @curl\/curl.h:3224:37@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -926,7 +926,7 @@ foreign import ccall unsafe "hs_bindgen_b1bca56f1246c8d6" hs_bindgen_b1bca56f124
 
 {-| __C declaration:__ @curl_easy_strerror@
 
-    __defined at:__ @curl\/curl.h:3233:25@
+    __defined at:__ @curl\/curl.h:3235:25@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -942,7 +942,7 @@ foreign import ccall unsafe "hs_bindgen_01705ed8678c38f5" hs_bindgen_01705ed8678
 
 {-| __C declaration:__ @curl_share_strerror@
 
-    __defined at:__ @curl\/curl.h:3244:25@
+    __defined at:__ @curl\/curl.h:3246:25@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -958,7 +958,7 @@ foreign import ccall unsafe "hs_bindgen_3560a59a95e4bc78" hs_bindgen_3560a59a95e
 
 {-| __C declaration:__ @curl_easy_pause@
 
-    __defined at:__ @curl\/curl.h:3255:22@
+    __defined at:__ @curl\/curl.h:3257:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -974,7 +974,7 @@ foreign import ccall unsafe "hs_bindgen_7bb053400efd1f1a" hs_bindgen_7bb053400ef
 
 {-| __C declaration:__ @curl_easy_ssls_import@
 
-    __defined at:__ @curl\/curl.h:3274:22@
+    __defined at:__ @curl\/curl.h:3276:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
@@ -990,7 +990,7 @@ foreign import ccall unsafe "hs_bindgen_2922ba79d40612b3" hs_bindgen_2922ba79d40
 
 {-| __C declaration:__ @curl_easy_ssls_export@
 
-    __defined at:__ @curl\/curl.h:3305:22@
+    __defined at:__ @curl\/curl.h:3307:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}

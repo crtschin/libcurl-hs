@@ -791,7 +791,7 @@ foreign import ccall unsafe "hs_bindgen_74c38424f692ecab" curl_share_init ::
 
 {-| __C declaration:__ @curl_share_cleanup@
 
-    __defined at:__ @curl\/curl.h:3084:24@
+    __defined at:__ @curl\/curl.h:3086:24@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -804,7 +804,7 @@ foreign import ccall unsafe "hs_bindgen_237314ee80d59d94" curl_share_cleanup ::
 
 {-| __C declaration:__ @curl_version_info@
 
-    __defined at:__ @curl\/curl.h:3222:37@
+    __defined at:__ @curl\/curl.h:3224:37@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -816,7 +816,7 @@ foreign import ccall unsafe "hs_bindgen_ac37ccfb39e370f6" curl_version_info ::
 
 {-| __C declaration:__ @curl_easy_strerror@
 
-    __defined at:__ @curl\/curl.h:3233:25@
+    __defined at:__ @curl\/curl.h:3235:25@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -828,7 +828,7 @@ foreign import ccall unsafe "hs_bindgen_2678dcdf79c2ba10" curl_easy_strerror ::
 
 {-| __C declaration:__ @curl_share_strerror@
 
-    __defined at:__ @curl\/curl.h:3244:25@
+    __defined at:__ @curl\/curl.h:3246:25@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -840,7 +840,7 @@ foreign import ccall unsafe "hs_bindgen_d99b19e3569d21ac" curl_share_strerror ::
 
 {-| __C declaration:__ @curl_easy_pause@
 
-    __defined at:__ @curl\/curl.h:3255:22@
+    __defined at:__ @curl\/curl.h:3257:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -855,7 +855,7 @@ foreign import ccall unsafe "hs_bindgen_fdcb17214d3edc05" curl_easy_pause ::
 
 {-| __C declaration:__ @curl_easy_ssls_import@
 
-    __defined at:__ @curl\/curl.h:3274:22@
+    __defined at:__ @curl\/curl.h:3276:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 
@@ -878,7 +878,7 @@ foreign import ccall unsafe "hs_bindgen_89b2b50de78c1c4c" curl_easy_ssls_import 
 
 {-| __C declaration:__ @curl_easy_ssls_export@
 
-    __defined at:__ @curl\/curl.h:3305:22@
+    __defined at:__ @curl\/curl.h:3307:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 

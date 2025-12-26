@@ -381,7 +381,7 @@ foreign import ccall safe "hs_bindgen_9e478fabfb7277b7" curl_multi_timeout ::
 
 {-| __C declaration:__ @curl_multi_assign@
 
-    __defined at:__ @multi.h:439:23@
+    __defined at:__ @multi.h:441:23@
 
     __exported by:__ @curl\/curl.h@
 
@@ -398,7 +398,7 @@ foreign import ccall safe "hs_bindgen_1c0faedba39bc575" curl_multi_assign ::
 
 {-| __C declaration:__ @curl_multi_get_handles@
 
-    __defined at:__ @multi.h:452:20@
+    __defined at:__ @multi.h:454:20@
 
     __exported by:__ @curl\/curl.h@
 
@@ -411,7 +411,7 @@ foreign import ccall safe "hs_bindgen_43ed1670697661bf" curl_multi_get_handles :
 
 {-| __C declaration:__ @curl_multi_get_offt@
 
-    __defined at:__ @multi.h:482:23@
+    __defined at:__ @multi.h:484:23@
 
     __exported by:__ @curl\/curl.h@
 
@@ -428,7 +428,7 @@ foreign import ccall safe "hs_bindgen_dc066ef5bf093840" curl_multi_get_offt ::
 
 {-| __C declaration:__ @curl_pushheader_bynum@
 
-    __defined at:__ @multi.h:501:19@
+    __defined at:__ @multi.h:503:19@
 
     __exported by:__ @curl\/curl.h@
 
@@ -443,7 +443,7 @@ foreign import ccall safe "hs_bindgen_310d32f807c8fbb9" curl_pushheader_bynum ::
 
 {-| __C declaration:__ @curl_pushheader_byname@
 
-    __defined at:__ @multi.h:503:19@
+    __defined at:__ @multi.h:505:19@
 
     __exported by:__ @curl\/curl.h@
 
@@ -458,7 +458,7 @@ foreign import ccall safe "hs_bindgen_6ef59be08c20b23e" curl_pushheader_byname :
 
 {-| __C declaration:__ @curl_multi_waitfds@
 
-    __defined at:__ @multi.h:521:23@
+    __defined at:__ @multi.h:523:23@
 
     __exported by:__ @curl\/curl.h@
 
@@ -477,7 +477,7 @@ foreign import ccall safe "hs_bindgen_a8408c8881d63416" curl_multi_waitfds ::
 
 {-| __C declaration:__ @curl_multi_notify_disable@
 
-    __defined at:__ @multi.h:540:23@
+    __defined at:__ @multi.h:542:23@
 
     __exported by:__ @curl\/curl.h@
 
@@ -492,7 +492,7 @@ foreign import ccall safe "hs_bindgen_598aa3d2b2dd8f87" curl_multi_notify_disabl
 
 {-| __C declaration:__ @curl_multi_notify_enable@
 
-    __defined at:__ @multi.h:543:23@
+    __defined at:__ @multi.h:545:23@
 
     __exported by:__ @curl\/curl.h@
 
