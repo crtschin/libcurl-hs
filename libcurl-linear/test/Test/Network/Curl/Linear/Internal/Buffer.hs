@@ -31,16 +31,6 @@ tests = describe "RingBuffer" $ do
         sz <- Buffer.size buf
         sz `shouldBe` 0
 
-    it "capacity is lower-bounded to pagesize" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new 512 $ \buf -> do
-        Buffer.capacity buf `shouldBe` pageSize
-
-    it "capacity returns configured capacity matched to pagesize" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new (pageSize + 1) $ \buf -> do
-        Buffer.capacity buf `shouldBe` (pageSize * 2)
-
   describe "Write Operations" $ do
     it "write to empty buffer returns empty remainder" $ liftIO $ do
       Buffer.new 100 $ \buf -> do
@@ -50,122 +40,97 @@ tests = describe "RingBuffer" $ do
         sz `shouldBe` 5
 
     it "write partial when buffer full returns unwritten data" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new pageSize $ \buf -> do
-        let startSize = pageSize - 10
-        _ <- Buffer.write (BS.pack $ replicate startSize 0) buf
+      Buffer.new 10 $ \buf -> do
         _ <- Buffer.write "12345" buf
         sz <- Buffer.size buf
-        sz `shouldBe` (startSize + 5)
+        sz `shouldBe` 5
         remainder <- Buffer.write "67890ABCDE" buf
         remainder `shouldBe` "ABCDE"
         sz' <- Buffer.size buf
-        sz' `shouldBe` (startSize + 10)
+        sz' `shouldBe` 10
 
     it "write to full buffer returns entire input" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
       Buffer.new 5 $ \buf -> do
-        let startSize = pageSize - 5
-        _ <- Buffer.write (BS.pack $ replicate startSize 0) buf
         _ <- Buffer.write "12345" buf
         remainder <- Buffer.write "xyz" buf
         remainder `shouldBe` "xyz"
         sz <- Buffer.size buf
-        sz `shouldBe` pageSize
+        sz `shouldBe` 5
 
     it "empty write returns empty" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new pageSize $ \buf -> do
+      Buffer.new 10 $ \buf -> do
         remainder <- Buffer.write BS.empty buf
         remainder `shouldBe` BS.empty
 
   describe "toByteString" $ do
     it "empty buffer returns empty bytestring" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new pageSize $ \buf -> do
+      Buffer.new 10 $ \buf -> do
         bs <- Buffer.toByteString buf
         bs `shouldBe` BS.empty
 
     it "retrieves written data" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new pageSize $ \buf -> do
+      Buffer.new 20 $ \buf -> do
         _ <- Buffer.write "hello world" buf
         bs <- Buffer.toByteString buf
         bs `shouldBe` "hello world"
 
     it "retrieves partial writes correctly" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new pageSize $ \buf -> do
-        let dummy = BS.pack $ replicate (pageSize - 10) 0
-        _ <- Buffer.write dummy buf
+      Buffer.new 10 $ \buf -> do
         _ <- Buffer.write "12345" buf
         _ <- Buffer.write "67890ABC" buf
         bs <- Buffer.toByteString buf
-        bs `shouldBe` (dummy <> "1234567890")
+        bs `shouldBe` "1234567890"
 
   describe "Properties" $ introduceQuickCheck $ do
     prop "write then read retrieves exact data (within capacity)" $ do
       forAll genCapacityAndData $ \(cap, dat) -> unsafePerformIO $ do
-        pageSize <- fromIntegral <$> Buffer.c_getpagesize
-        let cap' = max cap pageSize
-        Buffer.new cap' $ \buf -> do
+        Buffer.new cap $ \buf -> do
           remainder <- Buffer.write dat buf
           bs <- Buffer.toByteString buf
-          let expected = BS.take cap' dat
-          pure (bs === expected .&&. remainder === BS.drop cap' dat)
+          let expected = BS.take cap dat
+          pure (bs === expected .&&. remainder === BS.drop cap dat)
 
     prop "size matches written bytes (capped at capacity)" $
       forAll genCapacityAndData $ \(cap, dat) -> unsafePerformIO $ do
-        pageSize <- fromIntegral <$> Buffer.c_getpagesize
-        let cap' = max cap pageSize
-        Buffer.new cap' $ \buf -> do
+        Buffer.new cap $ \buf -> do
           _ <- Buffer.write dat buf
           sz <- Buffer.size buf
-          pure (sz === min cap' (BS.length dat))
+          pure (sz === min cap (BS.length dat))
 
     prop "multiple small writes accumulate correctly" $
       forAll genCapacityAndChunks $ \(cap, chunks) -> unsafePerformIO $ do
-        pageSize <- fromIntegral <$> Buffer.c_getpagesize
-        let cap' = max cap pageSize
-        Buffer.new cap' $ \buf -> do
+        Buffer.new cap $ \buf -> do
           let writeThenCheck chunk = do
                 _ <- Buffer.write chunk buf
                 Buffer.size buf
           sizes <- mapM writeThenCheck chunks
           let expectedSizes = scanl1 (+) (map BS.length chunks)
-              cappedSizes = map (min cap') expectedSizes
+              cappedSizes = map (min cap) expectedSizes
           pure (sizes === cappedSizes)
 
     prop "write returns correct remainder" $
       forAll genCapacityAndData $ \(cap, dat) -> unsafePerformIO $ do
-        pageSize <- fromIntegral <$> Buffer.c_getpagesize
-        let cap' = max cap pageSize
-        Buffer.new cap' $ \buf -> do
+        Buffer.new cap $ \buf -> do
           remainder <- Buffer.write dat buf
-          let expected = BS.drop cap' dat
+          let expected = BS.drop cap dat
           pure (remainder === expected)
 
     prop "capacity never changes" $
       forAll genCapacityAndMultiData $ \(cap, datas) -> unsafePerformIO $ do
-        pageSize <- fromIntegral <$> Buffer.c_getpagesize
-        let cap' = max cap pageSize
-        Buffer.new cap' $ \buf -> do
+        Buffer.new cap $ \buf -> do
           mapM_ (`Buffer.write` buf) datas
-          pure (Buffer.capacity buf === cap')
+          pure (Buffer.capacity buf === cap)
 
     prop "toByteString after full buffer contains first N bytes" $
       forAll genCapacityAndLargeData $ \(cap, dat) -> unsafePerformIO $ do
-        pageSize <- fromIntegral <$> Buffer.c_getpagesize
-        let cap' = max cap pageSize
-        Buffer.new cap' $ \buf -> do
+       Buffer.new cap $ \buf -> do
           _ <- Buffer.write dat buf
           bs <- Buffer.toByteString buf
-          pure (bs === BS.take cap' dat)
+          pure (bs === BS.take cap dat)
 
   describe "Edge Cases" $ do
     it "write exactly capacity bytes" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new pageSize $ \buf -> do
+      Buffer.new 10 $ \buf -> do
         remainder <- Buffer.write "1234567890" buf
         remainder `shouldBe` BS.empty
         sz <- Buffer.size buf
@@ -182,15 +147,12 @@ tests = describe "RingBuffer" $ do
         bs `shouldBe` "12345"
 
     it "write after reaching capacity ignores new data" $ liftIO $ do
-      pageSize <- fromIntegral <$> Buffer.c_getpagesize
-      Buffer.new pageSize $ \buf -> do
-        let dummy = BS.pack $ replicate (pageSize - 3) 0
-        _ <- Buffer.write dummy buf
+      Buffer.new 3 $ \buf -> do
         _ <- Buffer.write "ABC" buf
         remainder <- Buffer.write "XYZ" buf
         remainder `shouldBe` "XYZ"
         bs <- Buffer.toByteString buf
-        bs `shouldBe` (dummy <> "ABC")
+        bs `shouldBe` "ABC"
 
     it "minimum capacity buffer (1 byte)" $ liftIO $ do
       Buffer.new 1 $ \buf -> do
