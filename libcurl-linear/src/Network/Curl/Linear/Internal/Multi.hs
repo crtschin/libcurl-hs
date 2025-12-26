@@ -6,7 +6,6 @@ import Control.Concurrent.STM
 import Control.Exception
 import Control.Monad (unless, void, when)
 import Data.IntMap.Strict qualified as IntMap
-import Data.Nat
 import Foreign hiding (void)
 import Foreign.C
 import Generated.Curl.Curl qualified as C
@@ -14,6 +13,7 @@ import Generated.Curl.Multi qualified as C
 import Generated.Curl.Multi.Safe qualified as Safe
 import Generated.Curl.Multi.Unsafe qualified as Unsafe
 import Network.Curl.Linear.Easy
+import Network.Curl.Linear.Internal.Easy.Perform
 import Network.Curl.Linear.Internal.Handle
 import Network.Curl.Linear.Internal.Multi.Option
 import Network.Curl.Linear.Internal.Types
@@ -21,41 +21,55 @@ import Network.Curl.Linear.Internal.Utils
 import Prelude.Linear as L
 import System.IO.Linear qualified as Linear
 import System.IO.Unsafe qualified as Unsafe
-import System.Mem.StableName
 import System.Posix.Types (Fd (..))
 import System.Timeout
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
 
 multiAdd
-  :: CurlMulti n
+  :: CurlMulti
   %1 -> (CurlEasy %1 -> CurlEasy)
-  %1 -> CurlMulti (S n)
+  %1 -> CurlMulti
 multiAdd = Unsafe.toLinear2 $ \(CurlMulti m handles) setupHandle -> Unsafe.unsafeDupablePerformIO $ do
   c <- toSystemIO curlEasyInit
   let h@(CurlEasy c' _) = setupHandle c
   _ <- Unsafe.curl_multi_add_handle (unur m) (unur c')
-  h' <- makeStableName h
-  let handles' = IntMap.insertWith (N.++) (hashStableName h') [CurlEasyToken h'] handles
+  let IntPtr key = ptrToIntPtr $ unur c'
+  let assertionError = throw $ AssertionFailed "The same easy handle has already been registered in the multi handle."
+  let handles' = IntMap.insertWith assertionError key h handles
   N.pure (CurlMulti m handles')
 
+data CurlMultiResult
+  = CurlMultiMessage CurlMulti CurlEasyResult CInt
+  | CurlMultiNoMessage CurlMulti CInt
+
 multiRemove
-  :: CurlMulti (S n)
-  %1 -> (CurlMulti n, CurlEasyResult)
-multiRemove = Unsafe.toLinear $ \(CurlMulti m handles) -> do
-  alloca $ \resultPtr -> do
-    msgPtr <- Unsafe.curl_multi_info_read m resultPtr
-    if msgPtr /= nullPtr
-      then Nothing
+  :: CurlMulti
+  %1 -> Linear.IO CurlMultiResult
+multiRemove = Unsafe.toLinear $ \multi@(CurlMulti m handles) -> Linear.fromSystemIO $ do
+  alloca $ \msgsInQueue -> do
+    msgPtr <- Unsafe.curl_multi_info_read (unur m) msgsInQueue
+    if msgPtr N./= nullPtr
+      then CurlMultiNoMessage multi N.<$> peek msgsInQueue
       else do
         msg <- peek msgPtr
-        case cURLMsg_msg msg of
-          cURLMSG_DONE -> do
-            nMsgs <- peek resultPtr
-            N.pure (result, nMsgs)
-          _ -> undefined
+        case C.cURLMsg_msg msg of
+          C.CURLMSG_DONE -> do
+            let msgData = C.cURLMsg_data msg
+                IntPtr key = ptrToIntPtr $ C.cURLMsg_easy_handle msg
+            case IntMap.lookup key handles of
+              Nothing -> throwIO $ AssertionFailed "The finished easy handle couldn't be found in the multi handle."
+              Just h -> do
+                let handles' = IntMap.delete key handles
+                result <- Linear.withLinearIO $ curlResult (C.get_cURLMsg_data_result msgData) (easyErrorBuffer h)
+                CurlMultiMessage (CurlMulti m handles') result N.<$> peek msgsInQueue
 
-multiPerform :: Int -> CurlMulti n %1 -> Linear.IO (CurlMulti n)
+          -- The documentation says that CURLMSG_DONE is the only message type.
+          -- There are a few other enum values though, so error out if we do
+          -- see those.
+          e -> throwIO $ AssertionFailed ("unexpected message type: " <> show e)
+
+multiPerform :: Int -> CurlMulti %1 -> Linear.IO CurlMulti
 multiPerform timeoutUs = Unsafe.toLinear $ \h -> Linear.fromSystemIO $ do
   bracket (newStablePtr ()) freeStablePtr $ \ptr -> do
     waitOnAction <- newTVarIO Nothing

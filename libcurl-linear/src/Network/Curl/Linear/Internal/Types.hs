@@ -31,12 +31,10 @@ newtype CurlErrorBuffer = CurlErrorBuffer (Ur (IORef (Maybe CString)))
 instance Consumable CurlErrorBuffer where
   consume (CurlErrorBuffer buf) = consume buf
 
-newtype CurlEasyToken = CurlEasyToken (StableName CurlEasy)
-
 -- | A CURL easy handle. Must be used linearly to prevent resource leaks.
-data CurlMulti (n :: Nat) = CurlMulti
+data CurlMulti = CurlMulti
   { multiHandle :: Ur (Ptr Void)
-  , multiEasyHandles :: IntMap.IntMap [CurlEasyToken]
+  , multiEasyHandles :: IntMap.IntMap CurlEasy
   }
 
 -- | Result of a CURL operation

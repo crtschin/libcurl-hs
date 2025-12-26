@@ -15,8 +15,8 @@ setOption
   :: CurlMultiOption c
   => c
   -> CurlMOptionArgument c
-  %1 -> CurlMulti n
-  %1 -> CurlMulti n
+  %1 -> CurlMulti
+  %1 -> CurlMulti
 setOption option = Unsafe.toLinear2 performSet
  where
   performSet arg handle@(CurlMulti h _) = Unsafe.unsafeDupablePerformIO $ do
@@ -27,8 +27,8 @@ setOptionM
   :: CurlMultiOption c
   => c
   -> N.IO (CurlMOptionArgument c)
-  %1 -> CurlMulti n
-  %1 -> CurlMulti n
+  %1 -> CurlMulti
+  %1 -> CurlMulti
 setOptionM option = Unsafe.toLinear2 performSet
  where
   performSet getArg handle@(CurlMulti h _) = Unsafe.unsafeDupablePerformIO $ do
@@ -36,7 +36,7 @@ setOptionM option = Unsafe.toLinear2 performSet
     _ <- curlSetMOpt option (unur h) arg
     N.pure handle
 
-setSocketFunction :: StablePtr a -> CurlSocketFunction a -> CurlMulti n %1 -> CurlMulti n
+setSocketFunction :: StablePtr a -> CurlSocketFunction a -> CurlMulti %1 -> CurlMulti
 setSocketFunction curlSocketData curlSocketFunction =
   setOption Unsafe.CurlmoptSocketdata (castPtr (castStablePtrToPtr curlSocketData))
     . setOptionM Unsafe.CurlmoptSocketfunction (N.fmap castFunPtrToPtr writeFunction)

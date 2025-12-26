@@ -5,7 +5,7 @@ module Network.Curl.Linear.Internal.Buffer
   , new
   , write
   , writePtr
-  , toByteString
+  , unsafeToByteString
   , capacity
   , size
   ) where
@@ -62,8 +62,8 @@ writePtr src len buf
 -- should be 'live', when it is called again, that includes thunks. It is _only_
 -- safe when it is used linearly. Under the hood, every bytestring returned from
 -- this function comes from the same buffer, no copying is done.
-toByteString :: Buffer -> IO ByteString
-toByteString buf = do
+unsafeToByteString :: Buffer -> IO ByteString
+unsafeToByteString buf = do
   (secondaryPtr, secondarySize) <- atomically $ do
     (primaryPtr, sz) <- readTVar (primary buf)
     (secondaryPtr, _) <- readTVar (secondary buf)

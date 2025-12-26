@@ -102,7 +102,7 @@ performStream streamOption = do
         result <- Linear.withLinearIO $ curlResult code curlErrorBuffer
         N.pure $ Left $ StreamResult result
       else do
-        contents <- Buffer.toByteString (getStreamBuffer performBuffer)
+        contents <- Buffer.unsafeToByteString (getStreamBuffer performBuffer)
         -- Mark buffer as empty after reading
         atomically $ writeTVar (bufferIsEmpty performBuffer) True
         N.pure $ Right (contents Linear.:> performBuffer)

@@ -35,7 +35,7 @@ withCurlEasy _ = Unsafe.toLinear runAction
     handle <- Linear.toSystemIO curlEasyInit
     Linear.toSystemIO (g handle) `finally` Linear.toSystemIO (curlEasyCleanup handle)
 
-withCurlMulti :: GlobalCurlHandle -> (CurlMulti Z %1 -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
+withCurlMulti :: GlobalCurlHandle -> (CurlMulti %1 -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
 withCurlMulti global = Unsafe.toLinear $ \g -> Linear.fromSystemIO $ do
   handle <- Linear.toSystemIO (curlMultiInit global)
   Linear.toSystemIO (g handle) `finally` Linear.toSystemIO (curlMultiCleanup handle)
@@ -52,12 +52,12 @@ curlEasyCleanup = Unsafe.toLinear $ \(CurlEasy h (CurlErrorBuffer bufRef)) -> Li
   mbuf <- readIORef $ unur bufRef
   for_ mbuf free
 
-curlMultiInit :: GlobalCurlHandle -> Linear.IO (CurlMulti Z)
+curlMultiInit :: GlobalCurlHandle -> Linear.IO CurlMulti
 curlMultiInit _ = Linear.fromSystemIO $ do
   h <- Unsafe.curl_multi_init
   N.pure $ CurlMulti (Ur h) N.mempty
 
-curlMultiCleanup :: CurlMulti Z %1 -> Linear.IO C.CURLMcode
+curlMultiCleanup :: CurlMulti %1 -> Linear.IO C.CURLMcode
 curlMultiCleanup = Unsafe.toLinear $ \(CurlMulti h _) ->
   Linear.fromSystemIO $ Unsafe.curl_multi_cleanup (unur h)
 

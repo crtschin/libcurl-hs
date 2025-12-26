@@ -4,6 +4,11 @@ style:
   git diff --name-only | grep -E "\.py" | xargs -I {} ruff {}
   git diff --name-only | grep -E "\.cabal" | xargs -I {} cabal-fmt -i {}
 
+[working-directory: 'libcurl-bindings']
+@generate:
+  ./generate-bindings
+  python postprocess-bindings.py --generate
+
 build:
   cabal build all
 

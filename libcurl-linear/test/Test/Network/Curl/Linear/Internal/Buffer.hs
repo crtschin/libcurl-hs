@@ -62,23 +62,23 @@ tests = describe "RingBuffer" $ do
         remainder <- Buffer.write BS.empty buf
         remainder `shouldBe` BS.empty
 
-  describe "toByteString" $ do
+  describe "unsafeToByteString" $ do
     it "empty buffer returns empty bytestring" $ liftIO $ do
       Buffer.new 10 $ \buf -> do
-        bs <- Buffer.toByteString buf
+        bs <- Buffer.unsafeToByteString buf
         bs `shouldBe` BS.empty
 
     it "retrieves written data" $ liftIO $ do
       Buffer.new 20 $ \buf -> do
         _ <- Buffer.write "hello world" buf
-        bs <- Buffer.toByteString buf
+        bs <- Buffer.unsafeToByteString buf
         bs `shouldBe` "hello world"
 
     it "retrieves partial writes correctly" $ liftIO $ do
       Buffer.new 10 $ \buf -> do
         _ <- Buffer.write "12345" buf
         _ <- Buffer.write "67890ABC" buf
-        bs <- Buffer.toByteString buf
+        bs <- Buffer.unsafeToByteString buf
         bs `shouldBe` "1234567890"
 
   describe "Properties" $ introduceQuickCheck $ do
@@ -86,7 +86,7 @@ tests = describe "RingBuffer" $ do
       forAll genCapacityAndData $ \(cap, dat) -> unsafePerformIO $ do
         Buffer.new cap $ \buf -> do
           remainder <- Buffer.write dat buf
-          bs <- Buffer.toByteString buf
+          bs <- Buffer.unsafeToByteString buf
           let expected = BS.take cap dat
           pure (bs === expected .&&. remainder === BS.drop cap dat)
 
@@ -121,11 +121,11 @@ tests = describe "RingBuffer" $ do
           mapM_ (`Buffer.write` buf) datas
           pure (Buffer.capacity buf === cap)
 
-    prop "toByteString after full buffer contains first N bytes" $
+    prop "unsafeToByteString after full buffer contains first N bytes" $
       forAll genCapacityAndLargeData $ \(cap, dat) -> unsafePerformIO $ do
        Buffer.new cap $ \buf -> do
           _ <- Buffer.write dat buf
-          bs <- Buffer.toByteString buf
+          bs <- Buffer.unsafeToByteString buf
           pure (bs === BS.take cap dat)
 
   describe "Edge Cases" $ do
@@ -135,7 +135,7 @@ tests = describe "RingBuffer" $ do
         remainder `shouldBe` BS.empty
         sz <- Buffer.size buf
         sz `shouldBe` 10
-        bs <- Buffer.toByteString buf
+        bs <- Buffer.unsafeToByteString buf
         bs `shouldBe` "1234567890"
 
     it "write one byte at a time to capacity" $ liftIO $ do
@@ -143,7 +143,7 @@ tests = describe "RingBuffer" $ do
         mapM_ (`Buffer.write` buf) ["1", "2", "3", "4", "5"]
         sz <- Buffer.size buf
         sz `shouldBe` 5
-        bs <- Buffer.toByteString buf
+        bs <- Buffer.unsafeToByteString buf
         bs `shouldBe` "12345"
 
     it "write after reaching capacity ignores new data" $ liftIO $ do
@@ -151,17 +151,17 @@ tests = describe "RingBuffer" $ do
         _ <- Buffer.write "ABC" buf
         remainder <- Buffer.write "XYZ" buf
         remainder `shouldBe` "XYZ"
-        bs <- Buffer.toByteString buf
+        bs <- Buffer.unsafeToByteString buf
         bs `shouldBe` "ABC"
 
     it "minimum capacity buffer (1 byte)" $ liftIO $ do
       Buffer.new 1 $ \buf -> do
         _ <- Buffer.write "X" buf
-        bs <- Buffer.toByteString buf
+        bs <- Buffer.unsafeToByteString buf
         bs `shouldBe` "X"
         remainder <- Buffer.write "Y" buf
         remainder `shouldBe` ""
-        bs' <- Buffer.toByteString buf
+        bs' <- Buffer.unsafeToByteString buf
         bs' `shouldBe` "Y"
 
 -- Generators

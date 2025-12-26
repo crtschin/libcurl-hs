@@ -44,7 +44,7 @@ main = do
   result <- withFile (output options) WriteMode $ \file -> do
     let streamOptions = StreamOptions (256 * 1024)
     Linear.withLinearIO $ L.do
-      withCurlGlobal $ \global -> L.do
+      withCurlGlobal $ \global -> do
         withCurlEasy global $ \handle -> L.do
           (handle', result) <- performStream
             streamOptions
