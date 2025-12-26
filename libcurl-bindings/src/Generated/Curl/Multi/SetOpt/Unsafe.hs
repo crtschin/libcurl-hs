@@ -29,12 +29,12 @@ foreign import ccall unsafe "curl_multi_setopt"
   curl_multi_setopt_off_t_c
     :: Ptr CURLM        -- ^ CURL handle
     -> CUInt           -- ^ option
-    -> CLong           -- ^ option
+    -> Curl_off_t           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_multi_setopt with a curl_off_t argument
 curl_multi_setopt_off_t :: Ptr CURLM -> CURLMoption -> Curl_off_t -> IO CURLcode
-curl_multi_setopt_off_t handle (CURLMoption opt) (Curl_off_t val) =
+curl_multi_setopt_off_t handle (CURLMoption opt) val =
   CURLcode <$> curl_multi_setopt_off_t_c handle opt val
 
 -- | curl_multi_setopt with a pointer argument (unsafe)

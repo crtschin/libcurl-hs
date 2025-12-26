@@ -48,6 +48,8 @@ debug_flags=(
     # -v4
 )
 
+mkdir -p "binding-specs"
+
 hs-bindgen-cli preprocess \
     "${module_flags[@]}" \
     "${libclang_flags[@]}" \

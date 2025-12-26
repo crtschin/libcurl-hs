@@ -29,12 +29,12 @@ foreign import ccall unsafe "curl_easy_setopt"
   curl_easy_setopt_off_t_c
     :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
-    -> CLong           -- ^ option
+    -> Curl_off_t           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a curl_off_t argument
 curl_easy_setopt_off_t :: Ptr CURL -> CURLoption -> Curl_off_t -> IO CURLcode
-curl_easy_setopt_off_t handle (CURLoption opt) (Curl_off_t val) =
+curl_easy_setopt_off_t handle (CURLoption opt) val =
   CURLcode <$> curl_easy_setopt_off_t_c handle opt val
 
 -- | curl_easy_setopt with a pointer argument (unsafe)

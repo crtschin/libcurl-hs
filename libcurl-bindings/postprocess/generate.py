@@ -17,7 +17,6 @@ class FFISpec:
     ffi_type: str
     comment: str
     unwrap_type_name: str
-    unwrap_pattern: Callable[[str], str]
 
 
 class FFISafety(StrEnum):
@@ -110,7 +109,7 @@ class ModuleConfig:
             "",
             f"-- | Type-safe wrapper for {self.ffi_config.base_name} with {spec.comment}",
             f"{spec.name} :: Ptr {self.handle_type} -> {self.constant_haskell_type} -> {spec.unwrap_type_name} -> IO CURLcode",
-            f"{spec.name} handle ({self.constant_haskell_type} opt) {spec.unwrap_pattern('val')} =",
+            f"{spec.name} handle ({self.constant_haskell_type} opt) val =",
             f"  CURLcode <$> {spec.name}_c handle opt val",
             "",
         ]
