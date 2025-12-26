@@ -6,7 +6,6 @@ import Data.Foldable (for_)
 import Data.Functor (($>))
 import Data.IORef
 import Data.Nat
-import Data.Unrestricted.Linear qualified as Ur
 import Foreign
 import Generated.Curl.Curl.Unsafe qualified as Unsafe
 import Generated.Curl.Easy.Unsafe qualified as Unsafe
@@ -20,13 +19,13 @@ import System.IO.Unsafe qualified as Unsafe
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
 
-withCurlGlobal :: (Ur.Ur GlobalCurlHandle %1 -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
+withCurlGlobal :: (GlobalCurlHandle -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
 withCurlGlobal = Unsafe.toLinear runAction
  where
-  runAction :: (Ur.Ur GlobalCurlHandle %1 -> Linear.IO (Ur r)) -> Linear.IO (Ur r)
+  runAction :: (GlobalCurlHandle -> Linear.IO (Ur r)) -> Linear.IO (Ur r)
   runAction g = Linear.fromSystemIO $ do
     h <- Unsafe.curl_global_init 1 $> GlobalCurlHandle
-    Linear.toSystemIO (g (Ur h)) `finally` Unsafe.curl_global_cleanup
+    Linear.toSystemIO (g h) `finally` Unsafe.curl_global_cleanup
 
 withCurlEasy :: GlobalCurlHandle -> (CurlEasy %1 -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
 withCurlEasy _ = Unsafe.toLinear runAction

@@ -49,15 +49,15 @@ basicNoopGlobal :: ExampleT ctx N.IO ()
 basicNoopGlobal = do
   liftIO $ Linear.withLinearIO (withCurlGlobal action)
  where
-  action :: Ur GlobalCurlHandle %1 -> Linear.IO (Ur ())
-  action h = pure $ move (consume h)
+  action :: GlobalCurlHandle -> Linear.IO (Ur ())
+  action _ = pure $ move ()
 
 basicTestSetup :: (Consumable a, MonadIO m) => (CurlEasy %1 -> a) -> m ()
 basicTestSetup act =
   liftIO $ Linear.withLinearIO (withCurlGlobal action)
  where
-  action :: Ur GlobalCurlHandle %1 -> Linear.IO (Ur ())
-  action (Ur global) = withCurlEasy global $ \h ->
+  action :: GlobalCurlHandle -> Linear.IO (Ur ())
+  action global = withCurlEasy global $ \h ->
     pure $ move (consume (act h))
 
 basicEasyNoop :: ExampleT ctx N.IO ()
@@ -92,8 +92,8 @@ performTestSetup setupHandle expect = do
   result <- liftIO (withLinearIO $ withCurlGlobal action)
   expect result
  where
-  action :: Ur GlobalCurlHandle %1 -> Linear.IO (Ur CurlEasyResult)
-  action (Ur global) = withCurlEasy global $ \h -> Linear.do
+  action :: GlobalCurlHandle -> Linear.IO (Ur CurlEasyResult)
+  action global = withCurlEasy global $ \h -> Linear.do
     (h', r) <- perform (setupHandle h)
     pure $ lseq h' r
 
@@ -104,8 +104,8 @@ performStreamTestSetup setupHandle expect = do
   bufferContents <- liftIO $ N.readIORef $ unur buffer
   expect result (BS.fromStrict bufferContents)
  where
-  action :: Ur GlobalCurlHandle %1 -> Linear.IO (Ur (CurlEasyResult, Ur (N.IORef BS.ByteString)))
-  action (Ur global) = withCurlEasy global $ \h -> Linear.do
+  action :: GlobalCurlHandle -> Linear.IO (Ur (CurlEasyResult, Ur (N.IORef BS.ByteString)))
+  action global = withCurlEasy global $ \h -> Linear.do
     Ur bufferRef <- newIORef N.mempty
     (h', Ur result) <- performStream (setupHandle h) (StreamOptions 1024) $ \h' stream -> Linear.do
       let accumContents :: Linear.Of BS.ByteString a %1 -> Linear.IO a
