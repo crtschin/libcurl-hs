@@ -33,7 +33,6 @@ data Buffer = Buffer
 new :: Int -> (Buffer -> IO r) -> IO r
 new cap _ | cap <= 0 = error "RingBuffer.new: capacity must be positive"
 new cap f = do
-  -- Ensure capacity is page-aligned, necessary for efficient virtual memory usage.
   primary <- BSI.mallocByteString cap
   secondary <- BSI.mallocByteString cap
   primaryPointer <- newIORef (primary, 0)

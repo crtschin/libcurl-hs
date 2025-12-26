@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeFamilies #-}
 
-module Network.Curl.Linear.Internal.Info where
+module Network.Curl.Linear.Internal.Easy.Info where
 
 import Data.Functor.Linear qualified as L
 import Data.Text (Text)

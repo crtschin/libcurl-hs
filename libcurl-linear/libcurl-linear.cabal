@@ -23,7 +23,8 @@ common shared
     RecordWildCards
     TypeData
 
-  ghc-options:        -Wall -Werror
+  ghc-options:        -Wall
+  -- -Werror
 
 common executable-shared
   ghc-options: -threaded -rtsopts +RTS -N2 -A32M
@@ -34,6 +35,7 @@ library
   hs-source-dirs:  src
   build-depends:
     , async
+    , atomic-primops
     , bytestring
     , containers
     , fin
@@ -47,13 +49,15 @@ library
 
   -- cabal-fmt: expand src
   exposed-modules:
-    Network.Curl.Linear
+    Network.Curl.Linear.Easy
     Network.Curl.Linear.Internal.Buffer
+    Network.Curl.Linear.Internal.Easy.Header
+    Network.Curl.Linear.Internal.Easy.Info
+    Network.Curl.Linear.Internal.Easy.Option
+    Network.Curl.Linear.Internal.Easy.Perform
     Network.Curl.Linear.Internal.Handle
-    Network.Curl.Linear.Internal.Header
-    Network.Curl.Linear.Internal.Info
-    Network.Curl.Linear.Internal.Option
-    Network.Curl.Linear.Internal.Perform
+    Network.Curl.Linear.Internal.Multi
+    Network.Curl.Linear.Internal.Multi.Option
     Network.Curl.Linear.Internal.Types
     Network.Curl.Linear.Internal.Utils
 

@@ -1,13 +1,16 @@
 module Network.Curl.Linear.Internal.Types where
 
 import Data.IORef
+import Data.IntMap.Strict qualified as IntMap
 import Data.Map.Strict qualified as M
 import Data.Nat
 import Data.Text (Text)
 import Data.Void (Void)
 import Foreign
 import Foreign.C
+import Generated.Curl.Curl
 import Prelude.Linear as L
+import System.Mem.StableName
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
 
@@ -18,11 +21,6 @@ data GlobalCurlHandle = GlobalCurlHandle
 data CurlEasy = CurlEasy
   { easyHandle :: Ur (Ptr Void)
   , easyErrorBuffer :: CurlErrorBuffer
-  }
-
--- | A CURL easy handle. Must be used linearly to prevent resource leaks.
-newtype CurlMulti (n :: Nat) = CurlMulti
-  { multiHandle :: Ur (Ptr Void)
   }
 
 instance Consumable CurlEasy where
@@ -80,7 +78,11 @@ newtype StreamOptions = StreamOptions
   deriving (Movable, Consumable, Dupable)
 
 newtype CurlWriteFunction a = CurlWriteFunction
-  { unCurlWriteFunction :: CString -> CSize -> CSize -> Ptr () -> IO CSize
+  { unCurlWriteFunction :: CString -> CSize -> CSize -> StablePtr a -> IO CSize
+  }
+
+newtype CurlSocketFunction a = CurlSocketFunction
+  { unCurlSocketFunction :: Ptr Void -> Curl_socket_t -> CInt -> StablePtr a -> Ptr Void -> IO CInt
   }
 
 newtype CurlHeaders = CurlHeaders

@@ -10,7 +10,7 @@ import Data.ByteString.Lazy qualified as BSL
 import Data.IORef qualified as N
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
-import Network.Curl.Linear
+import Network.Curl.Linear.Easy
 import Prelude.Linear
 import Streaming.Linear qualified as Linear
 import System.IO
@@ -107,14 +107,13 @@ performStreamTestSetup setupHandle expect = do
   action :: GlobalCurlHandle -> Linear.IO (Ur (CurlEasyResult, Ur (N.IORef BS.ByteString)))
   action global = withCurlEasy global $ \h -> Linear.do
     Ur bufferRef <- newIORef N.mempty
-    (h', Ur result) <- performStream (StreamOptions 1024) (setupHandle h) $ \h' stream -> Linear.do
+    (h', Ur (StreamResult r)) <- performStream (StreamOptions 1024) (setupHandle h) $ \h' stream -> Linear.do
       let accumContents :: Linear.Of BS.ByteString a %1 -> Linear.IO a
           accumContents (new Linear.:> buff) = Linear.do
             fromSystemIO $ N.modifyIORef' bufferRef $ \prev -> prev N.<> new
             pure buff
       result <- Linear.mapsM_ @(Linear.Of BS.ByteString) @Linear.IO accumContents stream
       pure $ h' `lseq` move result
-    let (StreamResult r) = result
     pure $ lseq h' $ move (r, Ur bufferRef)
 
 performBasicTest :: ExampleT ctx N.IO ()

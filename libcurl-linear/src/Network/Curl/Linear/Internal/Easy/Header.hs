@@ -1,4 +1,4 @@
-module Network.Curl.Linear.Internal.Header where
+module Network.Curl.Linear.Internal.Easy.Header where
 
 import Control.Functor.Linear qualified as L
 import Data.Map.Strict qualified as M

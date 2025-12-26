@@ -1,4 +1,4 @@
-module Network.Curl.Linear.Internal.Perform where
+module Network.Curl.Linear.Internal.Easy.Perform where
 
 import Control.Concurrent.Async (Async, wait, withAsync)
 import Control.Concurrent.STM
@@ -12,8 +12,8 @@ import Foreign.C.String (peekCString)
 import Generated.Curl.Curl qualified as C
 import Generated.Curl.Easy.Safe qualified as Safe
 import Network.Curl.Linear.Internal.Buffer qualified as Buffer
-import Network.Curl.Linear.Internal.Header
-import Network.Curl.Linear.Internal.Option
+import Network.Curl.Linear.Internal.Easy.Header
+import Network.Curl.Linear.Internal.Easy.Option
 import Network.Curl.Linear.Internal.Types
 import Network.Curl.Linear.Internal.Utils qualified as Linear
 import Prelude.Linear as L
@@ -86,7 +86,6 @@ performStream streamOption = do
     -> Linear.IO (Either StreamResult (Linear.Of BS.ByteString StreamBuffer))
   createStream curlThread curlErrorBuffer performBuffer = Linear.fromSystemIO $ do
     -- Check if we should stop: download finished AND buffer has no data
-    -- print "shouldStop"
     shouldStop <- atomically $ do
       isFinished <- readTVar (requestFinished performBuffer)
       if not isFinished
@@ -97,15 +96,12 @@ performStream streamOption = do
         else do
           readTVar (bufferIsEmpty performBuffer)
 
-    -- print (shouldStop, isEmpty)
     if shouldStop
       then do
         code <- wait curlThread
         result <- Linear.withLinearIO $ curlResult code curlErrorBuffer
         N.pure $ Left $ StreamResult result
-        -- print "stop"
       else do
-        -- print "step"
         contents <- Buffer.toByteString (getStreamBuffer performBuffer)
         -- Mark buffer as empty after reading
         atomically $ writeTVar (bufferIsEmpty performBuffer) True
@@ -120,7 +116,6 @@ performStream streamOption = do
        )
     -> Linear.IO (CurlEasy, Ur r)
   doPerform streamOptions handle act = Linear.fromSystemIO $ do
-    -- print "starting"
     Buffer.new (bufferSizeBytes streamOptions) $ \payloadBuffer -> do
       buffer <-
         StreamBuffer payloadBuffer
@@ -131,15 +126,11 @@ performStream streamOption = do
       bracket (newStablePtr buffer) freeStablePtr $ \stableBuffer -> do
         let handle' = setWriteFunction @StreamBuffer stableBuffer (performStreamWriteFunction handle) handle
             doDownload = do
-              -- print "perform"
               result <- Safe.curl_easy_perform (unur (easyHandle handle'))
               atomically (writeTVar (requestFinished buffer) True)
-              -- print "finish perform"
               N.pure result
 
-        -- print "in"
         withAsync doDownload $ \threadId -> Linear.toSystemIO $ Linear.do
-          -- Linear.fromSystemIO $ print "in"
           headers <- Linear.fromSystemIO $ atomically $ do
             isFinished <- readTVar (requestFinished buffer)
             headers <- readTVar (responseHeaders buffer)
@@ -163,8 +154,7 @@ performStream streamOption = do
 
 performStreamWriteFunction :: CurlEasy -> CurlWriteFunction StreamBuffer
 performStreamWriteFunction handle = CurlWriteFunction $ \content _ bsLen innerBufferPtr -> do
-  -- print "write"
-  buffer <- deRefStablePtr (castPtrToStablePtr innerBufferPtr)
+  buffer <- deRefStablePtr innerBufferPtr
   headers <- readTVarIO (responseHeaders buffer)
   case unur headers of
     Nothing -> do
@@ -188,7 +178,6 @@ performStreamWriteFunction handle = CurlWriteFunction $ \content _ bsLen innerBu
           continueWriting unwritten
 
   continueWriting next
-  -- print "write finished"
   N.pure bsLen
 
 curlResult :: C.CURLcode %1 -> CurlErrorBuffer %1 -> Linear.IO (Ur CurlEasyResult)

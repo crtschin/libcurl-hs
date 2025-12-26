@@ -1,6 +1,6 @@
 {-# LANGUAGE DataKinds #-}
 
-module Network.Curl.Linear
+module Network.Curl.Linear.Easy
   ( -- * Types
     GlobalCurlHandle
   , CurlEasy
@@ -26,7 +26,6 @@ module Network.Curl.Linear
   , setVerbose
   , setErrorBuffer
   , setWriteFunction
-  , setHeaderFunction
 
     -- * curl_easy_getinfo
   , getInfo
@@ -47,7 +46,7 @@ module Network.Curl.Linear
   ) where
 
 import Network.Curl.Linear.Internal.Handle
-import Network.Curl.Linear.Internal.Info
-import Network.Curl.Linear.Internal.Option
-import Network.Curl.Linear.Internal.Perform
+import Network.Curl.Linear.Internal.Easy.Info
+import Network.Curl.Linear.Internal.Easy.Option
+import Network.Curl.Linear.Internal.Easy.Perform
 import Network.Curl.Linear.Internal.Types

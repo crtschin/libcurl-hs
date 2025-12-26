@@ -40,18 +40,6 @@ withCurlMulti global = Unsafe.toLinear $ \g -> Linear.fromSystemIO $ do
   handle <- Linear.toSystemIO (curlMultiInit global)
   Linear.toSystemIO (g handle) `finally` Linear.toSystemIO (curlMultiCleanup handle)
 
-multiAddEasy
-  :: GlobalCurlHandle
-  -> CurlMulti n
-  %1 -> (CurlMulti (S n), CurlEasy)
-multiAddEasy = undefined
-
-multiRemoveEasy
-  :: GlobalCurlHandle
-  -> CurlMulti n
-  %1 -> (CurlMulti (S n), CurlEasy)
-multiRemoveEasy = undefined
-
 curlEasyInit :: Linear.IO CurlEasy
 curlEasyInit = Linear.fromSystemIO $ do
   h <- Unsafe.curl_easy_init
@@ -67,10 +55,10 @@ curlEasyCleanup = Unsafe.toLinear $ \(CurlEasy h (CurlErrorBuffer bufRef)) -> Li
 curlMultiInit :: GlobalCurlHandle -> Linear.IO (CurlMulti Z)
 curlMultiInit _ = Linear.fromSystemIO $ do
   h <- Unsafe.curl_multi_init
-  N.pure $ CurlMulti (Ur h)
+  N.pure $ CurlMulti (Ur h) N.mempty
 
 curlMultiCleanup :: CurlMulti Z %1 -> Linear.IO C.CURLMcode
-curlMultiCleanup = Unsafe.toLinear $ \(CurlMulti h) ->
+curlMultiCleanup = Unsafe.toLinear $ \(CurlMulti h _) ->
   Linear.fromSystemIO $ Unsafe.curl_multi_cleanup (unur h)
 
 -- | Reset a CURL handle to default state, keeping the connection cache.

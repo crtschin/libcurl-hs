@@ -1,4 +1,4 @@
-module Network.Curl.Linear.Internal.Option where
+module Network.Curl.Linear.Internal.Easy.Option where
 
 import Data.IORef
 import Data.Text (Text)
@@ -93,13 +93,4 @@ setWriteFunction curlWriteData curlWriteFunction =
     . setOptionM Unsafe.CurloptWritefunction (N.fmap castFunPtrToPtr writeFunction)
  where
   writeFunction = toFunPtr $ C.Curl_write_callback_Deref $ \contents size nmemb userdata -> do
-    unCurlWriteFunction curlWriteFunction contents size nmemb (castPtr userdata)
-
-setHeaderFunction :: StablePtr a -> CurlWriteFunction a -> CurlEasy %1 -> CurlEasy
-setHeaderFunction curlHeaderData curlHeaderFunction =
-  setOption Unsafe.CurloptHeader 1
-    . setOption Unsafe.CurloptHeaderdata (castPtr (castStablePtrToPtr curlHeaderData))
-    . setOptionM Unsafe.CurloptHeaderfunction (N.fmap castFunPtrToPtr writeFunction)
- where
-  writeFunction = toFunPtr $ C.Curl_write_callback_Deref $ \contents size nmemb userdata -> do
-    unCurlWriteFunction curlHeaderFunction contents size nmemb (castPtr userdata)
+    unCurlWriteFunction curlWriteFunction contents size nmemb (castPtrToStablePtr (castPtr userdata))

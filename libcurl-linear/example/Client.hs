@@ -6,7 +6,7 @@ import Data.ByteString qualified as BS
 import Data.Text (Text)
 import Data.Text qualified as T
 import Data.Unrestricted.Linear qualified as Ur
-import Network.Curl.Linear
+import Network.Curl.Linear.Easy
 import Options.Applicative
 import Prelude.Linear as L
 import Streaming.Prelude.Linear qualified as L
