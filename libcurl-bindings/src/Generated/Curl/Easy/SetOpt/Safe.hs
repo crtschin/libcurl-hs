@@ -4,7 +4,9 @@ module Generated.Curl.Easy.SetOpt.Safe where
 
 import Generated.Curl.Curl
 import Generated.Curl.Easy
+import Generated.Curl.Multi
 import Data.Void
+import Foreign.C
 import Foreign.C.Types
 import Foreign.Ptr
 import Prelude
@@ -14,7 +16,7 @@ foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_long_c
     :: Ptr Void        -- ^ CURL handle
     -> CUInt           -- ^ option
-    -> CLong           -- ^ value
+    -> CLong           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a long argument
@@ -27,7 +29,7 @@ foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_off_t_c
     :: Ptr Void        -- ^ CURL handle
     -> CUInt           -- ^ option
-    -> CLong           -- ^ value
+    -> CLong           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a curl_off_t argument
@@ -40,7 +42,7 @@ foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_ptr_c
     :: Ptr Void        -- ^ CURL handle
     -> CUInt           -- ^ option
-    -> Ptr Void           -- ^ value
+    -> Ptr Void           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a pointer argument
@@ -53,7 +55,7 @@ foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_blob_c
     :: Ptr Void        -- ^ CURL handle
     -> CUInt           -- ^ option
-    -> Ptr Curl_blob           -- ^ value
+    -> Ptr Curl_blob           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a curl_blob argument

@@ -46,4 +46,9 @@ library
     Generated.Curl.Multi
     Generated.Curl.Multi.FunPtr
     Generated.Curl.Multi.Safe
+    Generated.Curl.Multi.SetOpt.Class
+    Generated.Curl.Multi.SetOpt.Instances.Safe
+    Generated.Curl.Multi.SetOpt.Instances.Unsafe
+    Generated.Curl.Multi.SetOpt.Safe
+    Generated.Curl.Multi.SetOpt.Unsafe
     Generated.Curl.Multi.Unsafe
