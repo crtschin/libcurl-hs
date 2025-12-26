@@ -6,7 +6,6 @@ style:
 
 build:
   cabal build all
-    
+
 test:
   cabal test
-    

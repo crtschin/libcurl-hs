@@ -1,0 +1,13 @@
+cradle:
+  cabal:
+    - path: "libcurl-bindings/src"
+      component: "lib:libcurl-bindings"
+
+    - path: "libcurl-linear/src"
+      component: "lib:libcurl-linear"
+
+    - path: "libcurl-linear/test"
+      component: "libcurl-linear:test:libcurl-linear-tests"
+
+    - path: "libcurl-linear/example/Client.hs"
+      component: "libcurl-linear:exe:example-libcurl-linear-client"

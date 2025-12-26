@@ -1,0 +1,143 @@
+version:
+  hs_bindgen: 0.1.0
+  binding_specification: '1.0'
+target: x86_64-pc-linux-gnu
+hsmodule: Generated.Curl.Multi
+ctypes:
+- headers: curl/curl.h
+  cname: union @CURLMsg_data
+  hsname: CURLMsg_data
+- headers: curl/curl.h
+  cname: CURLMSG
+  hsname: CURLMSG
+- headers: curl/curl.h
+  cname: CURLMcode
+  hsname: CURLMcode
+- headers: curl/curl.h
+  cname: CURLMinfo_offt
+  hsname: CURLMinfo_offt
+- headers: curl/curl.h
+  cname: CURLMoption
+  hsname: CURLMoption
+- headers: curl/curl.h
+  cname: CURLMsg
+  hsname: CURLMsg
+- headers: curl/curl.h
+  cname: __fd_mask
+  hsname: C__Fd_mask
+- headers: curl/curl.h
+  cname: curl_multi_timer_callback
+  hsname: Curl_multi_timer_callback
+- headers: curl/curl.h
+  cname: curl_notify_callback
+  hsname: Curl_notify_callback
+- headers: curl/curl.h
+  cname: curl_push_callback
+  hsname: Curl_push_callback
+- headers: curl/curl.h
+  cname: struct curl_pushheaders
+  hsname: Curl_pushheaders
+- headers: curl/curl.h
+  cname: curl_socket_callback
+  hsname: Curl_socket_callback
+- headers: curl/curl.h
+  cname: struct curl_waitfd
+  hsname: Curl_waitfd
+- headers: curl/curl.h
+  cname: fd_set
+  hsname: Fd_set
+hstypes:
+- hsname: CURLMSG
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLMcode
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLMinfo_offt
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLMoption
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLMsg
+  instances:
+  - Storable
+- hsname: CURLMsg_data
+  instances:
+  - Storable
+- hsname: C__Fd_mask
+  instances:
+  - Bits
+  - Bounded
+  - Enum
+  - Eq
+  - FiniteBits
+  - HasBaseForeignType
+  - Integral
+  - Ix
+  - Num
+  - Ord
+  - Read
+  - Real
+  - Show
+  - Storable
+- hsname: Curl_multi_timer_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_notify_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_push_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_pushheaders
+  representation: opaque
+- hsname: Curl_socket_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_waitfd
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Fd_set
+  instances:
+  - Eq
+  - Show
+  - Storable

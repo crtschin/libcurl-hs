@@ -1,0 +1,49 @@
+cabal-version:   3.8
+name:            libcurl-bindings
+version:         0.1.0.0
+license:         MIT
+license-file:    LICENSE
+author:          Curtis Chin Jen Sem
+maintainer:      csochinjensem@gmail.com
+build-type:      Simple
+extra-doc-files: CHANGELOG.md
+synopsis:        Empty
+description:     Empty
+
+common shared
+  default-language: GHC2021
+  ghc-options:      -Wall -Werror
+
+library
+  import:          shared
+  build-depends:   base
+  hs-source-dirs:  src
+  extra-libraries: curl
+  build-depends:
+    , c-expr-runtime
+    , hs-bindgen-runtime
+
+  -- cabal-fmt: expand src
+  exposed-modules:
+    Generated.Curl.Curl
+    Generated.Curl.Curl.FunPtr
+    Generated.Curl.Curl.Safe
+    Generated.Curl.Curl.Unsafe
+    Generated.Curl.Easy
+    Generated.Curl.Easy.FunPtr
+    Generated.Curl.Easy.GetInfo.Class
+    Generated.Curl.Easy.GetInfo.Instances.Safe
+    Generated.Curl.Easy.GetInfo.Instances.Unsafe
+    Generated.Curl.Easy.GetInfo.Safe
+    Generated.Curl.Easy.GetInfo.Unsafe
+    Generated.Curl.Easy.Safe
+    Generated.Curl.Easy.SetOpt.Class
+    Generated.Curl.Easy.SetOpt.Instances.Safe
+    Generated.Curl.Easy.SetOpt.Instances.Unsafe
+    Generated.Curl.Easy.SetOpt.Safe
+    Generated.Curl.Easy.SetOpt.Unsafe
+    Generated.Curl.Easy.Unsafe
+    Generated.Curl.Multi
+    Generated.Curl.Multi.FunPtr
+    Generated.Curl.Multi.Safe
+    Generated.Curl.Multi.Unsafe

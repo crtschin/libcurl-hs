@@ -1,0 +1,92 @@
+cabal-version:   3.8
+name:            libcurl-linear
+version:         0.1.0.0
+license:         MIT
+license-file:    LICENSE
+author:          Curtis Chin Jen Sem
+maintainer:      csochinjensem@gmail.com
+build-type:      Simple
+extra-doc-files: CHANGELOG.md
+synopsis:        Empty
+description:     Empty
+
+common shared
+  default-language:   GHC2021
+  default-extensions:
+    DeriveGeneric
+    DerivingVia
+    GADTs
+    LinearTypes
+    NoImplicitPrelude
+    QualifiedDo
+    RecordWildCards
+    TypeData
+
+  ghc-options:        -Wall -Werror
+
+common executable-shared
+  ghc-options: -threaded -rtsopts +RTS -N2 -A32M
+
+library
+  import:          shared
+  build-depends:   base
+  hs-source-dirs:  src
+  build-depends:
+    , async
+    , bytestring
+    , containers
+    , hs-bindgen-runtime
+    , libcurl-bindings
+    , linear-base
+    , shared-memory
+    , stm
+    , text
+    , unix
+
+  -- cabal-fmt: expand src
+  exposed-modules:
+    Network.Curl.Linear
+    Network.Curl.Linear.Internal.Buffer
+    Network.Curl.Linear.Internal.Handle
+    Network.Curl.Linear.Internal.Header
+    Network.Curl.Linear.Internal.Info
+    Network.Curl.Linear.Internal.Option
+    Network.Curl.Linear.Internal.Perform
+    Network.Curl.Linear.Internal.Types
+    Network.Curl.Linear.Internal.Utils
+
+test-suite libcurl-linear-tests
+  import:         shared, executable-shared
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is:        Main.hs
+  build-depends:
+    , base
+    , bytestring
+    , ghc-prim
+    , libcurl-linear
+    , linear-base
+    , QuickCheck
+    , sandwich
+    , sandwich-quickcheck
+    , temporary
+    , text
+
+  -- cabal-fmt: expand test -Main
+  other-modules:
+    Test.Network.Curl.Linear
+    Test.Network.Curl.Linear.Internal.Buffer
+
+executable example-libcurl-linear-client
+  import:         shared, executable-shared
+  hs-source-dirs: example
+  main-is:        Client.hs
+  build-depends:
+    , base
+    , bytestring
+    , directory
+    , libcurl-bindings
+    , libcurl-linear
+    , linear-base
+    , optparse-applicative
+    , text

@@ -1,0 +1,874 @@
+version:
+  hs_bindgen: 0.1.0
+  binding_specification: '1.0'
+target: x86_64-pc-linux-gnu
+hsmodule: Generated.Curl.Curl
+ctypes:
+- headers: curl/curl.h
+  cname: struct @curl_fileinfo_strings
+  hsname: Curl_fileinfo_strings
+- headers: curl/curl.h
+  cname: CURLFORMcode
+  hsname: CURLFORMcode
+- headers: curl/curl.h
+  cname: CURLHcode
+  hsname: CURLHcode
+- headers: curl/curl.h
+  cname: CURLINFO
+  hsname: CURLINFO
+- headers: curl/curl.h
+  cname: CURLSHcode
+  hsname: CURLSHcode
+- headers: curl/curl.h
+  cname: CURLSHoption
+  hsname: CURLSHoption
+- headers: curl/curl.h
+  cname: CURLSTScode
+  hsname: CURLSTScode
+- headers: curl/curl.h
+  cname: enum CURL_NETRC_OPTION
+  hsname: CURL_NETRC_OPTION
+- headers: curl/curl.h
+  cname: enum CURL_TLSAUTH
+  hsname: CURL_TLSAUTH
+- headers: curl/curl.h
+  cname: CURLcode
+  hsname: CURLcode
+- headers: curl/curl.h
+  cname: CURLformoption
+  hsname: CURLformoption
+- headers: curl/curl.h
+  cname: CURLoption
+  hsname: CURLoption
+- headers: curl/curl.h
+  cname: CURLproxycode
+  hsname: CURLproxycode
+- headers: curl/curl.h
+  cname: CURLsslset
+  hsname: CURLsslset
+- headers: curl/curl.h
+  cname: CURLversion
+  hsname: CURLversion
+- headers: curl/curl.h
+  cname: curl_TimeCond
+  hsname: Curl_TimeCond
+- headers: curl/curl.h
+  cname: curl_calloc_callback
+  hsname: Curl_calloc_callback
+- headers: curl/curl.h
+  cname: struct curl_certinfo
+  hsname: Curl_certinfo
+- headers: curl/curl.h
+  cname: curl_chunk_bgn_callback
+  hsname: Curl_chunk_bgn_callback
+- headers: curl/curl.h
+  cname: curl_chunk_end_callback
+  hsname: Curl_chunk_end_callback
+- headers: curl/curl.h
+  cname: curl_closepolicy
+  hsname: Curl_closepolicy
+- headers: curl/curl.h
+  cname: curl_closesocket_callback
+  hsname: Curl_closesocket_callback
+- headers: curl/curl.h
+  cname: curl_conv_callback
+  hsname: Curl_conv_callback
+- headers: curl/curl.h
+  cname: curl_debug_callback
+  hsname: Curl_debug_callback
+- headers: curl/curl.h
+  cname: struct curl_fileinfo
+  hsname: Curl_fileinfo
+- headers: curl/curl.h
+  cname: curl_fnmatch_callback
+  hsname: Curl_fnmatch_callback
+- headers: curl/curl.h
+  cname: curl_formget_callback
+  hsname: Curl_formget_callback
+- headers: curl/curl.h
+  cname: struct curl_forms
+  hsname: Curl_forms
+- headers: curl/curl.h
+  cname: curl_free_callback
+  hsname: Curl_free_callback
+- headers: curl/curl.h
+  cname: curl_ftpauth
+  hsname: Curl_ftpauth
+- headers: curl/curl.h
+  cname: curl_ftpccc
+  hsname: Curl_ftpccc
+- headers: curl/curl.h
+  cname: curl_ftpcreatedir
+  hsname: Curl_ftpcreatedir
+- headers: curl/curl.h
+  cname: curl_ftpmethod
+  hsname: Curl_ftpmethod
+- headers: curl/curl.h
+  cname: curl_ftpssl
+  hsname: Curl_ftpssl
+- headers: curl/curl.h
+  cname: struct curl_header
+  hsname: Curl_header
+- headers: curl/curl.h
+  cname: struct curl_hstsentry
+  hsname: Curl_hstsentry
+- headers: curl/curl.h
+  cname: curl_hstsread_callback
+  hsname: Curl_hstsread_callback
+- headers: curl/curl.h
+  cname: curl_hstswrite_callback
+  hsname: Curl_hstswrite_callback
+- headers: curl/curl.h
+  cname: struct curl_httppost
+  hsname: Curl_httppost
+- headers: curl/curl.h
+  cname: struct curl_index
+  hsname: Curl_index
+- headers: curl/curl.h
+  cname: curl_infotype
+  hsname: Curl_infotype
+- headers: curl/curl.h
+  cname: curl_ioctl_callback
+  hsname: Curl_ioctl_callback
+- headers: curl/curl.h
+  cname: struct curl_khkey
+  hsname: Curl_khkey
+- headers: curl/curl.h
+  cname: enum curl_khmatch
+  hsname: Curl_khmatch
+- headers: curl/curl.h
+  cname: enum curl_khstat
+  hsname: Curl_khstat
+- headers: curl/curl.h
+  cname: enum curl_khtype
+  hsname: Curl_khtype
+- headers: curl/curl.h
+  cname: curl_lock_access
+  hsname: Curl_lock_access
+- headers: curl/curl.h
+  cname: curl_lock_data
+  hsname: Curl_lock_data
+- headers: curl/curl.h
+  cname: curl_lock_function
+  hsname: Curl_lock_function
+- headers: curl/curl.h
+  cname: curl_malloc_callback
+  hsname: Curl_malloc_callback
+- headers: curl/curl.h
+  cname: curl_mime
+  hsname: Curl_mime
+- headers: curl/curl.h
+  cname: curl_mimepart
+  hsname: Curl_mimepart
+- headers: curl/curl.h
+  cname: curl_off_t
+  hsname: Curl_off_t
+- headers: curl/curl.h
+  cname: curl_opensocket_callback
+  hsname: Curl_opensocket_callback
+- headers: curl/curl.h
+  cname: curl_prereq_callback
+  hsname: Curl_prereq_callback
+- headers: curl/curl.h
+  cname: curl_progress_callback
+  hsname: Curl_progress_callback
+- headers: curl/curl.h
+  cname: curl_proxytype
+  hsname: Curl_proxytype
+- headers: curl/curl.h
+  cname: curl_read_callback
+  hsname: Curl_read_callback
+- headers: curl/curl.h
+  cname: curl_realloc_callback
+  hsname: Curl_realloc_callback
+- headers: curl/curl.h
+  cname: curl_resolver_start_callback
+  hsname: Curl_resolver_start_callback
+- headers: curl/curl.h
+  cname: curl_seek_callback
+  hsname: Curl_seek_callback
+- headers: curl/curl.h
+  cname: struct curl_slist
+  hsname: Curl_slist
+- headers: curl/curl.h
+  cname: struct curl_sockaddr
+  hsname: Curl_sockaddr
+- headers: curl/curl.h
+  cname: curl_socket_t
+  hsname: Curl_socket_t
+- headers: curl/curl.h
+  cname: curl_sockopt_callback
+  hsname: Curl_sockopt_callback
+- headers: curl/curl.h
+  cname: curl_sshhostkeycallback
+  hsname: Curl_sshhostkeycallback
+- headers: curl/curl.h
+  cname: curl_sshkeycallback
+  hsname: Curl_sshkeycallback
+- headers: curl/curl.h
+  cname: curl_ssl_backend
+  hsname: Curl_ssl_backend
+- headers: curl/curl.h
+  cname: curl_ssl_ctx_callback
+  hsname: Curl_ssl_ctx_callback
+- headers: curl/curl.h
+  cname: curl_sslbackend
+  hsname: Curl_sslbackend
+- headers: curl/curl.h
+  cname: curl_ssls_export_cb
+  hsname: Curl_ssls_export_cb
+- headers: curl/curl.h
+  cname: curl_strdup_callback
+  hsname: Curl_strdup_callback
+- headers: curl/curl.h
+  cname: struct curl_tlssessioninfo
+  hsname: Curl_tlssessioninfo
+- headers: curl/curl.h
+  cname: curl_trailer_callback
+  hsname: Curl_trailer_callback
+- headers: curl/curl.h
+  cname: curl_unlock_function
+  hsname: Curl_unlock_function
+- headers: curl/curl.h
+  cname: curl_usessl
+  hsname: Curl_usessl
+- headers: curl/curl.h
+  cname: curl_version_info_data
+  hsname: Curl_version_info_data
+- headers: curl/curl.h
+  cname: curl_write_callback
+  hsname: Curl_write_callback
+- headers: curl/curl.h
+  cname: curl_xferinfo_callback
+  hsname: Curl_xferinfo_callback
+- headers: curl/curl.h
+  cname: curlfiletype
+  hsname: Curlfiletype
+- headers: curl/curl.h
+  cname: curliocmd
+  hsname: Curliocmd
+- headers: curl/curl.h
+  cname: curlioerr
+  hsname: Curlioerr
+- headers: curl/curl.h
+  cname: curlsocktype
+  hsname: Curlsocktype
+- headers: curl/curl.h
+  cname: sa_family_t
+  hsname: Sa_family_t
+- headers: curl/curl.h
+  cname: struct sockaddr
+  hsname: Sockaddr
+hstypes:
+- hsname: CURLFORMcode
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLHcode
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLINFO
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLSHcode
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLSHoption
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLSTScode
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURL_NETRC_OPTION
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURL_TLSAUTH
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLcode
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLformoption
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLoption
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLproxycode
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLsslset
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: CURLversion
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_TimeCond
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_calloc_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_certinfo
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_chunk_bgn_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_chunk_end_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_closepolicy
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_closesocket_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_conv_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_debug_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_fileinfo
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_fileinfo_strings
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_fnmatch_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_formget_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_forms
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_free_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_ftpauth
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_ftpccc
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_ftpcreatedir
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_ftpmethod
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_ftpssl
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_header
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_hstsentry
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_hstsread_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_hstswrite_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_httppost
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_index
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_infotype
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_ioctl_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_khkey
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_khmatch
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_khstat
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_khtype
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_lock_access
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_lock_data
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_lock_function
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_malloc_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_mime
+  representation: opaque
+- hsname: Curl_mimepart
+  representation: opaque
+- hsname: Curl_off_t
+  instances:
+  - Bits
+  - Bounded
+  - Enum
+  - Eq
+  - FiniteBits
+  - HasBaseForeignType
+  - Integral
+  - Ix
+  - Num
+  - Ord
+  - Read
+  - Real
+  - Show
+  - Storable
+- hsname: Curl_opensocket_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_prereq_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_progress_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_proxytype
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_read_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_realloc_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_resolver_start_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_seek_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_slist
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_sockaddr
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_socket_t
+  instances:
+  - Bits
+  - Bounded
+  - Enum
+  - Eq
+  - FiniteBits
+  - HasBaseForeignType
+  - Integral
+  - Ix
+  - Num
+  - Ord
+  - Read
+  - Real
+  - Show
+  - Storable
+- hsname: Curl_sockopt_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_sshhostkeycallback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_sshkeycallback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_ssl_backend
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_ssl_ctx_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_sslbackend
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_ssls_export_cb
+  instances:
+  - HasBaseForeignType
+- hsname: Curl_strdup_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_tlssessioninfo
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_trailer_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_unlock_function
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_usessl
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curl_version_info_data
+  instances:
+  - Eq
+  - Show
+  - Storable
+- hsname: Curl_write_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curl_xferinfo_callback
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Show
+  - Storable
+- hsname: Curlfiletype
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curliocmd
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curlioerr
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Curlsocktype
+  instances:
+  - Eq
+  - HasBaseForeignType
+  - Ord
+  - Read
+  - Show
+  - Storable
+- hsname: Sa_family_t
+  instances:
+  - Bits
+  - Bounded
+  - Enum
+  - Eq
+  - FiniteBits
+  - HasBaseForeignType
+  - Integral
+  - Ix
+  - Num
+  - Ord
+  - Read
+  - Real
+  - Show
+  - Storable
+- hsname: Sockaddr
+  instances:
+  - Eq
+  - Show
+  - Storable

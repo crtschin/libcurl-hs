@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+# Command line flags affecting module generation.
+module_flags=(
+    # C has a global namespace. Providing a unique ID ensures the C wrappers
+    # have unique names.
+    --unique-id org.libcurl-bindgen.curl
+    -D CURL_ALLOW_OLD_MULTI_SOCKET
+    # Base output directory of generated bindings.
+    --hs-output-dir src
+    --create-output-dirs
+    --overwrite-files
+)
+
+# Command line flags affecting `libclang`.
+libclang_flags=(
+    --gnu
+)
+
+# `hs-bindgen` parses the C header files using `libclang` and interprets/reifies
+# the declarations into an `hs-bindgen`-internal abstract syntax tree. These
+# flags affect the parsing/reifying step.
+parse_flags=(
+    # TODO: We panic without `--parse-all`, see
+    # https://github.com/well-typed/hs-bindgen/issues/1155.
+    --parse-all
+)
+
+# We only generate bindings for a sub-set of all parsed/reified declarations.
+# These flags configure the selection step.
+select_flags=(
+    # --select-by-header-path curl\.h
+    # --select-by-header-path easy\.h
+    # --select-by-header-path multi\.h
+    # -D CURL_DISABLE_TYPECHECK=true
+    # Select transitive dependencies.
+    --enable-program-slicing
+    --select-except-deprecated
+)
+
+# Increase the verbosity of `hs-bindgen` to learn something about its internals.
+# For example, activate Info-level log messages to see which declarations are
+# selected/not selected, or which C macros we succeed or fail to parse.
+debug_flags=(
+    # # Run `hs-bindgen` with log level "Info".
+    # -v3
+    # # Run `hs-bindgen` with log level "Debug".
+    # -v4
+)
+
+hs-bindgen-cli preprocess \
+    "${module_flags[@]}" \
+    "${libclang_flags[@]}" \
+    "${parse_flags[@]}" \
+    "${select_flags[@]}" \
+    "${debug_flags[@]}" \
+    "--select-by-header-path" "curl.h" \
+    "--module" "Generated.Curl.Curl" \
+    "--gen-binding-spec" "binding-specs/curl" \
+    "curl/curl.h"
+
+hs-bindgen-cli preprocess \
+    "${module_flags[@]}" \
+    "${libclang_flags[@]}" \
+    "${parse_flags[@]}" \
+    "${select_flags[@]}" \
+    "${debug_flags[@]}" \
+    "--external-binding-spec" "binding-specs/curl" \
+    "--select-by-header-path" "easy.h" \
+    "--module" "Generated.Curl.Easy" \
+    "--gen-binding-spec" "binding-specs/easy" \
+    "curl/curl.h"
+
+hs-bindgen-cli preprocess \
+    "${module_flags[@]}" \
+    "${libclang_flags[@]}" \
+    "${parse_flags[@]}" \
+    "${select_flags[@]}" \
+    "${debug_flags[@]}" \
+    "--external-binding-spec" "binding-specs/curl" \
+    "--select-by-header-path" "multi.h" \
+    "--select-by-decl-name" "CURL_SOCKET_BAD" \
+    "--module" "Generated.Curl.Multi" \
+    "--gen-binding-spec" "binding-specs/multi" \
+    "curl/curl.h"
+
+# hs-bindgen-cli preprocess \
+#     "${module_flags[@]}" \
+#     "${libclang_flags[@]}" \
+#     "${parse_flags[@]}" \
+#     "${select_flags[@]}" \
+#     "${debug_flags[@]}" \
+#     "--external-binding-spec" "binding-specs/common" \
+#     "--external-binding-spec" "binding-specs/easy" \
+#     "--external-binding-spec" "binding-specs/multi" \
+#     "--select-by-header-path" "curl.h" \
+#     "--module" "Generated.Curl.Curl" \
+#     "--gen-binding-spec" "binding-specs/curl" \
+#     "curl/curl.h"

@@ -1,4 +1,4 @@
-# Revision history for template-hs
+# Revision history for libcurl-hs
 
 ## 0.1.0.0 -- YYYY-mm-dd
 
