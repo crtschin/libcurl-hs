@@ -17,7 +17,6 @@ import Network.Curl.Linear.Internal.Easy.Perform
 import Network.Curl.Linear.Internal.Handle
 import Network.Curl.Linear.Internal.Multi.Option
 import Network.Curl.Linear.Internal.Types
-import Network.Curl.Linear.Internal.Utils
 import Prelude.Linear as L
 import System.IO.Linear qualified as Linear
 import System.IO.Unsafe qualified as Unsafe
@@ -31,12 +30,12 @@ multiAdd
   %1 -> (CurlEasy %1 -> CurlEasy)
   %1 -> CurlMulti
 multiAdd = Unsafe.toLinear2 $ \(CurlMulti m handles) setupHandle -> Unsafe.unsafeDupablePerformIO $ do
-  c <- toSystemIO curlEasyInit
+  c <- Linear.withLinearIO curlEasyInit
   let h@(CurlEasy c' _) = setupHandle c
-  _ <- Unsafe.curl_multi_add_handle (unur m) (unur c')
-  let IntPtr key = ptrToIntPtr $ unur c'
-  let assertionError = throw $ AssertionFailed "The same easy handle has already been registered in the multi handle."
-  let handles' = IntMap.insertWith assertionError key h handles
+  _ <- Unsafe.curl_multi_add_handle (unur m) c'
+  let IntPtr key = ptrToIntPtr c'
+      assertionError = throw $ AssertionFailed "The same easy handle has already been registered in the multi handle."
+      handles' = IntMap.insertWith assertionError key h handles
   N.pure (CurlMulti m handles')
 
 data CurlMultiResult
@@ -61,7 +60,7 @@ multiRemove = Unsafe.toLinear $ \multi@(CurlMulti m handles) -> Linear.fromSyste
               Nothing -> throwIO $ AssertionFailed "The finished easy handle couldn't be found in the multi handle."
               Just h -> do
                 let handles' = IntMap.delete key handles
-                result <- Linear.withLinearIO $ curlResult (C.get_cURLMsg_data_result msgData) (easyErrorBuffer h)
+                result <- Linear.withLinearIO $ curlResult (easyErrorBuffer h) (C.get_cURLMsg_data_result msgData)
                 CurlMultiMessage (CurlMulti m handles') result N.<$> peek msgsInQueue
 
           -- The documentation says that CURLMSG_DONE is the only message type.

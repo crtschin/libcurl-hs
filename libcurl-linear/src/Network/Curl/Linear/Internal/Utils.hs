@@ -5,6 +5,15 @@ import Control.Functor.Linear as L
 import GHC.IO qualified as N
 import Prelude.Linear as L
 import System.IO.Linear qualified as Linear
+import Unsafe.Linear qualified as Unsafe
+
+data ScopedResult a b = ScopedResult
+  { _scoped :: !a
+  , _scopedResult :: {-# UNPACK #-} !(Ur b)
+  }
+
+scopedResult :: ScopedResult a b %1 -> Ur b
+scopedResult = Unsafe.toLinear $ \(ScopedResult _ r) -> r
 
 finally :: Linear.IO (L.Ur a) -> Linear.IO () -> Linear.IO (L.Ur a)
 finally action after = L.do

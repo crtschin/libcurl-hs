@@ -17,12 +17,9 @@ data GlobalCurlHandle = GlobalCurlHandle
 
 -- | A CURL easy handle. Must be used linearly to prevent resource leaks.
 data CurlEasy = CurlEasy
-  { easyHandle :: Ur (Ptr Void)
+  { easyHandle :: Ptr Void
   , easyErrorBuffer :: CurlErrorBuffer
   }
-
-instance Consumable CurlEasy where
-  consume CurlEasy{..} = consume (easyHandle, easyErrorBuffer)
 
 newtype CurlErrorBuffer = CurlErrorBuffer (Ur (IORef (Maybe CString)))
 

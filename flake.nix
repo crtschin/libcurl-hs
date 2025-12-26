@@ -75,18 +75,18 @@
             hsBindgenHook
             hs-bindgen-cli
           ];
-          tools = with pkgs; [ just ];
+          tools = with pkgs; [ just perl ];
           haskellTools = with haskellPackages; [
-            fourmolu
-            haskell-language-server
-            eventlog2html
-            hp2pretty
-            profiteur
-            ghc-prof-flamegraph
-            threadscope
-            ghcid
             cabal-fmt
+            eventlog2html
+            fourmolu
+            ghc-prof-flamegraph
+            ghcid
+            haskell-language-server
+            hp2pretty
             nixfmt
+            profiteur
+            threadscope
           ];
 
           pythonTools = with pkgs; [

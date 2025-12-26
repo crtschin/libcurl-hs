@@ -6,11 +6,13 @@ module Test.Network.Curl.Linear (tests) where
 
 import Control.Functor.Linear as Linear
 import Control.Monad.IO.Class (MonadIO (..))
+import Data.ByteString qualified as BS
 import Data.ByteString.Lazy qualified as BSL
 import Data.IORef qualified as N
 import Data.Text qualified as T
 import Data.Text.IO qualified as T
 import Network.Curl.Linear.Easy
+import Network.Curl.Linear.Internal.Utils
 import Prelude.Linear
 import Streaming.Linear qualified as Linear
 import System.IO
@@ -18,7 +20,6 @@ import System.IO.Linear as Linear
 import System.IO.Temp
 import Test.Sandwich
 import Prelude qualified as N
-import qualified Data.ByteString as BS
 
 tests :: TopSpec
 tests = describe "Network.Curl.Linear" $ do
@@ -49,16 +50,22 @@ basicNoopGlobal :: ExampleT ctx N.IO ()
 basicNoopGlobal = do
   liftIO $ Linear.withLinearIO (withCurlGlobal action)
  where
-  action :: GlobalCurlHandle -> Linear.IO (Ur ())
-  action _ = pure $ move ()
+  action :: GlobalCurlHandle -> Linear.IO (ScopedResult GlobalCurlHandle ())
+  action h = pure $ ScopedResult h (move ())
 
-basicTestSetup :: (Consumable a, MonadIO m) => (CurlEasy %1 -> a) -> m ()
+basicTestSetup
+  :: forall m
+   . (MonadIO m)
+  => (CurlEasy %1 -> CurlEasy)
+  -> m ()
 basicTestSetup act =
   liftIO $ Linear.withLinearIO (withCurlGlobal action)
  where
-  action :: GlobalCurlHandle -> Linear.IO (Ur ())
-  action global = withCurlEasy global $ \h ->
-    pure $ move (consume (act h))
+  action :: GlobalCurlHandle -> Linear.IO (ScopedResult GlobalCurlHandle ())
+  action global = Linear.do
+    result <- withCurlEasy global $ \h ->
+      pure (ScopedResult (act h) (move ()))
+    pure $ ScopedResult global result
 
 basicEasyNoop :: ExampleT ctx N.IO ()
 basicEasyNoop = basicTestSetup id
@@ -92,29 +99,35 @@ performTestSetup setupHandle expect = do
   result <- liftIO (withLinearIO $ withCurlGlobal action)
   expect result
  where
-  action :: GlobalCurlHandle -> Linear.IO (Ur CurlEasyResult)
-  action global = withCurlEasy global $ \h -> Linear.do
-    (h', r) <- perform (setupHandle h)
-    pure $ lseq h' r
+  action :: GlobalCurlHandle -> Linear.IO (ScopedResult GlobalCurlHandle CurlEasyResult)
+  action global = Linear.do
+    result <- withCurlEasy global $ \h -> Linear.do
+      (h', r) <- perform (setupHandle h)
+      pure $ ScopedResult h' r
+    Linear.pure $ ScopedResult global result
 
 performStreamTestSetup
   :: MonadIO m => (CurlEasy %1 -> CurlEasy) -> (CurlEasyResult -> BSL.ByteString -> m r) -> m r
 performStreamTestSetup setupHandle expect = do
   (result, buffer) <- liftIO (withLinearIO $ withCurlGlobal action)
   bufferContents <- liftIO $ N.readIORef $ unur buffer
-  expect result (BS.fromStrict bufferContents)
+  expect (unur result) (BS.fromStrict bufferContents)
  where
-  action :: GlobalCurlHandle -> Linear.IO (Ur (CurlEasyResult, Ur (N.IORef BS.ByteString)))
-  action global = withCurlEasy global $ \h -> Linear.do
-    Ur bufferRef <- newIORef N.mempty
-    (h', Ur (StreamResult r)) <- performStream (StreamOptions 1024) (setupHandle h) $ \h' stream -> Linear.do
-      let accumContents :: Linear.Of BS.ByteString a %1 -> Linear.IO a
-          accumContents (new Linear.:> buff) = Linear.do
-            fromSystemIO $ N.modifyIORef' bufferRef $ \prev -> prev N.<> new
-            pure buff
-      result <- Linear.mapsM_ @(Linear.Of BS.ByteString) @Linear.IO accumContents stream
-      pure $ h' `lseq` move result
-    pure $ lseq h' $ move (r, Ur bufferRef)
+  action
+    :: GlobalCurlHandle
+    -> Linear.IO (ScopedResult GlobalCurlHandle (Ur CurlEasyResult, Ur (N.IORef BS.ByteString)))
+  action global = Linear.do
+    result <- withCurlEasy global $ \h -> Linear.do
+      Ur bufferRef <- newIORef N.mempty
+      (h', Ur (StreamResult r)) <- performStream (StreamOptions 1024) (setupHandle h) $ \h' stream -> Linear.do
+        let accumContents :: Linear.Of BS.ByteString a %1 -> Linear.IO a
+            accumContents (new Linear.:> buff) = Linear.do
+              fromSystemIO $ N.modifyIORef' bufferRef $ \prev -> prev N.<> new
+              pure buff
+        result <- Linear.mapsM_ @(Linear.Of BS.ByteString) @Linear.IO accumContents stream
+        pure $ h' `lseq` move result
+      pure $ ScopedResult h' (move (r, Ur bufferRef))
+    Linear.pure $ ScopedResult global result
 
 performBasicTest :: ExampleT ctx N.IO ()
 performBasicTest = performTestSetup id $ \result ->

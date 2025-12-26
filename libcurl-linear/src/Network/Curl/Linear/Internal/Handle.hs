@@ -2,10 +2,10 @@
 module Network.Curl.Linear.Internal.Handle where
 
 import Control.Exception (finally)
+import Control.Functor.Linear qualified as L
 import Data.Foldable (for_)
 import Data.Functor (($>))
 import Data.IORef
-import Data.Nat
 import Foreign
 import Generated.Curl.Curl.Unsafe qualified as Unsafe
 import Generated.Curl.Easy.Unsafe qualified as Unsafe
@@ -19,36 +19,41 @@ import System.IO.Unsafe qualified as Unsafe
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
 
-withCurlGlobal :: (GlobalCurlHandle -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
+withCurlGlobal
+  :: (GlobalCurlHandle -> Linear.IO (Linear.ScopedResult GlobalCurlHandle r))
+  %1 -> Linear.IO (Ur r)
 withCurlGlobal = Unsafe.toLinear runAction
  where
-  runAction :: (GlobalCurlHandle -> Linear.IO (Ur r)) -> Linear.IO (Ur r)
   runAction g = Linear.fromSystemIO $ do
     h <- Unsafe.curl_global_init 1 $> GlobalCurlHandle
-    Linear.toSystemIO (g h) `finally` Unsafe.curl_global_cleanup
+    Linear.toSystemIO (Linear.scopedResult L.<$> g h) `finally` Unsafe.curl_global_cleanup
 
-withCurlEasy :: GlobalCurlHandle -> (CurlEasy %1 -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
+withCurlEasy
+  :: GlobalCurlHandle
+  -> (CurlEasy %1 -> Linear.IO (Linear.ScopedResult CurlEasy r))
+  %1 -> Linear.IO (Ur r)
 withCurlEasy _ = Unsafe.toLinear runAction
  where
-  runAction :: (CurlEasy %1 -> Linear.IO (Ur r)) -> Linear.IO (Ur r)
-  runAction g = Linear.fromSystemIO $ do
-    handle <- Linear.toSystemIO curlEasyInit
-    Linear.toSystemIO (g handle) `finally` Linear.toSystemIO (curlEasyCleanup handle)
+  runAction :: (CurlEasy %1 -> Linear.IO (Linear.ScopedResult CurlEasy r)) -> Linear.IO (Ur r)
+  runAction g = L.do
+    Ur handle <- curlEasyInit
+    (Linear.scopedResult L.<$> g handle)
+      `Linear.finally` curlEasyCleanup handle
 
 withCurlMulti :: GlobalCurlHandle -> (CurlMulti %1 -> Linear.IO (Ur r)) %1 -> Linear.IO (Ur r)
 withCurlMulti global = Unsafe.toLinear $ \g -> Linear.fromSystemIO $ do
   handle <- Linear.toSystemIO (curlMultiInit global)
   Linear.toSystemIO (g handle) `finally` Linear.toSystemIO (curlMultiCleanup handle)
 
-curlEasyInit :: Linear.IO CurlEasy
-curlEasyInit = Linear.fromSystemIO $ do
+curlEasyInit :: Linear.IO (Ur CurlEasy)
+curlEasyInit = Linear.fromSystemIOU $ do
   h <- Unsafe.curl_easy_init
   bufRef <- newIORef N.Nothing
-  N.pure $ CurlEasy (Ur h) (CurlErrorBuffer (Ur bufRef))
+  N.pure $ CurlEasy h (CurlErrorBuffer (Ur bufRef))
 
 curlEasyCleanup :: CurlEasy %1 -> Linear.IO ()
 curlEasyCleanup = Unsafe.toLinear $ \(CurlEasy h (CurlErrorBuffer bufRef)) -> Linear.fromSystemIO $ do
-  Unsafe.curl_easy_cleanup $ unur h
+  Unsafe.curl_easy_cleanup h
   mbuf <- readIORef $ unur bufRef
   for_ mbuf free
 
@@ -66,5 +71,5 @@ reset :: CurlEasy %1 -> CurlEasy
 reset = Unsafe.toLinear doReset
  where
   doReset handle@(CurlEasy h _) = Unsafe.unsafeDupablePerformIO $ do
-    Unsafe.curl_easy_reset (unur h)
+    Unsafe.curl_easy_reset h
     N.pure handle

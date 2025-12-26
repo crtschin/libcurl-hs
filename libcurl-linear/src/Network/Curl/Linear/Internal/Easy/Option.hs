@@ -25,7 +25,7 @@ setOption
 setOption option = Unsafe.toLinear2 performSet
  where
   performSet arg handle@(CurlEasy h _) = Unsafe.unsafeDupablePerformIO $ do
-    _ <- curlSetOpt option (unur h) arg
+    _ <- curlSetOpt option h arg
     N.pure handle
 
 setOptionM :: CurlOption c => c -> N.IO (CurlOptionArgument c) %1 -> CurlEasy %1 -> CurlEasy
@@ -33,7 +33,7 @@ setOptionM option = Unsafe.toLinear2 performSet
  where
   performSet getArg handle@(CurlEasy h _) = Unsafe.unsafeDupablePerformIO $ do
     arg <- getArg
-    _ <- curlSetOpt option (unur h) arg
+    _ <- curlSetOpt option h arg
     N.pure handle
 
 setTextOption
@@ -84,7 +84,7 @@ setErrorBuffer = Unsafe.toLinear doSetErrorBuffer
     -- Store buffer reference for cleanup
     writeIORef (unur bufRef) (N.Just buf)
     -- Set the error buffer option
-    _ <- curlSetOpt Unsafe.CurloptErrorbuffer (unur h) (castPtr buf)
+    _ <- curlSetOpt Unsafe.CurloptErrorbuffer h (castPtr buf)
     N.pure handle
 
 setWriteFunction :: StablePtr a -> CurlWriteFunction a -> CurlEasy %1 -> CurlEasy

@@ -40,11 +40,13 @@ new cap f = do
   f buffer
 
 write :: ByteString -> Buffer -> IO ByteString
-write bs buf = BSU.unsafeUseAsCStringLen bs $ \(Ptr src#, len) -> do
-  remaining <- writePtr (Ptr src#) len buf
-  pure $ BS.drop (len - remaining) bs
+{-# INLINABLE write #-}
+write bs buf = BSU.unsafeUseAsCStringLen bs (\(Ptr src#, len) -> do
+  !remaining <- writePtr (Ptr src#) len buf
+  pure $! BS.drop (len - remaining) bs)
 
 writePtr :: Ptr Word8 -> Int -> Buffer -> IO Int
+{-# INLINABLE writePtr #-}
 writePtr src len buf
   | len <= 0 = pure 0
   | otherwise = do
@@ -59,10 +61,11 @@ writePtr src len buf
       pure (len - sz)
 
 -- | SAFETY: No references to a bytestring that is returned from this function
--- should be 'live', when it is called again, that includes thunks. It is _only_
+-- should be 'live' when it is called again, that includes thunks. It is _only_
 -- safe when it is used linearly. Under the hood, every bytestring returned from
 -- this function comes from the same buffer, no copying is done.
 unsafeToByteString :: Buffer -> IO ByteString
+{-# INLINABLE unsafeToByteString #-}
 unsafeToByteString buf = do
   (secondaryPtr, secondarySize) <- atomically $ do
     (primaryPtr, sz) <- readTVar (primary buf)

@@ -5,8 +5,8 @@ import Control.Functor.Linear qualified as L
 import Data.ByteString qualified as BS
 import Data.Text (Text)
 import Data.Text qualified as T
-import Data.Unrestricted.Linear qualified as Ur
 import Network.Curl.Linear.Easy
+import Network.Curl.Linear.Internal.Utils qualified as Linear
 import Options.Applicative
 import Prelude.Linear as L
 import Streaming.Prelude.Linear qualified as L
@@ -44,8 +44,8 @@ main = do
   result <- withFile (output options) WriteMode $ \file -> do
     let streamOptions = StreamOptions (256 * 1024)
     Linear.withLinearIO $ L.do
-      withCurlGlobal $ \global -> do
-        withCurlEasy global $ \handle -> L.do
+      withCurlGlobal $ \global -> L.do
+        result <- withCurlEasy global $ \handle -> L.do
           (handle', result) <- performStream
             streamOptions
             ( handle
@@ -58,8 +58,9 @@ main = do
             $ \headers stream -> L.do
               let writeHandle bs = Linear.fromSystemIO $ BS.hPut file bs
               StreamResult result <- L.mapM_ writeHandle stream
-              L.pure $ headers `lseq` Ur.move result
-          handle' `lseq` L.pure result
+              L.pure $ headers `lseq` result
+          L.pure (Linear.ScopedResult handle' result)
+        L.pure $ Linear.ScopedResult global result
 
   case result of
     CurlEasyResultOk -> do

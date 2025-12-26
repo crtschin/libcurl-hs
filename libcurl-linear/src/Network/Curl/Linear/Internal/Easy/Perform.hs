@@ -3,11 +3,10 @@ module Network.Curl.Linear.Internal.Easy.Perform where
 import Control.Concurrent.Async (Async, wait, withAsync)
 import Control.Concurrent.STM
 import Control.Exception (bracket)
-import Control.Functor.Linear qualified as Linear
+import Control.Functor.Linear qualified as L
 import Control.Monad (unless, when)
 import Data.ByteString qualified as BS
 import Data.ByteString.Unsafe qualified as BS
-import Data.IORef
 import Foreign
 import Foreign.C.String (peekCString)
 import Generated.Curl.Curl qualified as C
@@ -28,7 +27,7 @@ perform_ :: CurlEasy %1 -> Linear.IO CurlEasy
 perform_ = Unsafe.toLinear doPerform
  where
   doPerform handle@(CurlEasy h _) = Linear.fromSystemIO $ do
-    _ <- Safe.curl_easy_perform (unur h)
+    _ <- Safe.curl_easy_perform h
     N.pure handle
 
 -- | Perform the CURL request and return the result.
@@ -38,21 +37,21 @@ perform_ = Unsafe.toLinear doPerform
 perform :: CurlEasy %1 -> Linear.IO (CurlEasy, Ur CurlEasyResult)
 perform = Unsafe.toLinear doPerform
  where
-  doPerform handle@(CurlEasy h bufRef) = Linear.do
-    code <- Linear.fromSystemIO $ Safe.curl_easy_perform (unur h)
-    result <- curlResult code bufRef
-    Linear.pure (handle, result)
+  doPerform handle@(CurlEasy h bufRef) = L.do
+    code <- Linear.fromSystemIO $ Safe.curl_easy_perform h
+    result <- curlResult bufRef code
+    L.pure (handle, result)
 
 data StreamBuffer = StreamBuffer
   { curlHandle :: CurlEasy
   , getStreamBuffer :: Buffer.Buffer
   , bufferIsEmpty :: TVar Bool
   , requestFinished :: TVar Bool
-  , responseHeaders :: TVar (Ur (Maybe CurlHeaders))
+  , responseHeaders :: TVar (Maybe CurlHeaders)
   }
 
 newtype StreamResult = StreamResult
-  { getStreamResult :: CurlEasyResult
+  { getStreamResult :: Ur CurlEasyResult
   }
 
 instance Consumable StreamResult where
@@ -85,9 +84,9 @@ performStream streamOption = do
     -> CurlErrorBuffer
     -> StreamBuffer
     -> Linear.IO (Either StreamResult (Linear.Of BS.ByteString StreamBuffer))
-  createStream curlThread curlErrorBuffer performBuffer = Linear.fromSystemIO $ do
+  createStream curlThread curlErrorBuffer performBuffer = L.do
     -- Check if we should stop: download finished AND buffer has no data
-    shouldStop <- atomically $ do
+    shouldStop <- Linear.fromSystemIO $ atomically $ do
       isFinished <- readTVar (requestFinished performBuffer)
       if not isFinished
         then do
@@ -98,11 +97,11 @@ performStream streamOption = do
           readTVar (bufferIsEmpty performBuffer)
 
     if shouldStop
-      then do
-        code <- wait curlThread
-        result <- Linear.withLinearIO $ curlResult code curlErrorBuffer
-        N.pure $ Left $ StreamResult result
-      else do
+      then L.do
+        code <- Linear.fromSystemIO $ wait curlThread
+        result <- curlResult curlErrorBuffer code
+        L.pure $ Left $ StreamResult result
+      else Linear.fromSystemIO $ do
         contents <- Buffer.unsafeToByteString (getStreamBuffer performBuffer)
         -- Mark buffer as empty after reading
         atomically $ writeTVar (bufferIsEmpty performBuffer) True
@@ -122,21 +121,21 @@ performStream streamOption = do
         StreamBuffer handle payloadBuffer
           N.<$> newTVarIO True
           N.<*> newTVarIO False
-          N.<*> newTVarIO (move Nothing)
+          N.<*> newTVarIO Nothing
 
       bracket (newStablePtr buffer) freeStablePtr $ \stableBuffer -> do
         let handle' = setWriteFunction @StreamBuffer stableBuffer performStreamWriteFunction handle
             doDownload = do
-              result <- Safe.curl_easy_perform (unur (easyHandle handle'))
+              result <- Safe.curl_easy_perform (easyHandle handle')
               atomically (writeTVar (requestFinished buffer) True)
               N.pure result
 
-        withAsync doDownload $ \threadId -> Linear.toSystemIO $ Linear.do
-          headers <- Linear.fromSystemIO $ atomically $ do
+        withAsync doDownload $ \threadId -> Linear.toSystemIO $ L.do
+          headers <- Linear.fromSystemIOU $ atomically $ do
             isFinished <- readTVar (requestFinished buffer)
             headers <- readTVar (responseHeaders buffer)
-            let checkWait = if isFinished then N.pure (move (CurlHeaders N.mempty)) else retry
-            N.maybe checkWait N.pure $ N.sequence headers
+            let checkWait = if isFinished then N.pure (CurlHeaders N.mempty) else retry
+            N.maybe checkWait N.pure headers
 
           result <-
             act headers
@@ -151,16 +150,16 @@ performStream streamOption = do
           Linear.fromSystemIO $ atomically $ do
             isFinished <- readTVar (requestFinished buffer)
             unless isFinished retry
-          Linear.pure (handle', result)
+          L.pure (handle', result)
 
 performStreamWriteFunction :: CurlWriteFunction StreamBuffer
 performStreamWriteFunction = CurlWriteFunction $ \content _ bsLen innerBufferPtr -> do
   buffer <- deRefStablePtr innerBufferPtr
   headers <- readTVarIO (responseHeaders buffer)
-  case unur headers of
+  case headers of
     Nothing -> do
       (_, h) <- Linear.toSystemIO $ curlGetLastHeaders (curlHandle buffer)
-      atomically $ writeTVar (responseHeaders buffer) $ move (Just h)
+      atomically $ writeTVar (responseHeaders buffer) (Just h)
     Just _ -> N.pure ()
 
   -- SAFETY: Writing entails copying over the bytes from the given pointer to
@@ -181,16 +180,14 @@ performStreamWriteFunction = CurlWriteFunction $ \content _ bsLen innerBufferPtr
   continueWriting next
   N.pure bsLen
 
-curlResult :: C.CURLcode %1 -> CurlErrorBuffer %1 -> Linear.IO (Ur CurlEasyResult)
-curlResult = Unsafe.toLinear2 helper
- where
-  helper code (CurlErrorBuffer bufRef) = Linear.fromSystemIO $ do
-    if code N.== C.CURLE_OK
-      then N.pure $ move CurlEasyResultOk
-      else do
-        -- Try to read error message from buffer if one was set
-        mbuf <- readIORef (unur bufRef)
-        errMsg <- case mbuf of
-          N.Just buf -> peekCString buf
-          N.Nothing -> N.pure "Error occurred"
-        N.pure $ move $ CurlEasyResultError (CurlError (N.fromIntegral $ C.un_CURLcode code) errMsg)
+curlResult :: CurlErrorBuffer -> C.CURLcode %1 -> Linear.IO (Ur CurlEasyResult)
+curlResult (CurlErrorBuffer bufRef) = Unsafe.toLinear $ \code -> L.do
+  if code N.== C.CURLE_OK
+    then L.pure $ move CurlEasyResultOk
+    else L.do
+      -- Try to read error message from buffer if one was set
+      Ur mbuf <- Linear.readIORef (unur bufRef)
+      errMsg <- case mbuf of
+        N.Just buf -> Linear.fromSystemIO $ peekCString buf
+        N.Nothing -> L.pure "Error occurred"
+      L.pure $ move $ CurlEasyResultError (CurlError (N.fromIntegral $ C.un_CURLcode code) errMsg)
