@@ -1,0 +1,34 @@
+cabal-version:   3.8
+name:            template-hs
+version:         0.1.0.0
+license:         MIT
+license-file:    LICENSE
+author:          Curtis Chin Jen Sem
+maintainer:      csochinjensem@gmail.com
+build-type:      Simple
+extra-doc-files: CHANGELOG.md
+synopsis:        Empty
+description:     Empty
+
+common shared
+  default-language: GHC2024
+  ghc-options:      -Wall -Werror
+
+executable template-hs
+  import:           shared
+  main-is:          Main.hs
+  build-depends:
+    , base
+    , template-hs
+
+  hs-source-dirs:   app
+  default-language: GHC2024
+
+library
+  import:           shared
+  build-depends:    base
+  hs-source-dirs:   src
+  default-language: GHC2024
+
+  -- cabal-fmt: expand src
+  exposed-modules:  Lib
