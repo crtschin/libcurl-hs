@@ -10,13 +10,12 @@ module Network.Curl.Linear.Internal.Buffer
   , size
   ) where
 
+import Control.Concurrent.STM
 import Control.Monad (when)
-import Data.Atomics
 import Data.ByteString (ByteString)
 import Data.ByteString qualified as BS
 import Data.ByteString.Internal qualified as BSI
 import Data.ByteString.Unsafe qualified as BSU
-import Data.IORef (IORef, newIORef, readIORef)
 import Foreign (ForeignPtr, copyBytes)
 import Foreign.Ptr (plusPtr)
 import GHC.Exts
@@ -25,8 +24,8 @@ import Prelude
 
 -- A double buffer.
 data Buffer = Buffer
-  { primary :: {-# UNPACK #-} !(IORef (ForeignPtr Word8, Int))
-  , secondary :: {-# UNPACK #-} !(IORef (ForeignPtr Word8, Int))
+  { primary :: {-# UNPACK #-} !(TVar (ForeignPtr Word8, Int))
+  , secondary :: {-# UNPACK #-} !(TVar (ForeignPtr Word8, Int))
   , capacity :: {-# UNPACK #-} !Int
   }
 
@@ -35,8 +34,8 @@ new cap _ | cap <= 0 = error "RingBuffer.new: capacity must be positive"
 new cap f = do
   primary <- BSI.mallocByteString cap
   secondary <- BSI.mallocByteString cap
-  primaryPointer <- newIORef (primary, 0)
-  secondaryPointer <- newIORef (secondary, 0)
+  primaryPointer <- newTVarIO (primary, 0)
+  secondaryPointer <- newTVarIO (secondary, 0)
   let buffer = Buffer primaryPointer secondaryPointer cap
   f buffer
 
@@ -49,37 +48,29 @@ writePtr :: Ptr Word8 -> Int -> Buffer -> IO Int
 writePtr src len buf
   | len <= 0 = pure 0
   | otherwise = do
-      let setSize ticket = do
-            let (bufferPtr, bufferSize) = peekTicket ticket
-                available = min len (capacity buf - bufferSize)
-            (result, next) <- casIORef (primary buf) ticket (bufferPtr, bufferSize + available)
-            if result
-              then pure (bufferPtr, bufferSize, available)
-              else setSize next
-
-      primaryTicket <- readForCAS (primary buf)
-      (buffer, offset, sz) <- setSize primaryTicket
+      (buffer, offset, sz) <- atomically $ do
+        (bufferPtr, bufferSize) <- readTVar (primary buf)
+        let available = min len (capacity buf - bufferSize)
+        writeTVar (primary buf) (bufferPtr, bufferSize + available)
+        pure (bufferPtr, bufferSize, available)
 
       when (sz > 0) $ BSI.unsafeWithForeignPtr buffer $ \dst ->
         copyBytes (dst `plusPtr` offset) src sz
-
       pure (len - sz)
 
--- | SAFETY: No references to a bytestring that is returned from this function,
--- when it is called again. It is _only_ safe when it is used linearly. Under
--- the hood, every bytestring returned from this function comes from the same
--- buffer.
+-- | SAFETY: No references to a bytestring that is returned from this function
+-- should be 'live', when it is called again, that includes thunks. It is _only_
+-- safe when it is used linearly. Under the hood, every bytestring returned from
+-- this function comes from the same buffer, no copying is done.
 toByteString :: Buffer -> IO ByteString
 toByteString buf = do
-  let swapBuffers buf' ticket = do
-        (buffer, _) <- readIORef (secondary buf')
-        (result, next) <- casIORef (primary buf') ticket (buffer, 0)
-        if result
-          then pure $ peekTicket ticket
-          else swapBuffers buf' next
-  primaryTicket <- readForCAS (primary buf)
-  (secondaryPtr, secondarySize) <- swapBuffers buf primaryTicket
+  (secondaryPtr, secondarySize) <- atomically $ do
+    (primaryPtr, sz) <- readTVar (primary buf)
+    (secondaryPtr, _) <- readTVar (secondary buf)
+    writeTVar (primary buf) (secondaryPtr, 0)
+    writeTVar (secondary buf) (primaryPtr, sz)
+    pure (primaryPtr, sz)
   pure $ BSI.fromForeignPtr secondaryPtr 0 secondarySize
 
 size :: Buffer -> IO Int
-size buf = snd <$> readIORef (primary buf)
+size buf = snd <$> readTVarIO (primary buf)
