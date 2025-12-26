@@ -42,6 +42,7 @@ class ModuleConfig:
 
     module_base: str
     typeclass_name: str
+    handle_type: str
     constant_haskell_type: str
     option_argument_name: str
     option_function_name: str
@@ -68,7 +69,7 @@ class ModuleConfig:
             f"class {self.typeclass_name} c where",
             f"  type {self.result_type_name} c :: Type",
             f"  {self.option_argument_name} :: c -> {self.constant_haskell_type}",
-            f"  {self.option_function_name} :: c -> Ptr Void -> {self.result_type_adjust_argument(self.result_type_name + ' c')} -> IO CURLcode",
+            f"  {self.option_function_name} :: c -> Ptr {self.handle_type} -> {self.result_type_adjust_argument(self.result_type_name + ' c')} -> IO CURLcode",
         ]
 
         write_module(output_path, lines)
@@ -102,13 +103,13 @@ class ModuleConfig:
             f"-- | {self.ffi_config.base_name} with {spec.comment} ({ffi_safety.value})",
             f'foreign import ccall {ffi_safety.value} "{self.ffi_config.base_name}"',
             f"  {spec.name}_c",
-            "    :: Ptr Void        -- ^ CURL handle",
+            f"    :: Ptr {self.handle_type}        -- ^ CURL handle",
             f"    -> CUInt           -- ^ {self.result_param_name}",
             f"    -> {self.ffi_config.adjust_associated_type(spec.ffi_type)}           -- ^ {self.ffi_config.associated_comment}",
             "    -> IO CUInt",
             "",
             f"-- | Type-safe wrapper for {self.ffi_config.base_name} with {spec.comment}",
-            f"{spec.name} :: Ptr Void -> {self.constant_haskell_type} -> {spec.unwrap_type_name} -> IO CURLcode",
+            f"{spec.name} :: Ptr {self.handle_type} -> {self.constant_haskell_type} -> {spec.unwrap_type_name} -> IO CURLcode",
             f"{spec.name} handle ({self.constant_haskell_type} opt) {spec.unwrap_pattern('val')} =",
             f"  CURLcode <$> {spec.name}_c handle opt val",
             "",

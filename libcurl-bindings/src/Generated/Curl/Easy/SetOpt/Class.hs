@@ -12,4 +12,4 @@ import Prelude
 class CurlOption c where
   type CurlOptionArgument c :: Type
   curlOption :: c -> CURLoption
-  curlSetOpt :: c -> Ptr Void -> CurlOptionArgument c -> IO CURLcode
+  curlSetOpt :: c -> Ptr CURL -> CurlOptionArgument c -> IO CURLcode

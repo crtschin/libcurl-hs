@@ -8,6 +8,7 @@ import Data.Void (Void)
 import Foreign
 import Foreign.C
 import Generated.Curl.Curl
+import Generated.Curl.Multi
 import Prelude.Linear as L
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
@@ -17,7 +18,7 @@ data GlobalCurlHandle = GlobalCurlHandle
 
 -- | A CURL easy handle. Must be used linearly to prevent resource leaks.
 data CurlEasy = CurlEasy
-  { easyHandle :: Ptr Void
+  { easyHandle :: Ptr CURL
   , easyErrorBuffer :: CurlErrorBuffer
   }
 
@@ -28,7 +29,7 @@ instance Consumable CurlErrorBuffer where
 
 -- | A CURL easy handle. Must be used linearly to prevent resource leaks.
 data CurlMulti = CurlMulti
-  { multiHandle :: Ur (Ptr Void)
+  { multiHandle :: Ur (Ptr CURLM)
   , multiEasyHandles :: IntMap.IntMap CurlEasy
   }
 
@@ -36,7 +37,7 @@ data CurlMulti = CurlMulti
 data CurlEasyResult
   = CurlEasyResultOk
   | CurlEasyResultError CurlError
-  deriving (N.Show, N.Eq)
+  deriving (N.Eq, N.Show)
 
 instance Consumable CurlEasyResult where
   consume r = case r of
@@ -54,7 +55,7 @@ data CurlError = CurlError
   { errorCode :: N.Int
   , errorMessage :: N.String
   }
-  deriving (N.Show, N.Eq)
+  deriving (N.Eq, N.Show)
 
 instance Consumable CurlError where
   consume CurlError{..} = consume (errorCode, errorMessage)
@@ -68,14 +69,14 @@ instance Movable CurlError where
 newtype StreamOptions = StreamOptions
   { bufferSizeBytes :: Int
   }
-  deriving (Movable, Consumable, Dupable)
+  deriving (Consumable, Dupable, Movable)
 
 newtype CurlWriteFunction a = CurlWriteFunction
   { unCurlWriteFunction :: CString -> CSize -> CSize -> StablePtr a -> IO CSize
   }
 
 newtype CurlSocketFunction a = CurlSocketFunction
-  { unCurlSocketFunction :: Ptr Void -> Curl_socket_t -> CInt -> StablePtr a -> Ptr Void -> IO CInt
+  { unCurlSocketFunction :: Ptr CURL -> Curl_socket_t -> CInt -> StablePtr a -> Ptr Void -> IO CInt
   }
 
 newtype CurlHeaders = CurlHeaders

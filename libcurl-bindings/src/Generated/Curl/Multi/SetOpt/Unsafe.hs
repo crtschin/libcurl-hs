@@ -14,52 +14,52 @@ import Prelude
 -- | curl_multi_setopt with a long argument (unsafe)
 foreign import ccall unsafe "curl_multi_setopt"
   curl_multi_setopt_long_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURLM        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> CLong           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_multi_setopt with a long argument
-curl_multi_setopt_long :: Ptr Void -> CURLMoption -> CLong -> IO CURLcode
+curl_multi_setopt_long :: Ptr CURLM -> CURLMoption -> CLong -> IO CURLcode
 curl_multi_setopt_long handle (CURLMoption opt) val =
   CURLcode <$> curl_multi_setopt_long_c handle opt val
 
 -- | curl_multi_setopt with a curl_off_t argument (unsafe)
 foreign import ccall unsafe "curl_multi_setopt"
   curl_multi_setopt_off_t_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURLM        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> CLong           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_multi_setopt with a curl_off_t argument
-curl_multi_setopt_off_t :: Ptr Void -> CURLMoption -> Curl_off_t -> IO CURLcode
+curl_multi_setopt_off_t :: Ptr CURLM -> CURLMoption -> Curl_off_t -> IO CURLcode
 curl_multi_setopt_off_t handle (CURLMoption opt) (Curl_off_t val) =
   CURLcode <$> curl_multi_setopt_off_t_c handle opt val
 
 -- | curl_multi_setopt with a pointer argument (unsafe)
 foreign import ccall unsafe "curl_multi_setopt"
   curl_multi_setopt_ptr_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURLM        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> Ptr Void           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_multi_setopt with a pointer argument
-curl_multi_setopt_ptr :: Ptr Void -> CURLMoption -> Ptr Void -> IO CURLcode
+curl_multi_setopt_ptr :: Ptr CURLM -> CURLMoption -> Ptr Void -> IO CURLcode
 curl_multi_setopt_ptr handle (CURLMoption opt) val =
   CURLcode <$> curl_multi_setopt_ptr_c handle opt val
 
 -- | curl_multi_setopt with a curl_blob argument (unsafe)
 foreign import ccall unsafe "curl_multi_setopt"
   curl_multi_setopt_blob_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURLM        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> Ptr Curl_blob           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_multi_setopt with a curl_blob argument
-curl_multi_setopt_blob :: Ptr Void -> CURLMoption -> Ptr Curl_blob -> IO CURLcode
+curl_multi_setopt_blob :: Ptr CURLM -> CURLMoption -> Ptr Curl_blob -> IO CURLcode
 curl_multi_setopt_blob handle (CURLMoption opt) val =
   CURLcode <$> curl_multi_setopt_blob_c handle opt val
 

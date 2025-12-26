@@ -14,52 +14,52 @@ import Prelude
 -- | curl_easy_setopt with a long argument (safe)
 foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_long_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> CLong           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a long argument
-curl_easy_setopt_long :: Ptr Void -> CURLoption -> CLong -> IO CURLcode
+curl_easy_setopt_long :: Ptr CURL -> CURLoption -> CLong -> IO CURLcode
 curl_easy_setopt_long handle (CURLoption opt) val =
   CURLcode <$> curl_easy_setopt_long_c handle opt val
 
 -- | curl_easy_setopt with a curl_off_t argument (safe)
 foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_off_t_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> CLong           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a curl_off_t argument
-curl_easy_setopt_off_t :: Ptr Void -> CURLoption -> Curl_off_t -> IO CURLcode
+curl_easy_setopt_off_t :: Ptr CURL -> CURLoption -> Curl_off_t -> IO CURLcode
 curl_easy_setopt_off_t handle (CURLoption opt) (Curl_off_t val) =
   CURLcode <$> curl_easy_setopt_off_t_c handle opt val
 
 -- | curl_easy_setopt with a pointer argument (safe)
 foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_ptr_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> Ptr Void           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a pointer argument
-curl_easy_setopt_ptr :: Ptr Void -> CURLoption -> Ptr Void -> IO CURLcode
+curl_easy_setopt_ptr :: Ptr CURL -> CURLoption -> Ptr Void -> IO CURLcode
 curl_easy_setopt_ptr handle (CURLoption opt) val =
   CURLcode <$> curl_easy_setopt_ptr_c handle opt val
 
 -- | curl_easy_setopt with a curl_blob argument (safe)
 foreign import ccall safe "curl_easy_setopt"
   curl_easy_setopt_blob_c
-    :: Ptr Void        -- ^ CURL handle
+    :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
     -> Ptr Curl_blob           -- ^ option
     -> IO CUInt
 
 -- | Type-safe wrapper for curl_easy_setopt with a curl_blob argument
-curl_easy_setopt_blob :: Ptr Void -> CURLoption -> Ptr Curl_blob -> IO CURLcode
+curl_easy_setopt_blob :: Ptr CURL -> CURLoption -> Ptr Curl_blob -> IO CURLcode
 curl_easy_setopt_blob handle (CURLoption opt) val =
   CURLcode <$> curl_easy_setopt_blob_c handle opt val
 

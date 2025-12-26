@@ -5,49 +5,78 @@ target: x86_64-pc-linux-gnu
 hsmodule: Generated.Curl.Multi
 ctypes:
 - headers: curl/curl.h
-  cname: union @CURLMsg_data
-  hsname: CURLMsg_data
+  cname: __fd_mask
+  hsname: C__Fd_mask
 - headers: curl/curl.h
-  cname: CURLMSG
-  hsname: CURLMSG
+  cname: struct fd_set
+  hsname: Fd_set
+- headers: curl/curl.h
+  cname: fd_set
+  hsname: Fd_set
+- headers: curl/curl.h
+  cname: CURLM
+  hsname: CURLM
+- headers: curl/curl.h
+  cname: enum CURLMcode
+  hsname: CURLMcode
 - headers: curl/curl.h
   cname: CURLMcode
   hsname: CURLMcode
 - headers: curl/curl.h
-  cname: CURLMinfo_offt
-  hsname: CURLMinfo_offt
+  cname: enum CURLMSG
+  hsname: CURLMSG
 - headers: curl/curl.h
-  cname: CURLMoption
-  hsname: CURLMoption
+  cname: CURLMSG
+  hsname: CURLMSG
+- headers: curl/curl.h
+  cname: struct CURLMsg
+  hsname: CURLMsg
+- headers: curl/curl.h
+  cname: union @CURLMsg_data
+  hsname: CURLMsg_data
 - headers: curl/curl.h
   cname: CURLMsg
   hsname: CURLMsg
 - headers: curl/curl.h
-  cname: __fd_mask
-  hsname: C__Fd_mask
-- headers: curl/curl.h
-  cname: curl_multi_timer_callback
-  hsname: Curl_multi_timer_callback
-- headers: curl/curl.h
-  cname: curl_notify_callback
-  hsname: Curl_notify_callback
-- headers: curl/curl.h
-  cname: curl_push_callback
-  hsname: Curl_push_callback
-- headers: curl/curl.h
-  cname: struct curl_pushheaders
-  hsname: Curl_pushheaders
+  cname: struct curl_waitfd
+  hsname: Curl_waitfd
 - headers: curl/curl.h
   cname: curl_socket_callback
   hsname: Curl_socket_callback
 - headers: curl/curl.h
-  cname: struct curl_waitfd
-  hsname: Curl_waitfd
+  cname: curl_multi_timer_callback
+  hsname: Curl_multi_timer_callback
 - headers: curl/curl.h
-  cname: fd_set
-  hsname: Fd_set
+  cname: enum CURLMoption
+  hsname: CURLMoption
+- headers: curl/curl.h
+  cname: CURLMoption
+  hsname: CURLMoption
+- headers: curl/curl.h
+  cname: enum CURLMinfo_offt
+  hsname: CURLMinfo_offt
+- headers: curl/curl.h
+  cname: CURLMinfo_offt
+  hsname: CURLMinfo_offt
+- headers: curl/curl.h
+  cname: struct curl_pushheaders
+  hsname: Curl_pushheaders
+- headers: curl/curl.h
+  cname: curl_push_callback
+  hsname: Curl_push_callback
+- headers: curl/curl.h
+  cname: curl_notify_callback
+  hsname: Curl_notify_callback
 hstypes:
+- hsname: CURLM
+  representation: opaque
 - hsname: CURLMSG
+  representation:
+    newtype:
+      constructor: CURLMSG
+      fields:
+      - un_CURLMSG
+      ffitype: CUInt
   instances:
   - Eq
   - HasBaseForeignType
@@ -56,6 +85,12 @@ hstypes:
   - Show
   - Storable
 - hsname: CURLMcode
+  representation:
+    newtype:
+      constructor: CURLMcode
+      fields:
+      - un_CURLMcode
+      ffitype: CInt
   instances:
   - Eq
   - HasBaseForeignType
@@ -64,6 +99,12 @@ hstypes:
   - Show
   - Storable
 - hsname: CURLMinfo_offt
+  representation:
+    newtype:
+      constructor: CURLMinfo_offt
+      fields:
+      - un_CURLMinfo_offt
+      ffitype: CUInt
   instances:
   - Eq
   - HasBaseForeignType
@@ -72,6 +113,12 @@ hstypes:
   - Show
   - Storable
 - hsname: CURLMoption
+  representation:
+    newtype:
+      constructor: CURLMoption
+      fields:
+      - un_CURLMoption
+      ffitype: CUInt
   instances:
   - Eq
   - HasBaseForeignType
@@ -80,12 +127,30 @@ hstypes:
   - Show
   - Storable
 - hsname: CURLMsg
+  representation:
+    record:
+      constructor: CURLMsg
+      fields:
+      - cURLMsg_msg
+      - cURLMsg_easy_handle
+      - cURLMsg_data
   instances:
   - Storable
 - hsname: CURLMsg_data
+  representation:
+    newtype:
+      constructor: CURLMsg_data
+      fields:
+      - un_CURLMsg_data
   instances:
   - Storable
 - hsname: C__Fd_mask
+  representation:
+    newtype:
+      constructor: C__Fd_mask
+      fields:
+      - un_C__Fd_mask
+      ffitype: CLong
   instances:
   - Bits
   - Bounded
@@ -97,11 +162,18 @@ hstypes:
   - Ix
   - Num
   - Ord
+  - Prim
   - Read
   - Real
   - Show
   - Storable
 - hsname: Curl_multi_timer_callback
+  representation:
+    newtype:
+      constructor: Curl_multi_timer_callback
+      fields:
+      - un_Curl_multi_timer_callback
+      ffitype: FunPtr
   instances:
   - Eq
   - HasBaseForeignType
@@ -109,6 +181,12 @@ hstypes:
   - Show
   - Storable
 - hsname: Curl_notify_callback
+  representation:
+    newtype:
+      constructor: Curl_notify_callback
+      fields:
+      - un_Curl_notify_callback
+      ffitype: FunPtr
   instances:
   - Eq
   - HasBaseForeignType
@@ -116,6 +194,12 @@ hstypes:
   - Show
   - Storable
 - hsname: Curl_push_callback
+  representation:
+    newtype:
+      constructor: Curl_push_callback
+      fields:
+      - un_Curl_push_callback
+      ffitype: FunPtr
   instances:
   - Eq
   - HasBaseForeignType
@@ -125,6 +209,12 @@ hstypes:
 - hsname: Curl_pushheaders
   representation: opaque
 - hsname: Curl_socket_callback
+  representation:
+    newtype:
+      constructor: Curl_socket_callback
+      fields:
+      - un_Curl_socket_callback
+      ffitype: FunPtr
   instances:
   - Eq
   - HasBaseForeignType
@@ -132,11 +222,24 @@ hstypes:
   - Show
   - Storable
 - hsname: Curl_waitfd
+  representation:
+    record:
+      constructor: Curl_waitfd
+      fields:
+      - curl_waitfd_fd
+      - curl_waitfd_events
+      - curl_waitfd_revents
   instances:
   - Eq
+  - Prim
   - Show
   - Storable
 - hsname: Fd_set
+  representation:
+    record:
+      constructor: Fd_set
+      fields:
+      - fd_set___fds_bits
   instances:
   - Eq
   - Show

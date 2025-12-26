@@ -12,4 +12,4 @@ import Prelude
 class CurlInfo c where
   type CurlInfoResult c :: Type
   curlInfo :: c -> CURLINFO
-  curlGetInfo :: c -> Ptr Void -> Ptr (CurlInfoResult c) -> IO CURLcode
+  curlGetInfo :: c -> Ptr CURL -> Ptr (CurlInfoResult c) -> IO CURLcode

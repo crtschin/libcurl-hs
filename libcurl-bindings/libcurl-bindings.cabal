@@ -24,7 +24,9 @@ library
   build-depends:
     , base               >= 4.17 && < 4.22
     , c-expr-runtime     < 0.2
+    , ghc-prim < 0.13
     , hs-bindgen-runtime < 0.2
+    , primitive < 0.10
 
   -- cabal-fmt: expand src
   exposed-modules:

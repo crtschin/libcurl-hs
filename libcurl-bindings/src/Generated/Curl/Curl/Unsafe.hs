@@ -16,7 +16,7 @@ import Prelude (IO)
 $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   [ "#include <curl/curl.h>"
   , "CURLHcode hs_bindgen_e71dd5007c628c42 ("
-  , "  void *arg1,"
+  , "  CURL *arg1,"
   , "  char const *arg2,"
   , "  size_t arg3,"
   , "  unsigned int arg4,"
@@ -27,7 +27,7 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "  return curl_easy_header(arg1, arg2, arg3, arg4, arg5, arg6);"
   , "}"
   , "struct curl_header *hs_bindgen_137decc1d48adb1d ("
-  , "  void *arg1,"
+  , "  CURL *arg1,"
   , "  unsigned int arg2,"
   , "  signed int arg3,"
   , "  struct curl_header *arg4"
@@ -51,7 +51,7 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "  return curl_strnequal(arg1, arg2, arg3);"
   , "}"
   , "curl_mime *hs_bindgen_7bcc6a043dd9d9da ("
-  , "  void *arg1"
+  , "  CURL *arg1"
   , ")"
   , "{"
   , "  return curl_mime_init(arg1);"
@@ -148,7 +148,7 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "  return curl_version();"
   , "}"
   , "char *hs_bindgen_cecdfa23d28ebea4 ("
-  , "  void *arg1,"
+  , "  CURL *arg1,"
   , "  char const *arg2,"
   , "  signed int arg3"
   , ")"
@@ -163,7 +163,7 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "  return curl_escape(arg1, arg2);"
   , "}"
   , "char *hs_bindgen_e3b3e663cd396b11 ("
-  , "  void *arg1,"
+  , "  CURL *arg1,"
   , "  char const *arg2,"
   , "  signed int arg3,"
   , "  signed int *arg4"
@@ -239,12 +239,12 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "{"
   , "  return curl_getdate(arg1, arg2);"
   , "}"
-  , "void *hs_bindgen_74c38424f692ecab (void)"
+  , "CURLSH *hs_bindgen_74c38424f692ecab (void)"
   , "{"
   , "  return curl_share_init();"
   , "}"
   , "CURLSHcode hs_bindgen_237314ee80d59d94 ("
-  , "  void *arg1"
+  , "  CURLSH *arg1"
   , ")"
   , "{"
   , "  return curl_share_cleanup(arg1);"
@@ -268,14 +268,14 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "  return curl_share_strerror(arg1);"
   , "}"
   , "CURLcode hs_bindgen_fdcb17214d3edc05 ("
-  , "  void *arg1,"
+  , "  CURL *arg1,"
   , "  signed int arg2"
   , ")"
   , "{"
   , "  return curl_easy_pause(arg1, arg2);"
   , "}"
   , "CURLcode hs_bindgen_89b2b50de78c1c4c ("
-  , "  void *arg1,"
+  , "  CURL *arg1,"
   , "  char const *arg2,"
   , "  unsigned char const *arg3,"
   , "  size_t arg4,"
@@ -286,7 +286,7 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "  return curl_easy_ssls_import(arg1, arg2, arg3, arg4, arg5, arg6);"
   , "}"
   , "CURLcode hs_bindgen_60288fde4604bdd6 ("
-  , "  void *arg1,"
+  , "  CURL *arg1,"
   , "  curl_ssls_export_cb *arg2,"
   , "  void *arg3"
   , ")"
@@ -295,16 +295,24 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "}"
   ]))
 
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_header@
+foreign import ccall unsafe "hs_bindgen_e71dd5007c628c42" hs_bindgen_e71dd5007c628c42 ::
+     Ptr.Ptr CURL
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> HsBindgen.Runtime.Prelude.CSize
+  -> FC.CUInt
+  -> FC.CInt
+  -> Ptr.Ptr (Ptr.Ptr Curl_header)
+  -> IO CURLHcode
+
 {-| __C declaration:__ @curl_easy_header@
 
     __defined at:__ @header.h:58:23@
 
     __exported by:__ @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_header@
 -}
-foreign import ccall unsafe "hs_bindgen_e71dd5007c628c42" curl_easy_header ::
-     Ptr.Ptr Void
+curl_easy_header ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @easy@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @name@
@@ -317,17 +325,24 @@ foreign import ccall unsafe "hs_bindgen_e71dd5007c628c42" curl_easy_header ::
   -> Ptr.Ptr (Ptr.Ptr Curl_header)
      -- ^ __C declaration:__ @hout@
   -> IO CURLHcode
+curl_easy_header = hs_bindgen_e71dd5007c628c42
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_nextheader@
+foreign import ccall unsafe "hs_bindgen_137decc1d48adb1d" hs_bindgen_137decc1d48adb1d ::
+     Ptr.Ptr CURL
+  -> FC.CUInt
+  -> FC.CInt
+  -> Ptr.Ptr Curl_header
+  -> IO (Ptr.Ptr Curl_header)
 
 {-| __C declaration:__ @curl_easy_nextheader@
 
     __defined at:__ @header.h:65:33@
 
     __exported by:__ @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_nextheader@
 -}
-foreign import ccall unsafe "hs_bindgen_137decc1d48adb1d" curl_easy_nextheader ::
-     Ptr.Ptr Void
+curl_easy_nextheader ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @easy@
   -> FC.CUInt
      -- ^ __C declaration:__ @origin@
@@ -336,31 +351,42 @@ foreign import ccall unsafe "hs_bindgen_137decc1d48adb1d" curl_easy_nextheader :
   -> Ptr.Ptr Curl_header
      -- ^ __C declaration:__ @prev@
   -> IO (Ptr.Ptr Curl_header)
+curl_easy_nextheader = hs_bindgen_137decc1d48adb1d
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_strequal@
+foreign import ccall unsafe "hs_bindgen_520b735cbef0d33c" hs_bindgen_520b735cbef0d33c ::
+     HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO FC.CInt
 
 {-| __C declaration:__ @curl_strequal@
 
-    __defined at:__ @curl\/curl.h:2423:17@
+    __defined at:__ @curl\/curl.h:2425:17@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_strequal@
 -}
-foreign import ccall unsafe "hs_bindgen_520b735cbef0d33c" curl_strequal ::
+curl_strequal ::
      HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @s1@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @s2@
   -> IO FC.CInt
+curl_strequal = hs_bindgen_520b735cbef0d33c
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_strnequal@
+foreign import ccall unsafe "hs_bindgen_e8bc6df6920fc9c6" hs_bindgen_e8bc6df6920fc9c6 ::
+     HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> HsBindgen.Runtime.Prelude.CSize
+  -> IO FC.CInt
 
 {-| __C declaration:__ @curl_strnequal@
 
-    __defined at:__ @curl\/curl.h:2424:17@
+    __defined at:__ @curl\/curl.h:2426:17@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_strnequal@
 -}
-foreign import ccall unsafe "hs_bindgen_e8bc6df6920fc9c6" curl_strnequal ::
+curl_strnequal ::
      HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @s1@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
@@ -368,115 +394,153 @@ foreign import ccall unsafe "hs_bindgen_e8bc6df6920fc9c6" curl_strnequal ::
   -> HsBindgen.Runtime.Prelude.CSize
      -- ^ __C declaration:__ @n@
   -> IO FC.CInt
+curl_strnequal = hs_bindgen_e8bc6df6920fc9c6
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_init@
+foreign import ccall unsafe "hs_bindgen_7bcc6a043dd9d9da" hs_bindgen_7bcc6a043dd9d9da ::
+     Ptr.Ptr CURL
+  -> IO (Ptr.Ptr Curl_mime)
 
 {-| __C declaration:__ @curl_mime_init@
 
-    __defined at:__ @curl\/curl.h:2441:24@
+    __defined at:__ @curl\/curl.h:2443:24@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_init@
 -}
-foreign import ccall unsafe "hs_bindgen_7bcc6a043dd9d9da" curl_mime_init ::
-     Ptr.Ptr Void
+curl_mime_init ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @easy@
   -> IO (Ptr.Ptr Curl_mime)
+curl_mime_init = hs_bindgen_7bcc6a043dd9d9da
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_free@
+foreign import ccall unsafe "hs_bindgen_bf87fdf2e6e6f550" hs_bindgen_bf87fdf2e6e6f550 ::
+     Ptr.Ptr Curl_mime
+  -> IO ()
 
 {-| __C declaration:__ @curl_mime_free@
 
-    __defined at:__ @curl\/curl.h:2450:18@
+    __defined at:__ @curl\/curl.h:2452:18@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_free@
 -}
-foreign import ccall unsafe "hs_bindgen_bf87fdf2e6e6f550" curl_mime_free ::
+curl_mime_free ::
      Ptr.Ptr Curl_mime
      -- ^ __C declaration:__ @mime@
   -> IO ()
+curl_mime_free = hs_bindgen_bf87fdf2e6e6f550
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_addpart@
+foreign import ccall unsafe "hs_bindgen_4f618ae59e7fe26e" hs_bindgen_4f618ae59e7fe26e ::
+     Ptr.Ptr Curl_mime
+  -> IO (Ptr.Ptr Curl_mimepart)
 
 {-| __C declaration:__ @curl_mime_addpart@
 
-    __defined at:__ @curl\/curl.h:2460:28@
+    __defined at:__ @curl\/curl.h:2462:28@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_addpart@
 -}
-foreign import ccall unsafe "hs_bindgen_4f618ae59e7fe26e" curl_mime_addpart ::
+curl_mime_addpart ::
      Ptr.Ptr Curl_mime
      -- ^ __C declaration:__ @mime@
   -> IO (Ptr.Ptr Curl_mimepart)
+curl_mime_addpart = hs_bindgen_4f618ae59e7fe26e
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_name@
+foreign import ccall unsafe "hs_bindgen_58d54b6a4261573c" hs_bindgen_58d54b6a4261573c ::
+     Ptr.Ptr Curl_mimepart
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_name@
 
-    __defined at:__ @curl\/curl.h:2469:22@
+    __defined at:__ @curl\/curl.h:2471:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_name@
 -}
-foreign import ccall unsafe "hs_bindgen_58d54b6a4261573c" curl_mime_name ::
+curl_mime_name ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @name@
   -> IO CURLcode
+curl_mime_name = hs_bindgen_58d54b6a4261573c
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_filename@
+foreign import ccall unsafe "hs_bindgen_baa70c1b2b4c14d2" hs_bindgen_baa70c1b2b4c14d2 ::
+     Ptr.Ptr Curl_mimepart
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_filename@
 
-    __defined at:__ @curl\/curl.h:2478:22@
+    __defined at:__ @curl\/curl.h:2480:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_filename@
 -}
-foreign import ccall unsafe "hs_bindgen_baa70c1b2b4c14d2" curl_mime_filename ::
+curl_mime_filename ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @filename@
   -> IO CURLcode
+curl_mime_filename = hs_bindgen_baa70c1b2b4c14d2
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_type@
+foreign import ccall unsafe "hs_bindgen_c32ee7fd51e3e9ca" hs_bindgen_c32ee7fd51e3e9ca ::
+     Ptr.Ptr Curl_mimepart
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_type@
 
-    __defined at:__ @curl\/curl.h:2488:22@
+    __defined at:__ @curl\/curl.h:2490:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_type@
 -}
-foreign import ccall unsafe "hs_bindgen_c32ee7fd51e3e9ca" curl_mime_type ::
+curl_mime_type ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @mimetype@
   -> IO CURLcode
+curl_mime_type = hs_bindgen_c32ee7fd51e3e9ca
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_encoder@
+foreign import ccall unsafe "hs_bindgen_5e5bc6b193d4dcee" hs_bindgen_5e5bc6b193d4dcee ::
+     Ptr.Ptr Curl_mimepart
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_encoder@
 
-    __defined at:__ @curl\/curl.h:2497:22@
+    __defined at:__ @curl\/curl.h:2499:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_encoder@
 -}
-foreign import ccall unsafe "hs_bindgen_5e5bc6b193d4dcee" curl_mime_encoder ::
+curl_mime_encoder ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @encoding@
   -> IO CURLcode
+curl_mime_encoder = hs_bindgen_5e5bc6b193d4dcee
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_data@
+foreign import ccall unsafe "hs_bindgen_64f3df9352ec2577" hs_bindgen_64f3df9352ec2577 ::
+     Ptr.Ptr Curl_mimepart
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> HsBindgen.Runtime.Prelude.CSize
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_data@
 
-    __defined at:__ @curl\/curl.h:2507:22@
+    __defined at:__ @curl\/curl.h:2509:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_data@
 -}
-foreign import ccall unsafe "hs_bindgen_64f3df9352ec2577" curl_mime_data ::
+curl_mime_data ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
@@ -484,31 +548,45 @@ foreign import ccall unsafe "hs_bindgen_64f3df9352ec2577" curl_mime_data ::
   -> HsBindgen.Runtime.Prelude.CSize
      -- ^ __C declaration:__ @datasize@
   -> IO CURLcode
+curl_mime_data = hs_bindgen_64f3df9352ec2577
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_filedata@
+foreign import ccall unsafe "hs_bindgen_545a432f5080f93f" hs_bindgen_545a432f5080f93f ::
+     Ptr.Ptr Curl_mimepart
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_filedata@
 
-    __defined at:__ @curl\/curl.h:2517:22@
+    __defined at:__ @curl\/curl.h:2519:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_filedata@
 -}
-foreign import ccall unsafe "hs_bindgen_545a432f5080f93f" curl_mime_filedata ::
+curl_mime_filedata ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @filename@
   -> IO CURLcode
+curl_mime_filedata = hs_bindgen_545a432f5080f93f
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_data_cb@
+foreign import ccall unsafe "hs_bindgen_736f3c3242ca79f0" hs_bindgen_736f3c3242ca79f0 ::
+     Ptr.Ptr Curl_mimepart
+  -> Curl_off_t
+  -> Curl_read_callback
+  -> Curl_seek_callback
+  -> Curl_free_callback
+  -> Ptr.Ptr Void
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_data_cb@
 
-    __defined at:__ @curl\/curl.h:2527:22@
+    __defined at:__ @curl\/curl.h:2529:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_data_cb@
 -}
-foreign import ccall unsafe "hs_bindgen_736f3c3242ca79f0" curl_mime_data_cb ::
+curl_mime_data_cb ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> Curl_off_t
@@ -522,31 +600,42 @@ foreign import ccall unsafe "hs_bindgen_736f3c3242ca79f0" curl_mime_data_cb ::
   -> Ptr.Ptr Void
      -- ^ __C declaration:__ @arg@
   -> IO CURLcode
+curl_mime_data_cb = hs_bindgen_736f3c3242ca79f0
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_subparts@
+foreign import ccall unsafe "hs_bindgen_57b29c24e3e737d0" hs_bindgen_57b29c24e3e737d0 ::
+     Ptr.Ptr Curl_mimepart
+  -> Ptr.Ptr Curl_mime
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_subparts@
 
-    __defined at:__ @curl\/curl.h:2541:22@
+    __defined at:__ @curl\/curl.h:2543:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_subparts@
 -}
-foreign import ccall unsafe "hs_bindgen_57b29c24e3e737d0" curl_mime_subparts ::
+curl_mime_subparts ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> Ptr.Ptr Curl_mime
      -- ^ __C declaration:__ @subparts@
   -> IO CURLcode
+curl_mime_subparts = hs_bindgen_57b29c24e3e737d0
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_headers@
+foreign import ccall unsafe "hs_bindgen_84dbd5c4fd450512" hs_bindgen_84dbd5c4fd450512 ::
+     Ptr.Ptr Curl_mimepart
+  -> Ptr.Ptr Curl_slist
+  -> FC.CInt
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_mime_headers@
 
-    __defined at:__ @curl\/curl.h:2550:22@
+    __defined at:__ @curl\/curl.h:2552:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_mime_headers@
 -}
-foreign import ccall unsafe "hs_bindgen_84dbd5c4fd450512" curl_mime_headers ::
+curl_mime_headers ::
      Ptr.Ptr Curl_mimepart
      -- ^ __C declaration:__ @part@
   -> Ptr.Ptr Curl_slist
@@ -554,73 +643,97 @@ foreign import ccall unsafe "hs_bindgen_84dbd5c4fd450512" curl_mime_headers ::
   -> FC.CInt
      -- ^ __C declaration:__ @take_ownership@
   -> IO CURLcode
+curl_mime_headers = hs_bindgen_84dbd5c4fd450512
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_getenv@
+foreign import ccall unsafe "hs_bindgen_0ba23b832c268c14" hs_bindgen_0ba23b832c268c14 ::
+     HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO (Ptr.Ptr FC.CChar)
 
 {-| __C declaration:__ @curl_getenv@
 
-    __defined at:__ @curl\/curl.h:2678:19@
+    __defined at:__ @curl\/curl.h:2680:19@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_getenv@
 -}
-foreign import ccall unsafe "hs_bindgen_0ba23b832c268c14" curl_getenv ::
+curl_getenv ::
      HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @variable@
   -> IO (Ptr.Ptr FC.CChar)
+curl_getenv = hs_bindgen_0ba23b832c268c14
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_version@
+foreign import ccall unsafe "hs_bindgen_ea5d8873b6da24f7" hs_bindgen_ea5d8873b6da24f7 ::
+     IO (Ptr.Ptr FC.CChar)
 
 {-| __C declaration:__ @curl_version@
 
-    __defined at:__ @curl\/curl.h:2687:19@
+    __defined at:__ @curl\/curl.h:2689:19@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_version@
 -}
-foreign import ccall unsafe "hs_bindgen_ea5d8873b6da24f7" curl_version ::
-     IO (Ptr.Ptr FC.CChar)
+curl_version :: IO (Ptr.Ptr FC.CChar)
+curl_version = hs_bindgen_ea5d8873b6da24f7
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_escape@
+foreign import ccall unsafe "hs_bindgen_cecdfa23d28ebea4" hs_bindgen_cecdfa23d28ebea4 ::
+     Ptr.Ptr CURL
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> FC.CInt
+  -> IO (Ptr.Ptr FC.CChar)
 
 {-| __C declaration:__ @curl_easy_escape@
 
-    __defined at:__ @curl\/curl.h:2698:19@
+    __defined at:__ @curl\/curl.h:2700:19@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_escape@
 -}
-foreign import ccall unsafe "hs_bindgen_cecdfa23d28ebea4" curl_easy_escape ::
-     Ptr.Ptr Void
+curl_easy_escape ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @handle@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @string@
   -> FC.CInt
      -- ^ __C declaration:__ @length@
   -> IO (Ptr.Ptr FC.CChar)
+curl_easy_escape = hs_bindgen_cecdfa23d28ebea4
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_escape@
+foreign import ccall unsafe "hs_bindgen_ef689abeb83599e6" hs_bindgen_ef689abeb83599e6 ::
+     HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> FC.CInt
+  -> IO (Ptr.Ptr FC.CChar)
 
 {-| __C declaration:__ @curl_escape@
 
-    __defined at:__ @curl\/curl.h:2703:19@
+    __defined at:__ @curl\/curl.h:2705:19@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_escape@
 -}
-foreign import ccall unsafe "hs_bindgen_ef689abeb83599e6" curl_escape ::
+curl_escape ::
      HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @string@
   -> FC.CInt
      -- ^ __C declaration:__ @length@
   -> IO (Ptr.Ptr FC.CChar)
+curl_escape = hs_bindgen_ef689abeb83599e6
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_unescape@
+foreign import ccall unsafe "hs_bindgen_e3b3e663cd396b11" hs_bindgen_e3b3e663cd396b11 ::
+     Ptr.Ptr CURL
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> FC.CInt
+  -> Ptr.Ptr FC.CInt
+  -> IO (Ptr.Ptr FC.CChar)
 
 {-| __C declaration:__ @curl_easy_unescape@
 
-    __defined at:__ @curl\/curl.h:2718:19@
+    __defined at:__ @curl\/curl.h:2720:19@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_unescape@
 -}
-foreign import ccall unsafe "hs_bindgen_e3b3e663cd396b11" curl_easy_unescape ::
-     Ptr.Ptr Void
+curl_easy_unescape ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @handle@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @string@
@@ -629,57 +742,79 @@ foreign import ccall unsafe "hs_bindgen_e3b3e663cd396b11" curl_easy_unescape ::
   -> Ptr.Ptr FC.CInt
      -- ^ __C declaration:__ @outlength@
   -> IO (Ptr.Ptr FC.CChar)
+curl_easy_unescape = hs_bindgen_e3b3e663cd396b11
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_unescape@
+foreign import ccall unsafe "hs_bindgen_aad77c713a9b096c" hs_bindgen_aad77c713a9b096c ::
+     HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> FC.CInt
+  -> IO (Ptr.Ptr FC.CChar)
 
 {-| __C declaration:__ @curl_unescape@
 
-    __defined at:__ @curl\/curl.h:2724:19@
+    __defined at:__ @curl\/curl.h:2726:19@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_unescape@
 -}
-foreign import ccall unsafe "hs_bindgen_aad77c713a9b096c" curl_unescape ::
+curl_unescape ::
      HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @string@
   -> FC.CInt
      -- ^ __C declaration:__ @length@
   -> IO (Ptr.Ptr FC.CChar)
+curl_unescape = hs_bindgen_aad77c713a9b096c
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_free@
+foreign import ccall unsafe "hs_bindgen_dd1f76030f86c011" hs_bindgen_dd1f76030f86c011 ::
+     Ptr.Ptr Void
+  -> IO ()
 
 {-| __C declaration:__ @curl_free@
 
-    __defined at:__ @curl\/curl.h:2735:18@
+    __defined at:__ @curl\/curl.h:2737:18@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_free@
 -}
-foreign import ccall unsafe "hs_bindgen_dd1f76030f86c011" curl_free ::
+curl_free ::
      Ptr.Ptr Void
      -- ^ __C declaration:__ @p@
   -> IO ()
+curl_free = hs_bindgen_dd1f76030f86c011
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_init@
+foreign import ccall unsafe "hs_bindgen_78e32583a8ccfabc" hs_bindgen_78e32583a8ccfabc ::
+     FC.CLong
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_global_init@
 
-    __defined at:__ @curl\/curl.h:2749:22@
+    __defined at:__ @curl\/curl.h:2751:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_init@
 -}
-foreign import ccall unsafe "hs_bindgen_78e32583a8ccfabc" curl_global_init ::
+curl_global_init ::
      FC.CLong
      -- ^ __C declaration:__ @flags@
+  -> IO CURLcode
+curl_global_init = hs_bindgen_78e32583a8ccfabc
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_init_mem@
+foreign import ccall unsafe "hs_bindgen_1a374b543c6e0e0c" hs_bindgen_1a374b543c6e0e0c ::
+     FC.CLong
+  -> Curl_malloc_callback
+  -> Curl_free_callback
+  -> Curl_realloc_callback
+  -> Curl_strdup_callback
+  -> Curl_calloc_callback
   -> IO CURLcode
 
 {-| __C declaration:__ @curl_global_init_mem@
 
-    __defined at:__ @curl\/curl.h:2764:22@
+    __defined at:__ @curl\/curl.h:2766:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_init_mem@
 -}
-foreign import ccall unsafe "hs_bindgen_1a374b543c6e0e0c" curl_global_init_mem ::
+curl_global_init_mem ::
      FC.CLong
      -- ^ __C declaration:__ @flags@
   -> Curl_malloc_callback
@@ -693,40 +828,52 @@ foreign import ccall unsafe "hs_bindgen_1a374b543c6e0e0c" curl_global_init_mem :
   -> Curl_calloc_callback
      -- ^ __C declaration:__ @c@
   -> IO CURLcode
+curl_global_init_mem = hs_bindgen_1a374b543c6e0e0c
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_cleanup@
+foreign import ccall unsafe "hs_bindgen_2897adbd15ddb0e7" hs_bindgen_2897adbd15ddb0e7 ::
+     IO ()
 
 {-| __C declaration:__ @curl_global_cleanup@
 
-    __defined at:__ @curl\/curl.h:2779:18@
+    __defined at:__ @curl\/curl.h:2781:18@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_cleanup@
 -}
-foreign import ccall unsafe "hs_bindgen_2897adbd15ddb0e7" curl_global_cleanup ::
-     IO ()
+curl_global_cleanup :: IO ()
+curl_global_cleanup = hs_bindgen_2897adbd15ddb0e7
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_trace@
+foreign import ccall unsafe "hs_bindgen_7ce574c6d141690c" hs_bindgen_7ce574c6d141690c ::
+     HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_global_trace@
 
-    __defined at:__ @curl\/curl.h:2793:22@
+    __defined at:__ @curl\/curl.h:2795:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_trace@
 -}
-foreign import ccall unsafe "hs_bindgen_7ce574c6d141690c" curl_global_trace ::
+curl_global_trace ::
      HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @config@
   -> IO CURLcode
+curl_global_trace = hs_bindgen_7ce574c6d141690c
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_sslset@
+foreign import ccall unsafe "hs_bindgen_4a615bba92a590e8" hs_bindgen_4a615bba92a590e8 ::
+     Curl_sslbackend
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> Ptr.Ptr (Ptr.Ptr (HsBindgen.Runtime.ConstPtr.ConstPtr Curl_ssl_backend))
+  -> IO CURLsslset
 
 {-| __C declaration:__ @curl_global_sslset@
 
-    __defined at:__ @curl\/curl.h:2840:24@
+    __defined at:__ @curl\/curl.h:2842:24@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_global_sslset@
 -}
-foreign import ccall unsafe "hs_bindgen_4a615bba92a590e8" curl_global_sslset ::
+curl_global_sslset ::
      Curl_sslbackend
      -- ^ __C declaration:__ @id@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
@@ -734,135 +881,181 @@ foreign import ccall unsafe "hs_bindgen_4a615bba92a590e8" curl_global_sslset ::
   -> Ptr.Ptr (Ptr.Ptr (HsBindgen.Runtime.ConstPtr.ConstPtr Curl_ssl_backend))
      -- ^ __C declaration:__ @avail@
   -> IO CURLsslset
+curl_global_sslset = hs_bindgen_4a615bba92a590e8
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_slist_append@
+foreign import ccall unsafe "hs_bindgen_555ea9c28c4f1371" hs_bindgen_555ea9c28c4f1371 ::
+     Ptr.Ptr Curl_slist
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> IO (Ptr.Ptr Curl_slist)
 
 {-| __C declaration:__ @curl_slist_append@
 
-    __defined at:__ @curl\/curl.h:2851:32@
+    __defined at:__ @curl\/curl.h:2853:32@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_slist_append@
 -}
-foreign import ccall unsafe "hs_bindgen_555ea9c28c4f1371" curl_slist_append ::
+curl_slist_append ::
      Ptr.Ptr Curl_slist
      -- ^ __C declaration:__ @list@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @data'@
   -> IO (Ptr.Ptr Curl_slist)
+curl_slist_append = hs_bindgen_555ea9c28c4f1371
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_slist_free_all@
+foreign import ccall unsafe "hs_bindgen_b5a1c38d963a4aed" hs_bindgen_b5a1c38d963a4aed ::
+     Ptr.Ptr Curl_slist
+  -> IO ()
 
 {-| __C declaration:__ @curl_slist_free_all@
 
-    __defined at:__ @curl\/curl.h:2861:18@
+    __defined at:__ @curl\/curl.h:2863:18@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_slist_free_all@
 -}
-foreign import ccall unsafe "hs_bindgen_b5a1c38d963a4aed" curl_slist_free_all ::
+curl_slist_free_all ::
      Ptr.Ptr Curl_slist
      -- ^ __C declaration:__ @list@
   -> IO ()
+curl_slist_free_all = hs_bindgen_b5a1c38d963a4aed
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_getdate@
+foreign import ccall unsafe "hs_bindgen_c8560ccf04d3a895" hs_bindgen_c8560ccf04d3a895 ::
+     HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr HsBindgen.Runtime.Prelude.CTime
+  -> IO HsBindgen.Runtime.Prelude.CTime
 
 {-| __C declaration:__ @curl_getdate@
 
-    __defined at:__ @curl\/curl.h:2872:20@
+    __defined at:__ @curl\/curl.h:2874:20@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_getdate@
 -}
-foreign import ccall unsafe "hs_bindgen_c8560ccf04d3a895" curl_getdate ::
+curl_getdate ::
      HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @p@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr HsBindgen.Runtime.Prelude.CTime
      -- ^ __C declaration:__ @unused@
   -> IO HsBindgen.Runtime.Prelude.CTime
+curl_getdate = hs_bindgen_c8560ccf04d3a895
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_share_init@
+foreign import ccall unsafe "hs_bindgen_74c38424f692ecab" hs_bindgen_74c38424f692ecab ::
+     IO (Ptr.Ptr CURLSH)
 
 {-| __C declaration:__ @curl_share_init@
 
-    __defined at:__ @curl\/curl.h:3083:19@
+    __defined at:__ @curl\/curl.h:3085:21@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_share_init@
 -}
-foreign import ccall unsafe "hs_bindgen_74c38424f692ecab" curl_share_init ::
-     IO (Ptr.Ptr Void)
+curl_share_init :: IO (Ptr.Ptr CURLSH)
+curl_share_init = hs_bindgen_74c38424f692ecab
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_share_cleanup@
+foreign import ccall unsafe "hs_bindgen_237314ee80d59d94" hs_bindgen_237314ee80d59d94 ::
+     Ptr.Ptr CURLSH
+  -> IO CURLSHcode
 
 {-| __C declaration:__ @curl_share_cleanup@
 
-    __defined at:__ @curl\/curl.h:3086:24@
+    __defined at:__ @curl\/curl.h:3088:24@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_share_cleanup@
 -}
-foreign import ccall unsafe "hs_bindgen_237314ee80d59d94" curl_share_cleanup ::
-     Ptr.Ptr Void
+curl_share_cleanup ::
+     Ptr.Ptr CURLSH
      -- ^ __C declaration:__ @share@
   -> IO CURLSHcode
+curl_share_cleanup = hs_bindgen_237314ee80d59d94
 
-{-| __C declaration:__ @curl_version_info@
-
-    __defined at:__ @curl\/curl.h:3224:37@
-
-    __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_version_info@
--}
-foreign import ccall unsafe "hs_bindgen_ac37ccfb39e370f6" curl_version_info ::
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_version_info@
+foreign import ccall unsafe "hs_bindgen_ac37ccfb39e370f6" hs_bindgen_ac37ccfb39e370f6 ::
      CURLversion
   -> IO (Ptr.Ptr Curl_version_info_data)
 
-{-| __C declaration:__ @curl_easy_strerror@
+{-| __C declaration:__ @curl_version_info@
 
-    __defined at:__ @curl\/curl.h:3235:25@
+    __defined at:__ @curl\/curl.h:3226:37@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_strerror@
 -}
-foreign import ccall unsafe "hs_bindgen_2678dcdf79c2ba10" curl_easy_strerror ::
+curl_version_info ::
+     CURLversion
+  -> IO (Ptr.Ptr Curl_version_info_data)
+curl_version_info = hs_bindgen_ac37ccfb39e370f6
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_strerror@
+foreign import ccall unsafe "hs_bindgen_2678dcdf79c2ba10" hs_bindgen_2678dcdf79c2ba10 ::
      CURLcode
+  -> IO (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar)
+
+{-| __C declaration:__ @curl_easy_strerror@
+
+    __defined at:__ @curl\/curl.h:3237:25@
+
+    __exported by:__ @curl\/curl.h@, @curl\/curl.h@
+-}
+curl_easy_strerror ::
+     CURLcode
+  -> IO (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar)
+curl_easy_strerror = hs_bindgen_2678dcdf79c2ba10
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_share_strerror@
+foreign import ccall unsafe "hs_bindgen_d99b19e3569d21ac" hs_bindgen_d99b19e3569d21ac ::
+     CURLSHcode
   -> IO (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar)
 
 {-| __C declaration:__ @curl_share_strerror@
 
-    __defined at:__ @curl\/curl.h:3246:25@
+    __defined at:__ @curl\/curl.h:3248:25@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_share_strerror@
 -}
-foreign import ccall unsafe "hs_bindgen_d99b19e3569d21ac" curl_share_strerror ::
+curl_share_strerror ::
      CURLSHcode
   -> IO (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar)
+curl_share_strerror = hs_bindgen_d99b19e3569d21ac
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_pause@
+foreign import ccall unsafe "hs_bindgen_fdcb17214d3edc05" hs_bindgen_fdcb17214d3edc05 ::
+     Ptr.Ptr CURL
+  -> FC.CInt
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_easy_pause@
 
-    __defined at:__ @curl\/curl.h:3257:22@
+    __defined at:__ @curl\/curl.h:3259:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_pause@
 -}
-foreign import ccall unsafe "hs_bindgen_fdcb17214d3edc05" curl_easy_pause ::
-     Ptr.Ptr Void
+curl_easy_pause ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @handle@
   -> FC.CInt
      -- ^ __C declaration:__ @bitmask@
   -> IO CURLcode
+curl_easy_pause = hs_bindgen_fdcb17214d3edc05
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_ssls_import@
+foreign import ccall unsafe "hs_bindgen_89b2b50de78c1c4c" hs_bindgen_89b2b50de78c1c4c ::
+     Ptr.Ptr CURL
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CUChar
+  -> HsBindgen.Runtime.Prelude.CSize
+  -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CUChar
+  -> HsBindgen.Runtime.Prelude.CSize
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_easy_ssls_import@
 
-    __defined at:__ @curl\/curl.h:3276:22@
+    __defined at:__ @curl\/curl.h:3278:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_ssls_import@
 -}
-foreign import ccall unsafe "hs_bindgen_89b2b50de78c1c4c" curl_easy_ssls_import ::
-     Ptr.Ptr Void
+curl_easy_ssls_import ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @handle@
   -> HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar
      -- ^ __C declaration:__ @session_key@
@@ -875,20 +1068,27 @@ foreign import ccall unsafe "hs_bindgen_89b2b50de78c1c4c" curl_easy_ssls_import 
   -> HsBindgen.Runtime.Prelude.CSize
      -- ^ __C declaration:__ @sdata_len@
   -> IO CURLcode
+curl_easy_ssls_import = hs_bindgen_89b2b50de78c1c4c
+
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_ssls_export@
+foreign import ccall unsafe "hs_bindgen_60288fde4604bdd6" hs_bindgen_60288fde4604bdd6 ::
+     Ptr.Ptr CURL
+  -> Ptr.FunPtr Curl_ssls_export_cb
+  -> Ptr.Ptr Void
+  -> IO CURLcode
 
 {-| __C declaration:__ @curl_easy_ssls_export@
 
-    __defined at:__ @curl\/curl.h:3307:22@
+    __defined at:__ @curl\/curl.h:3309:22@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
-
-    __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Curl_Unsafe_curl_easy_ssls_export@
 -}
-foreign import ccall unsafe "hs_bindgen_60288fde4604bdd6" curl_easy_ssls_export ::
-     Ptr.Ptr Void
+curl_easy_ssls_export ::
+     Ptr.Ptr CURL
      -- ^ __C declaration:__ @handle@
   -> Ptr.FunPtr Curl_ssls_export_cb
      -- ^ __C declaration:__ @export_fn@
   -> Ptr.Ptr Void
      -- ^ __C declaration:__ @userptr@
   -> IO CURLcode
+curl_easy_ssls_export = hs_bindgen_60288fde4604bdd6

@@ -9,6 +9,13 @@ ctypes:
   hsname: Curl_blob
 hstypes:
 - hsname: Curl_blob
+  representation:
+    record:
+      constructor: Curl_blob
+      fields:
+      - curl_blob_data
+      - curl_blob_len
+      - curl_blob_flags
   instances:
   - Eq
   - Show

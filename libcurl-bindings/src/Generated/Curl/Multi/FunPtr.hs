@@ -18,34 +18,34 @@ import Prelude (IO)
 
 $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   [ "#include <curl/curl.h>"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_init_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_init */"
   , "__attribute__ ((const))"
-  , "void *(*hs_bindgen_dd3901b64517e4d5 (void)) (void)"
+  , "CURLM *(*hs_bindgen_588e23ddafe2460c (void)) (void)"
   , "{"
   , "  return &curl_multi_init;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_add_handle_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_add_handle */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_b8d20e0795b4ca7b (void)) ("
-  , "  void *arg1,"
-  , "  void *arg2"
+  , "CURLMcode (*hs_bindgen_567745e4dea6efd5 (void)) ("
+  , "  CURLM *arg1,"
+  , "  CURL *arg2"
   , ")"
   , "{"
   , "  return &curl_multi_add_handle;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_remove_handle_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_remove_handle */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_e51c12e590e818fc (void)) ("
-  , "  void *arg1,"
-  , "  void *arg2"
+  , "CURLMcode (*hs_bindgen_dfd62d16f78ccf45 (void)) ("
+  , "  CURLM *arg1,"
+  , "  CURL *arg2"
   , ")"
   , "{"
   , "  return &curl_multi_remove_handle;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_fdset_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_fdset */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_70087d1f29dd3e81 (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_cac6cccb3012d05b (void)) ("
+  , "  CURLM *arg1,"
   , "  fd_set *arg2,"
   , "  fd_set *arg3,"
   , "  fd_set *arg4,"
@@ -54,10 +54,10 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "{"
   , "  return &curl_multi_fdset;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wait_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wait */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_285208b865fffa5b (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_81aa976f67244fb1 (void)) ("
+  , "  CURLM *arg1,"
   , "  struct curl_waitfd arg2[],"
   , "  unsigned int arg3,"
   , "  signed int arg4,"
@@ -66,10 +66,10 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "{"
   , "  return &curl_multi_wait;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_poll_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_poll */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_1bda14caefa11900 (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_03230a33811d6e16 (void)) ("
+  , "  CURLM *arg1,"
   , "  struct curl_waitfd arg2[],"
   , "  unsigned int arg3,"
   , "  signed int arg4,"
@@ -78,52 +78,52 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "{"
   , "  return &curl_multi_poll;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wakeup_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wakeup */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_ee10d8c84be7b3fe (void)) ("
-  , "  void *arg1"
+  , "CURLMcode (*hs_bindgen_e4d29370cd7115c9 (void)) ("
+  , "  CURLM *arg1"
   , ")"
   , "{"
   , "  return &curl_multi_wakeup;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_perform_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_perform */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_14a125b52af81132 (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_178858de89968f67 (void)) ("
+  , "  CURLM *arg1,"
   , "  signed int *arg2"
   , ")"
   , "{"
   , "  return &curl_multi_perform;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_cleanup_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_cleanup */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_d47f54d358bced02 (void)) ("
-  , "  void *arg1"
+  , "CURLMcode (*hs_bindgen_f6ea2a6a477969c1 (void)) ("
+  , "  CURLM *arg1"
   , ")"
   , "{"
   , "  return &curl_multi_cleanup;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_info_read_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_info_read */"
   , "__attribute__ ((const))"
-  , "CURLMsg *(*hs_bindgen_15dd37547a2535a0 (void)) ("
-  , "  void *arg1,"
+  , "CURLMsg *(*hs_bindgen_7e1d39f50dd17930 (void)) ("
+  , "  CURLM *arg1,"
   , "  signed int *arg2"
   , ")"
   , "{"
   , "  return &curl_multi_info_read;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_strerror_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_strerror */"
   , "__attribute__ ((const))"
-  , "char const *(*hs_bindgen_710468d35f607127 (void)) ("
+  , "char const *(*hs_bindgen_00b8d1cd60727e44 (void)) ("
   , "  CURLMcode arg1"
   , ")"
   , "{"
   , "  return &curl_multi_strerror;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_socket_action_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_socket_action */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_155ec4260acf0c91 (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_f505e02a56c56465 (void)) ("
+  , "  CURLM *arg1,"
   , "  curl_socket_t arg2,"
   , "  signed int arg3,"
   , "  signed int *arg4"
@@ -131,65 +131,65 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "{"
   , "  return &curl_multi_socket_action;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_timeout_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_timeout */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_e989d72cd06fe700 (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_62e9e3abaafeb437 (void)) ("
+  , "  CURLM *arg1,"
   , "  signed long *arg2"
   , ")"
   , "{"
   , "  return &curl_multi_timeout;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_assign_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_assign */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_eada4e2798b72d8c (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_6d520cab14803e56 (void)) ("
+  , "  CURLM *arg1,"
   , "  curl_socket_t arg2,"
   , "  void *arg3"
   , ")"
   , "{"
   , "  return &curl_multi_assign;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_handles_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_handles */"
   , "__attribute__ ((const))"
-  , "void **(*hs_bindgen_5585760bc5a80f7a (void)) ("
-  , "  void *arg1"
+  , "CURL **(*hs_bindgen_7e37fafb51c94c65 (void)) ("
+  , "  CURLM *arg1"
   , ")"
   , "{"
   , "  return &curl_multi_get_handles;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_offt_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_offt */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_a04013fffe387b21 (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_228ce3b7b66e47a3 (void)) ("
+  , "  CURLM *arg1,"
   , "  CURLMinfo_offt arg2,"
   , "  curl_off_t *arg3"
   , ")"
   , "{"
   , "  return &curl_multi_get_offt;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_bynum_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_bynum */"
   , "__attribute__ ((const))"
-  , "char *(*hs_bindgen_78f0278359f0ba83 (void)) ("
+  , "char *(*hs_bindgen_284d41b4ca90f30e (void)) ("
   , "  struct curl_pushheaders *arg1,"
   , "  size_t arg2"
   , ")"
   , "{"
   , "  return &curl_pushheader_bynum;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_byname_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_byname */"
   , "__attribute__ ((const))"
-  , "char *(*hs_bindgen_b5949b3d7874a6ec (void)) ("
+  , "char *(*hs_bindgen_abb1b41f348671c4 (void)) ("
   , "  struct curl_pushheaders *arg1,"
   , "  char const *arg2"
   , ")"
   , "{"
   , "  return &curl_pushheader_byname;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_waitfds_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_waitfds */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_f396ffd54bc568cc (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_5163188510dad346 (void)) ("
+  , "  CURLM *arg1,"
   , "  struct curl_waitfd *arg2,"
   , "  unsigned int arg3,"
   , "  unsigned int *arg4"
@@ -197,19 +197,19 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "{"
   , "  return &curl_multi_waitfds;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_disable_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_disable */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_bb641f0ca3cd3686 (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_8a386f6b66c7aaba (void)) ("
+  , "  CURLM *arg1,"
   , "  unsigned int arg2"
   , ")"
   , "{"
   , "  return &curl_multi_notify_disable;"
   , "}"
-  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_enable_ptr */"
+  , "/* org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_enable */"
   , "__attribute__ ((const))"
-  , "CURLMcode (*hs_bindgen_92fab89caae2237c (void)) ("
-  , "  void *arg1,"
+  , "CURLMcode (*hs_bindgen_b3a9c21c8b4178ba (void)) ("
+  , "  CURLM *arg1,"
   , "  unsigned int arg2"
   , ")"
   , "{"
@@ -217,338 +217,317 @@ $(HsBindgen.Runtime.Prelude.addCSource (HsBindgen.Runtime.Prelude.unlines
   , "}"
   ]))
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_init_ptr@
-foreign import ccall unsafe "hs_bindgen_dd3901b64517e4d5" hs_bindgen_dd3901b64517e4d5 ::
-     IO (Ptr.FunPtr (IO (Ptr.Ptr Void)))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_init@
+foreign import ccall unsafe "hs_bindgen_588e23ddafe2460c" hs_bindgen_588e23ddafe2460c ::
+     IO (Ptr.FunPtr (IO (Ptr.Ptr CURLM)))
 
-{-# NOINLINE curl_multi_init_ptr #-}
-
+{-# NOINLINE curl_multi_init #-}
 {-| __C declaration:__ @curl_multi_init@
 
-    __defined at:__ @multi.h:126:19@
+    __defined at:__ @multi.h:127:20@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_init_ptr :: Ptr.FunPtr (IO (Ptr.Ptr Void))
-curl_multi_init_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_dd3901b64517e4d5
+curl_multi_init :: Ptr.FunPtr (IO (Ptr.Ptr CURLM))
+curl_multi_init =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_588e23ddafe2460c
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_add_handle_ptr@
-foreign import ccall unsafe "hs_bindgen_b8d20e0795b4ca7b" hs_bindgen_b8d20e0795b4ca7b ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_add_handle@
+foreign import ccall unsafe "hs_bindgen_567745e4dea6efd5" hs_bindgen_567745e4dea6efd5 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_add_handle_ptr #-}
-
+{-# NOINLINE curl_multi_add_handle #-}
 {-| __C declaration:__ @curl_multi_add_handle@
 
-    __defined at:__ @multi.h:135:23@
+    __defined at:__ @multi.h:136:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_add_handle_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO CURLMcode)
-curl_multi_add_handle_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_b8d20e0795b4ca7b
+curl_multi_add_handle :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> IO CURLMcode)
+curl_multi_add_handle =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_567745e4dea6efd5
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_remove_handle_ptr@
-foreign import ccall unsafe "hs_bindgen_e51c12e590e818fc" hs_bindgen_e51c12e590e818fc ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_remove_handle@
+foreign import ccall unsafe "hs_bindgen_dfd62d16f78ccf45" hs_bindgen_dfd62d16f78ccf45 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_remove_handle_ptr #-}
-
+{-# NOINLINE curl_multi_remove_handle #-}
 {-| __C declaration:__ @curl_multi_remove_handle@
 
-    __defined at:__ @multi.h:145:23@
+    __defined at:__ @multi.h:146:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_remove_handle_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO CURLMcode)
-curl_multi_remove_handle_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_e51c12e590e818fc
+curl_multi_remove_handle :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> IO CURLMcode)
+curl_multi_remove_handle =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_dfd62d16f78ccf45
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_fdset_ptr@
-foreign import ccall unsafe "hs_bindgen_70087d1f29dd3e81" hs_bindgen_70087d1f29dd3e81 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_fdset@
+foreign import ccall unsafe "hs_bindgen_cac6cccb3012d05b" hs_bindgen_cac6cccb3012d05b ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_fdset_ptr #-}
-
+{-# NOINLINE curl_multi_fdset #-}
 {-| __C declaration:__ @curl_multi_fdset@
 
-    __defined at:__ @multi.h:157:23@
+    __defined at:__ @multi.h:158:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_fdset_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
-curl_multi_fdset_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_70087d1f29dd3e81
+curl_multi_fdset :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr Fd_set) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
+curl_multi_fdset =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_cac6cccb3012d05b
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wait_ptr@
-foreign import ccall unsafe "hs_bindgen_285208b865fffa5b" hs_bindgen_285208b865fffa5b ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wait@
+foreign import ccall unsafe "hs_bindgen_81aa976f67244fb1" hs_bindgen_81aa976f67244fb1 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_wait_ptr #-}
-
+{-# NOINLINE curl_multi_wait #-}
 {-| __C declaration:__ @curl_multi_wait@
 
-    __defined at:__ @multi.h:171:23@
+    __defined at:__ @multi.h:172:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_wait_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
-curl_multi_wait_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_285208b865fffa5b
+curl_multi_wait :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
+curl_multi_wait =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_81aa976f67244fb1
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_poll_ptr@
-foreign import ccall unsafe "hs_bindgen_1bda14caefa11900" hs_bindgen_1bda14caefa11900 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_poll@
+foreign import ccall unsafe "hs_bindgen_03230a33811d6e16" hs_bindgen_03230a33811d6e16 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_poll_ptr #-}
-
+{-# NOINLINE curl_multi_poll #-}
 {-| __C declaration:__ @curl_multi_poll@
 
-    __defined at:__ @multi.h:185:23@
+    __defined at:__ @multi.h:186:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_poll_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
-curl_multi_poll_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_1bda14caefa11900
+curl_multi_poll :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (HsBindgen.Runtime.IncompleteArray.IncompleteArray Curl_waitfd) -> FC.CUInt -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
+curl_multi_poll =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_03230a33811d6e16
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wakeup_ptr@
-foreign import ccall unsafe "hs_bindgen_ee10d8c84be7b3fe" hs_bindgen_ee10d8c84be7b3fe ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_wakeup@
+foreign import ccall unsafe "hs_bindgen_e4d29370cd7115c9" hs_bindgen_e4d29370cd7115c9 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_wakeup_ptr #-}
-
+{-# NOINLINE curl_multi_wakeup #-}
 {-| __C declaration:__ @curl_multi_wakeup@
 
-    __defined at:__ @multi.h:198:23@
+    __defined at:__ @multi.h:199:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_wakeup_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> IO CURLMcode)
-curl_multi_wakeup_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_ee10d8c84be7b3fe
+curl_multi_wakeup :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> IO CURLMcode)
+curl_multi_wakeup =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_e4d29370cd7115c9
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_perform_ptr@
-foreign import ccall unsafe "hs_bindgen_14a125b52af81132" hs_bindgen_14a125b52af81132 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_perform@
+foreign import ccall unsafe "hs_bindgen_178858de89968f67" hs_bindgen_178858de89968f67 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_perform_ptr #-}
-
+{-# NOINLINE curl_multi_perform #-}
 {-| __C declaration:__ @curl_multi_perform@
 
-    __defined at:__ @multi.h:216:23@
+    __defined at:__ @multi.h:217:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_perform_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
-curl_multi_perform_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_14a125b52af81132
+curl_multi_perform :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
+curl_multi_perform =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_178858de89968f67
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_cleanup_ptr@
-foreign import ccall unsafe "hs_bindgen_d47f54d358bced02" hs_bindgen_d47f54d358bced02 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_cleanup@
+foreign import ccall unsafe "hs_bindgen_f6ea2a6a477969c1" hs_bindgen_f6ea2a6a477969c1 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_cleanup_ptr #-}
-
+{-# NOINLINE curl_multi_cleanup #-}
 {-| __C declaration:__ @curl_multi_cleanup@
 
-    __defined at:__ @multi.h:229:23@
+    __defined at:__ @multi.h:230:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_cleanup_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> IO CURLMcode)
-curl_multi_cleanup_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_d47f54d358bced02
+curl_multi_cleanup :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> IO CURLMcode)
+curl_multi_cleanup =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_f6ea2a6a477969c1
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_info_read_ptr@
-foreign import ccall unsafe "hs_bindgen_15dd37547a2535a0" hs_bindgen_15dd37547a2535a0 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr FC.CInt) -> IO (Ptr.Ptr CURLMsg)))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_info_read@
+foreign import ccall unsafe "hs_bindgen_7e1d39f50dd17930" hs_bindgen_7e1d39f50dd17930 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr FC.CInt) -> IO (Ptr.Ptr CURLMsg)))
 
-{-# NOINLINE curl_multi_info_read_ptr #-}
-
+{-# NOINLINE curl_multi_info_read #-}
 {-| __C declaration:__ @curl_multi_info_read@
 
-    __defined at:__ @multi.h:259:22@
+    __defined at:__ @multi.h:260:22@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_info_read_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr FC.CInt) -> IO (Ptr.Ptr CURLMsg))
-curl_multi_info_read_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_15dd37547a2535a0
+curl_multi_info_read :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr FC.CInt) -> IO (Ptr.Ptr CURLMsg))
+curl_multi_info_read =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_7e1d39f50dd17930
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_strerror_ptr@
-foreign import ccall unsafe "hs_bindgen_710468d35f607127" hs_bindgen_710468d35f607127 ::
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_strerror@
+foreign import ccall unsafe "hs_bindgen_00b8d1cd60727e44" hs_bindgen_00b8d1cd60727e44 ::
      IO (Ptr.FunPtr (CURLMcode -> IO (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar)))
 
-{-# NOINLINE curl_multi_strerror_ptr #-}
-
+{-# NOINLINE curl_multi_strerror #-}
 {-| __C declaration:__ @curl_multi_strerror@
 
-    __defined at:__ @multi.h:271:25@
+    __defined at:__ @multi.h:272:25@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_strerror_ptr :: Ptr.FunPtr (CURLMcode -> IO (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar))
-curl_multi_strerror_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_710468d35f607127
+curl_multi_strerror :: Ptr.FunPtr (CURLMcode -> IO (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar))
+curl_multi_strerror =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_00b8d1cd60727e44
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_socket_action_ptr@
-foreign import ccall unsafe "hs_bindgen_155ec4260acf0c91" hs_bindgen_155ec4260acf0c91 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_socket_action@
+foreign import ccall unsafe "hs_bindgen_f505e02a56c56465" hs_bindgen_f505e02a56c56465 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_socket_action_ptr #-}
-
+{-# NOINLINE curl_multi_socket_action #-}
 {-| __C declaration:__ @curl_multi_socket_action@
 
-    __defined at:__ @multi.h:319:23@
+    __defined at:__ @multi.h:320:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_socket_action_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
-curl_multi_socket_action_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_155ec4260acf0c91
+curl_multi_socket_action :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr FC.CInt) -> IO CURLMcode)
+curl_multi_socket_action =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_f505e02a56c56465
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_timeout_ptr@
-foreign import ccall unsafe "hs_bindgen_e989d72cd06fe700" hs_bindgen_e989d72cd06fe700 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr FC.CLong) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_timeout@
+foreign import ccall unsafe "hs_bindgen_62e9e3abaafeb437" hs_bindgen_62e9e3abaafeb437 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr FC.CLong) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_timeout_ptr #-}
-
+{-# NOINLINE curl_multi_timeout #-}
 {-| __C declaration:__ @curl_multi_timeout@
 
-    __defined at:__ @multi.h:343:23@
+    __defined at:__ @multi.h:344:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_timeout_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr FC.CLong) -> IO CURLMcode)
-curl_multi_timeout_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_e989d72cd06fe700
+curl_multi_timeout :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr FC.CLong) -> IO CURLMcode)
+curl_multi_timeout =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_62e9e3abaafeb437
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_assign_ptr@
-foreign import ccall unsafe "hs_bindgen_eada4e2798b72d8c" hs_bindgen_eada4e2798b72d8c ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> Generated.Curl.Curl.Curl_socket_t -> (Ptr.Ptr Void) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_assign@
+foreign import ccall unsafe "hs_bindgen_6d520cab14803e56" hs_bindgen_6d520cab14803e56 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> Generated.Curl.Curl.Curl_socket_t -> (Ptr.Ptr Void) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_assign_ptr #-}
-
+{-# NOINLINE curl_multi_assign #-}
 {-| __C declaration:__ @curl_multi_assign@
 
-    __defined at:__ @multi.h:441:23@
+    __defined at:__ @multi.h:442:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_assign_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> Generated.Curl.Curl.Curl_socket_t -> (Ptr.Ptr Void) -> IO CURLMcode)
-curl_multi_assign_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_eada4e2798b72d8c
+curl_multi_assign :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> Generated.Curl.Curl.Curl_socket_t -> (Ptr.Ptr Void) -> IO CURLMcode)
+curl_multi_assign =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_6d520cab14803e56
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_handles_ptr@
-foreign import ccall unsafe "hs_bindgen_5585760bc5a80f7a" hs_bindgen_5585760bc5a80f7a ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> IO (Ptr.Ptr (Ptr.Ptr Void))))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_handles@
+foreign import ccall unsafe "hs_bindgen_7e37fafb51c94c65" hs_bindgen_7e37fafb51c94c65 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> IO (Ptr.Ptr (Ptr.Ptr Generated.Curl.Curl.CURL))))
 
-{-# NOINLINE curl_multi_get_handles_ptr #-}
-
+{-# NOINLINE curl_multi_get_handles #-}
 {-| __C declaration:__ @curl_multi_get_handles@
 
-    __defined at:__ @multi.h:454:20@
+    __defined at:__ @multi.h:455:20@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_get_handles_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> IO (Ptr.Ptr (Ptr.Ptr Void)))
-curl_multi_get_handles_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_5585760bc5a80f7a
+curl_multi_get_handles :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> IO (Ptr.Ptr (Ptr.Ptr Generated.Curl.Curl.CURL)))
+curl_multi_get_handles =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_7e37fafb51c94c65
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_offt_ptr@
-foreign import ccall unsafe "hs_bindgen_a04013fffe387b21" hs_bindgen_a04013fffe387b21 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> CURLMinfo_offt -> (Ptr.Ptr Generated.Curl.Curl.Curl_off_t) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_get_offt@
+foreign import ccall unsafe "hs_bindgen_228ce3b7b66e47a3" hs_bindgen_228ce3b7b66e47a3 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> CURLMinfo_offt -> (Ptr.Ptr Generated.Curl.Curl.Curl_off_t) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_get_offt_ptr #-}
-
+{-# NOINLINE curl_multi_get_offt #-}
 {-| __C declaration:__ @curl_multi_get_offt@
 
-    __defined at:__ @multi.h:484:23@
+    __defined at:__ @multi.h:485:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_get_offt_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> CURLMinfo_offt -> (Ptr.Ptr Generated.Curl.Curl.Curl_off_t) -> IO CURLMcode)
-curl_multi_get_offt_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_a04013fffe387b21
+curl_multi_get_offt :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> CURLMinfo_offt -> (Ptr.Ptr Generated.Curl.Curl.Curl_off_t) -> IO CURLMcode)
+curl_multi_get_offt =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_228ce3b7b66e47a3
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_bynum_ptr@
-foreign import ccall unsafe "hs_bindgen_78f0278359f0ba83" hs_bindgen_78f0278359f0ba83 ::
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_bynum@
+foreign import ccall unsafe "hs_bindgen_284d41b4ca90f30e" hs_bindgen_284d41b4ca90f30e ::
      IO (Ptr.FunPtr ((Ptr.Ptr Curl_pushheaders) -> HsBindgen.Runtime.Prelude.CSize -> IO (Ptr.Ptr FC.CChar)))
 
-{-# NOINLINE curl_pushheader_bynum_ptr #-}
-
+{-# NOINLINE curl_pushheader_bynum #-}
 {-| __C declaration:__ @curl_pushheader_bynum@
 
-    __defined at:__ @multi.h:503:19@
+    __defined at:__ @multi.h:504:19@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_pushheader_bynum_ptr :: Ptr.FunPtr ((Ptr.Ptr Curl_pushheaders) -> HsBindgen.Runtime.Prelude.CSize -> IO (Ptr.Ptr FC.CChar))
-curl_pushheader_bynum_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_78f0278359f0ba83
+curl_pushheader_bynum :: Ptr.FunPtr ((Ptr.Ptr Curl_pushheaders) -> HsBindgen.Runtime.Prelude.CSize -> IO (Ptr.Ptr FC.CChar))
+curl_pushheader_bynum =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_284d41b4ca90f30e
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_byname_ptr@
-foreign import ccall unsafe "hs_bindgen_b5949b3d7874a6ec" hs_bindgen_b5949b3d7874a6ec ::
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_pushheader_byname@
+foreign import ccall unsafe "hs_bindgen_abb1b41f348671c4" hs_bindgen_abb1b41f348671c4 ::
      IO (Ptr.FunPtr ((Ptr.Ptr Curl_pushheaders) -> (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar) -> IO (Ptr.Ptr FC.CChar)))
 
-{-# NOINLINE curl_pushheader_byname_ptr #-}
-
+{-# NOINLINE curl_pushheader_byname #-}
 {-| __C declaration:__ @curl_pushheader_byname@
 
-    __defined at:__ @multi.h:505:19@
+    __defined at:__ @multi.h:506:19@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_pushheader_byname_ptr :: Ptr.FunPtr ((Ptr.Ptr Curl_pushheaders) -> (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar) -> IO (Ptr.Ptr FC.CChar))
-curl_pushheader_byname_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_b5949b3d7874a6ec
+curl_pushheader_byname :: Ptr.FunPtr ((Ptr.Ptr Curl_pushheaders) -> (HsBindgen.Runtime.ConstPtr.ConstPtr FC.CChar) -> IO (Ptr.Ptr FC.CChar))
+curl_pushheader_byname =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_abb1b41f348671c4
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_waitfds_ptr@
-foreign import ccall unsafe "hs_bindgen_f396ffd54bc568cc" hs_bindgen_f396ffd54bc568cc ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Curl_waitfd) -> FC.CUInt -> (Ptr.Ptr FC.CUInt) -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_waitfds@
+foreign import ccall unsafe "hs_bindgen_5163188510dad346" hs_bindgen_5163188510dad346 ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Curl_waitfd) -> FC.CUInt -> (Ptr.Ptr FC.CUInt) -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_waitfds_ptr #-}
-
+{-# NOINLINE curl_multi_waitfds #-}
 {-| __C declaration:__ @curl_multi_waitfds@
 
-    __defined at:__ @multi.h:523:23@
+    __defined at:__ @multi.h:524:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_waitfds_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> (Ptr.Ptr Curl_waitfd) -> FC.CUInt -> (Ptr.Ptr FC.CUInt) -> IO CURLMcode)
-curl_multi_waitfds_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_f396ffd54bc568cc
+curl_multi_waitfds :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> (Ptr.Ptr Curl_waitfd) -> FC.CUInt -> (Ptr.Ptr FC.CUInt) -> IO CURLMcode)
+curl_multi_waitfds =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_5163188510dad346
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_disable_ptr@
-foreign import ccall unsafe "hs_bindgen_bb641f0ca3cd3686" hs_bindgen_bb641f0ca3cd3686 ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> FC.CUInt -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_disable@
+foreign import ccall unsafe "hs_bindgen_8a386f6b66c7aaba" hs_bindgen_8a386f6b66c7aaba ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> FC.CUInt -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_notify_disable_ptr #-}
-
+{-# NOINLINE curl_multi_notify_disable #-}
 {-| __C declaration:__ @curl_multi_notify_disable@
 
-    __defined at:__ @multi.h:542:23@
+    __defined at:__ @multi.h:543:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_notify_disable_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> FC.CUInt -> IO CURLMcode)
-curl_multi_notify_disable_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_bb641f0ca3cd3686
+curl_multi_notify_disable :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> FC.CUInt -> IO CURLMcode)
+curl_multi_notify_disable =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_8a386f6b66c7aaba
 
--- | __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_enable_ptr@
-foreign import ccall unsafe "hs_bindgen_92fab89caae2237c" hs_bindgen_92fab89caae2237c ::
-     IO (Ptr.FunPtr ((Ptr.Ptr Void) -> FC.CUInt -> IO CURLMcode))
+-- __unique:__ @org_libcurlbindgen_curl_Generated.Curl.Multi_get_curl_multi_notify_enable@
+foreign import ccall unsafe "hs_bindgen_b3a9c21c8b4178ba" hs_bindgen_b3a9c21c8b4178ba ::
+     IO (Ptr.FunPtr ((Ptr.Ptr CURLM) -> FC.CUInt -> IO CURLMcode))
 
-{-# NOINLINE curl_multi_notify_enable_ptr #-}
-
+{-# NOINLINE curl_multi_notify_enable #-}
 {-| __C declaration:__ @curl_multi_notify_enable@
 
-    __defined at:__ @multi.h:545:23@
+    __defined at:__ @multi.h:546:23@
 
     __exported by:__ @curl\/curl.h@
 -}
-curl_multi_notify_enable_ptr :: Ptr.FunPtr ((Ptr.Ptr Void) -> FC.CUInt -> IO CURLMcode)
-curl_multi_notify_enable_ptr =
-  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_92fab89caae2237c
+curl_multi_notify_enable :: Ptr.FunPtr ((Ptr.Ptr CURLM) -> FC.CUInt -> IO CURLMcode)
+curl_multi_notify_enable =
+  GHC.IO.Unsafe.unsafePerformIO hs_bindgen_b3a9c21c8b4178ba

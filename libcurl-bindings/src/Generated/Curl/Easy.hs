@@ -41,7 +41,7 @@ cURL_BLOB_COPY = (1 :: FC.CInt)
 cURL_BLOB_NOCOPY :: FC.CInt
 cURL_BLOB_NOCOPY = (0 :: FC.CInt)
 
-{-| __C declaration:__ @curl_blob@
+{-| __C declaration:__ @struct curl_blob@
 
     __defined at:__ @easy.h:34:8@
 

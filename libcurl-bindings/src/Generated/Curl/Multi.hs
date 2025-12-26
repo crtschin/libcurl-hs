@@ -14,6 +14,7 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE UnboxedTuples #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 module Generated.Curl.Multi where
@@ -23,6 +24,7 @@ import qualified Data.Array.Byte
 import qualified Data.Bits as Bits
 import qualified Data.Ix as Ix
 import qualified Data.List.NonEmpty
+import qualified Data.Primitive.Types
 import qualified Data.Proxy
 import qualified Foreign as F
 import qualified Foreign.C as FC
@@ -40,6 +42,7 @@ import qualified HsBindgen.Runtime.SizedByteArray
 import qualified Text.Read
 import Data.Bits (FiniteBits)
 import Data.Void (Void)
+import GHC.Prim ((*#), (+#))
 import HsBindgen.Runtime.TypeEquality (TyEq)
 import Prelude ((<*>), (>>), Bounded, Enum, Eq, IO, Int, Integral, Num, Ord, Read, Real, Show, pure, showsPrec)
 
@@ -53,7 +56,7 @@ newtype C__Fd_mask = C__Fd_mask
   { un_C__Fd_mask :: FC.CLong
   }
   deriving stock (Eq, Ord, Read, Show)
-  deriving newtype (F.Storable, HsBindgen.Runtime.HasBaseForeignType.HasBaseForeignType, Bits.Bits, Bounded, Enum, FiniteBits, Integral, Ix.Ix, Num, Real)
+  deriving newtype (F.Storable, HsBindgen.Runtime.HasBaseForeignType.HasBaseForeignType, Data.Primitive.Types.Prim, Bits.Bits, Bounded, Enum, FiniteBits, Integral, Ix.Ix, Num, Real)
 
 instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType C__Fd_mask) "un_C__Fd_mask")
          ) => GHC.Records.HasField "un_C__Fd_mask" (Ptr.Ptr C__Fd_mask) (Ptr.Ptr ty) where
@@ -67,7 +70,7 @@ instance HsBindgen.Runtime.HasCField.HasCField C__Fd_mask "un_C__Fd_mask" where
 
   offset# = \_ -> \_ -> 0
 
-{-| __C declaration:__ @fd_set@
+{-| __C declaration:__ @struct fd_set@
 
     __defined at:__ @sys\/select.h:59:9@
 
@@ -117,16 +120,24 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Fd_set) "fd_set___fd
 
 {-| __C declaration:__ @CURL_SOCKET_BAD@
 
-    __defined at:__ @curl\/curl.h:143:9@
+    __defined at:__ @curl\/curl.h:145:9@
 
     __exported by:__ @curl\/curl.h@, @curl\/curl.h@
 -}
 cURL_SOCKET_BAD :: FC.CInt
 cURL_SOCKET_BAD = C.negate (1 :: FC.CInt)
 
-{-| __C declaration:__ @CURLMcode@
+{-| __C declaration:__ @CURLM@
 
-    __defined at:__ @multi.h:58:9@
+    __defined at:__ @multi.h:57:14@
+
+    __exported by:__ @curl\/curl.h@
+-}
+data CURLM
+
+{-| __C declaration:__ @enum CURLMcode@
+
+    __defined at:__ @multi.h:59:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -153,6 +164,8 @@ instance F.Storable CURLMcode where
         case s1 of
           CURLMcode un_CURLMcode2 ->
             F.pokeByteOff ptr0 (0 :: Int) un_CURLMcode2
+
+deriving via FC.CInt instance Data.Primitive.Types.Prim CURLMcode
 
 instance HsBindgen.Runtime.CEnum.CEnum CURLMcode where
 
@@ -211,7 +224,7 @@ instance Read CURLMcode where
 
 {-| __C declaration:__ @CURLM_CALL_MULTI_PERFORM@
 
-    __defined at:__ @multi.h:59:3@
+    __defined at:__ @multi.h:60:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -220,7 +233,7 @@ pattern CURLM_CALL_MULTI_PERFORM = CURLMcode (-1)
 
 {-| __C declaration:__ @CURLM_OK@
 
-    __defined at:__ @multi.h:61:3@
+    __defined at:__ @multi.h:62:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -229,7 +242,7 @@ pattern CURLM_OK = CURLMcode 0
 
 {-| __C declaration:__ @CURLM_BAD_HANDLE@
 
-    __defined at:__ @multi.h:62:3@
+    __defined at:__ @multi.h:63:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -238,7 +251,7 @@ pattern CURLM_BAD_HANDLE = CURLMcode 1
 
 {-| __C declaration:__ @CURLM_BAD_EASY_HANDLE@
 
-    __defined at:__ @multi.h:63:3@
+    __defined at:__ @multi.h:64:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -247,7 +260,7 @@ pattern CURLM_BAD_EASY_HANDLE = CURLMcode 2
 
 {-| __C declaration:__ @CURLM_OUT_OF_MEMORY@
 
-    __defined at:__ @multi.h:64:3@
+    __defined at:__ @multi.h:65:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -256,7 +269,7 @@ pattern CURLM_OUT_OF_MEMORY = CURLMcode 3
 
 {-| __C declaration:__ @CURLM_INTERNAL_ERROR@
 
-    __defined at:__ @multi.h:65:3@
+    __defined at:__ @multi.h:66:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -265,7 +278,7 @@ pattern CURLM_INTERNAL_ERROR = CURLMcode 4
 
 {-| __C declaration:__ @CURLM_BAD_SOCKET@
 
-    __defined at:__ @multi.h:66:3@
+    __defined at:__ @multi.h:67:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -274,7 +287,7 @@ pattern CURLM_BAD_SOCKET = CURLMcode 5
 
 {-| __C declaration:__ @CURLM_UNKNOWN_OPTION@
 
-    __defined at:__ @multi.h:67:3@
+    __defined at:__ @multi.h:68:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -283,7 +296,7 @@ pattern CURLM_UNKNOWN_OPTION = CURLMcode 6
 
 {-| __C declaration:__ @CURLM_ADDED_ALREADY@
 
-    __defined at:__ @multi.h:68:3@
+    __defined at:__ @multi.h:69:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -292,7 +305,7 @@ pattern CURLM_ADDED_ALREADY = CURLMcode 7
 
 {-| __C declaration:__ @CURLM_RECURSIVE_API_CALL@
 
-    __defined at:__ @multi.h:70:3@
+    __defined at:__ @multi.h:71:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -301,7 +314,7 @@ pattern CURLM_RECURSIVE_API_CALL = CURLMcode 8
 
 {-| __C declaration:__ @CURLM_WAKEUP_FAILURE@
 
-    __defined at:__ @multi.h:72:3@
+    __defined at:__ @multi.h:73:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -310,7 +323,7 @@ pattern CURLM_WAKEUP_FAILURE = CURLMcode 9
 
 {-| __C declaration:__ @CURLM_BAD_FUNCTION_ARGUMENT@
 
-    __defined at:__ @multi.h:73:3@
+    __defined at:__ @multi.h:74:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -319,7 +332,7 @@ pattern CURLM_BAD_FUNCTION_ARGUMENT = CURLMcode 10
 
 {-| __C declaration:__ @CURLM_ABORTED_BY_CALLBACK@
 
-    __defined at:__ @multi.h:74:3@
+    __defined at:__ @multi.h:75:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -328,7 +341,7 @@ pattern CURLM_ABORTED_BY_CALLBACK = CURLMcode 11
 
 {-| __C declaration:__ @CURLM_UNRECOVERABLE_POLL@
 
-    __defined at:__ @multi.h:75:3@
+    __defined at:__ @multi.h:76:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -337,7 +350,7 @@ pattern CURLM_UNRECOVERABLE_POLL = CURLMcode 12
 
 {-| __C declaration:__ @CURLM_LAST@
 
-    __defined at:__ @multi.h:76:3@
+    __defined at:__ @multi.h:77:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -346,7 +359,7 @@ pattern CURLM_LAST = CURLMcode 13
 
 {-| __C declaration:__ @CURLPIPE_NOTHING@
 
-    __defined at:__ @multi.h:85:9@
+    __defined at:__ @multi.h:86:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -355,7 +368,7 @@ cURLPIPE_NOTHING = (0 :: FC.CLong)
 
 {-| __C declaration:__ @CURLPIPE_HTTP1@
 
-    __defined at:__ @multi.h:86:9@
+    __defined at:__ @multi.h:87:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -364,16 +377,16 @@ cURLPIPE_HTTP1 = (1 :: FC.CLong)
 
 {-| __C declaration:__ @CURLPIPE_MULTIPLEX@
 
-    __defined at:__ @multi.h:87:9@
+    __defined at:__ @multi.h:88:9@
 
     __exported by:__ @curl\/curl.h@
 -}
 cURLPIPE_MULTIPLEX :: FC.CLong
 cURLPIPE_MULTIPLEX = (2 :: FC.CLong)
 
-{-| __C declaration:__ @CURLMSG@
+{-| __C declaration:__ @enum CURLMSG@
 
-    __defined at:__ @multi.h:89:9@
+    __defined at:__ @multi.h:90:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -400,6 +413,8 @@ instance F.Storable CURLMSG where
         case s1 of
           CURLMSG un_CURLMSG2 ->
             F.pokeByteOff ptr0 (0 :: Int) un_CURLMSG2
+
+deriving via FC.CUInt instance Data.Primitive.Types.Prim CURLMSG
 
 instance HsBindgen.Runtime.CEnum.CEnum CURLMSG where
 
@@ -446,7 +461,7 @@ instance Read CURLMSG where
 
 {-| __C declaration:__ @CURLMSG_NONE@
 
-    __defined at:__ @multi.h:90:3@
+    __defined at:__ @multi.h:91:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -455,7 +470,7 @@ pattern CURLMSG_NONE = CURLMSG 0
 
 {-| __C declaration:__ @CURLMSG_DONE@
 
-    __defined at:__ @multi.h:91:3@
+    __defined at:__ @multi.h:92:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -464,14 +479,16 @@ pattern CURLMSG_DONE = CURLMSG 1
 
 {-| __C declaration:__ @CURLMSG_LAST@
 
-    __defined at:__ @multi.h:93:3@
+    __defined at:__ @multi.h:94:3@
 
     __exported by:__ @curl\/curl.h@
 -}
 pattern CURLMSG_LAST :: CURLMSG
 pattern CURLMSG_LAST = CURLMSG 2
 
-{-| __defined at:__ @multi.h:99:3@
+{-| __C declaration:__ @union \@CURLMsg_data@
+
+    __defined at:__ @multi.h:100:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -481,13 +498,15 @@ newtype CURLMsg_data = CURLMsg_data
 
 deriving via (HsBindgen.Runtime.SizedByteArray.SizedByteArray 8) 8 instance F.Storable CURLMsg_data
 
+deriving via (HsBindgen.Runtime.SizedByteArray.SizedByteArray 8) 8 instance Data.Primitive.Types.Prim CURLMsg_data
+
 {-|
 
   __See:__ 'set_cURLMsg_data_whatever'
 
 __C declaration:__ @whatever@
 
-__defined at:__ @multi.h:100:11@
+__defined at:__ @multi.h:101:11@
 
 __exported by:__ @curl\/curl.h@
 -}
@@ -514,7 +533,7 @@ set_cURLMsg_data_whatever =
 
 __C declaration:__ @result@
 
-__defined at:__ @multi.h:101:14@
+__defined at:__ @multi.h:102:14@
 
 __exported by:__ @curl\/curl.h@
 -}
@@ -561,9 +580,9 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType CURLMsg_data) "cURLM
   getField =
     HsBindgen.Runtime.HasCField.ptrToCField (Data.Proxy.Proxy @"cURLMsg_data_result")
 
-{-| __C declaration:__ @CURLMsg@
+{-| __C declaration:__ @struct CURLMsg@
 
-    __defined at:__ @multi.h:96:8@
+    __defined at:__ @multi.h:97:8@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -571,21 +590,21 @@ data CURLMsg = CURLMsg
   { cURLMsg_msg :: CURLMSG
     {- ^ __C declaration:__ @msg@
 
-         __defined at:__ @multi.h:97:11@
+         __defined at:__ @multi.h:98:11@
 
          __exported by:__ @curl\/curl.h@
     -}
-  , cURLMsg_easy_handle :: Ptr.Ptr Void
+  , cURLMsg_easy_handle :: Ptr.Ptr Generated.Curl.Curl.CURL
     {- ^ __C declaration:__ @easy_handle@
 
-         __defined at:__ @multi.h:98:9@
+         __defined at:__ @multi.h:99:9@
 
          __exported by:__ @curl\/curl.h@
     -}
   , cURLMsg_data :: CURLMsg_data
     {- ^ __C declaration:__ @data@
 
-         __defined at:__ @multi.h:102:5@
+         __defined at:__ @multi.h:103:5@
 
          __exported by:__ @curl\/curl.h@
     -}
@@ -628,7 +647,7 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType CURLMsg) "cURLMsg_ms
 instance HsBindgen.Runtime.HasCField.HasCField CURLMsg "cURLMsg_easy_handle" where
 
   type CFieldType CURLMsg "cURLMsg_easy_handle" =
-    Ptr.Ptr Void
+    Ptr.Ptr Generated.Curl.Curl.CURL
 
   offset# = \_ -> \_ -> 8
 
@@ -652,7 +671,7 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType CURLMsg) "cURLMsg_da
 
 {-| __C declaration:__ @CURL_WAIT_POLLIN@
 
-    __defined at:__ @multi.h:109:9@
+    __defined at:__ @multi.h:110:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -661,7 +680,7 @@ cURL_WAIT_POLLIN = (1 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_WAIT_POLLPRI@
 
-    __defined at:__ @multi.h:110:9@
+    __defined at:__ @multi.h:111:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -670,16 +689,16 @@ cURL_WAIT_POLLPRI = (2 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_WAIT_POLLOUT@
 
-    __defined at:__ @multi.h:111:9@
+    __defined at:__ @multi.h:112:9@
 
     __exported by:__ @curl\/curl.h@
 -}
 cURL_WAIT_POLLOUT :: FC.CInt
 cURL_WAIT_POLLOUT = (4 :: FC.CInt)
 
-{-| __C declaration:__ @curl_waitfd@
+{-| __C declaration:__ @struct curl_waitfd@
 
-    __defined at:__ @multi.h:113:8@
+    __defined at:__ @multi.h:114:8@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -687,21 +706,21 @@ data Curl_waitfd = Curl_waitfd
   { curl_waitfd_fd :: Generated.Curl.Curl.Curl_socket_t
     {- ^ __C declaration:__ @fd@
 
-         __defined at:__ @multi.h:114:17@
+         __defined at:__ @multi.h:115:17@
 
          __exported by:__ @curl\/curl.h@
     -}
   , curl_waitfd_events :: FC.CShort
     {- ^ __C declaration:__ @events@
 
-         __defined at:__ @multi.h:115:9@
+         __defined at:__ @multi.h:116:9@
 
          __exported by:__ @curl\/curl.h@
     -}
   , curl_waitfd_revents :: FC.CShort
     {- ^ __C declaration:__ @revents@
 
-         __defined at:__ @multi.h:116:9@
+         __defined at:__ @multi.h:117:9@
 
          __exported by:__ @curl\/curl.h@
     -}
@@ -729,6 +748,70 @@ instance F.Storable Curl_waitfd where
                HsBindgen.Runtime.HasCField.pokeCField (Data.Proxy.Proxy @"curl_waitfd_fd") ptr0 curl_waitfd_fd2
             >> HsBindgen.Runtime.HasCField.pokeCField (Data.Proxy.Proxy @"curl_waitfd_events") ptr0 curl_waitfd_events3
             >> HsBindgen.Runtime.HasCField.pokeCField (Data.Proxy.Proxy @"curl_waitfd_revents") ptr0 curl_waitfd_revents4
+
+instance Data.Primitive.Types.Prim Curl_waitfd where
+
+  sizeOf# = \_ -> (8#)
+
+  alignment# = \_ -> (4#)
+
+  indexByteArray# =
+    \arr0 ->
+      \i1 ->
+        Curl_waitfd (Data.Primitive.Types.indexByteArray# arr0 ((+#) ((*#) (3#) i1) (0#))) (Data.Primitive.Types.indexByteArray# arr0 ((+#) ((*#) (3#) i1) (1#))) (Data.Primitive.Types.indexByteArray# arr0 ((+#) ((*#) (3#) i1) (2#)))
+
+  readByteArray# =
+    \arr0 ->
+      \i1 ->
+        \s2 ->
+          case Data.Primitive.Types.readByteArray# arr0 ((+#) ((*#) (3#) i1) (0#)) s2 of
+            (# s3, v4 #) ->
+              case Data.Primitive.Types.readByteArray# arr0 ((+#) ((*#) (3#) i1) (1#)) s3 of
+                (# s5, v6 #) ->
+                  case Data.Primitive.Types.readByteArray# arr0 ((+#) ((*#) (3#) i1) (2#)) s5 of
+                    (# s7, v8 #) -> (# s7, Curl_waitfd v4 v6 v8 #)
+
+  writeByteArray# =
+    \arr0 ->
+      \i1 ->
+        \struct2 ->
+          \s3 ->
+            case struct2 of
+              Curl_waitfd curl_waitfd_fd4 curl_waitfd_events5 curl_waitfd_revents6 ->
+                case Data.Primitive.Types.writeByteArray# arr0 ((+#) ((*#) (3#) i1) (0#)) curl_waitfd_fd4 s3 of
+                  s7 ->
+                    case Data.Primitive.Types.writeByteArray# arr0 ((+#) ((*#) (3#) i1) (1#)) curl_waitfd_events5 s7 of
+                      s8 ->
+                        Data.Primitive.Types.writeByteArray# arr0 ((+#) ((*#) (3#) i1) (2#)) curl_waitfd_revents6 s8
+
+  indexOffAddr# =
+    \addr0 ->
+      \i1 ->
+        Curl_waitfd (Data.Primitive.Types.indexOffAddr# addr0 ((+#) ((*#) (3#) i1) (0#))) (Data.Primitive.Types.indexOffAddr# addr0 ((+#) ((*#) (3#) i1) (1#))) (Data.Primitive.Types.indexOffAddr# addr0 ((+#) ((*#) (3#) i1) (2#)))
+
+  readOffAddr# =
+    \addr0 ->
+      \i1 ->
+        \s2 ->
+          case Data.Primitive.Types.readOffAddr# addr0 ((+#) ((*#) (3#) i1) (0#)) s2 of
+            (# s3, v4 #) ->
+              case Data.Primitive.Types.readOffAddr# addr0 ((+#) ((*#) (3#) i1) (1#)) s3 of
+                (# s5, v6 #) ->
+                  case Data.Primitive.Types.readOffAddr# addr0 ((+#) ((*#) (3#) i1) (2#)) s5 of
+                    (# s7, v8 #) -> (# s7, Curl_waitfd v4 v6 v8 #)
+
+  writeOffAddr# =
+    \addr0 ->
+      \i1 ->
+        \struct2 ->
+          \s3 ->
+            case struct2 of
+              Curl_waitfd curl_waitfd_fd4 curl_waitfd_events5 curl_waitfd_revents6 ->
+                case Data.Primitive.Types.writeOffAddr# addr0 ((+#) ((*#) (3#) i1) (0#)) curl_waitfd_fd4 s3 of
+                  s7 ->
+                    case Data.Primitive.Types.writeOffAddr# addr0 ((+#) ((*#) (3#) i1) (1#)) curl_waitfd_events5 s7 of
+                      s8 ->
+                        Data.Primitive.Types.writeOffAddr# addr0 ((+#) ((*#) (3#) i1) (2#)) curl_waitfd_revents6 s8
 
 instance HsBindgen.Runtime.HasCField.HasCField Curl_waitfd "curl_waitfd_fd" where
 
@@ -771,7 +854,7 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_waitfd) "curl_w
 
 {-| __C declaration:__ @CURL_POLL_NONE@
 
-    __defined at:__ @multi.h:282:9@
+    __defined at:__ @multi.h:283:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -780,7 +863,7 @@ cURL_POLL_NONE = (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_POLL_IN@
 
-    __defined at:__ @multi.h:283:9@
+    __defined at:__ @multi.h:284:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -789,7 +872,7 @@ cURL_POLL_IN = (1 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_POLL_OUT@
 
-    __defined at:__ @multi.h:284:9@
+    __defined at:__ @multi.h:285:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -798,7 +881,7 @@ cURL_POLL_OUT = (2 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_POLL_INOUT@
 
-    __defined at:__ @multi.h:285:9@
+    __defined at:__ @multi.h:286:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -807,7 +890,7 @@ cURL_POLL_INOUT = (3 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_POLL_REMOVE@
 
-    __defined at:__ @multi.h:286:9@
+    __defined at:__ @multi.h:287:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -816,7 +899,7 @@ cURL_POLL_REMOVE = (4 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_SOCKET_TIMEOUT@
 
-    __defined at:__ @multi.h:288:9@
+    __defined at:__ @multi.h:289:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -825,7 +908,7 @@ cURL_SOCKET_TIMEOUT = cURL_SOCKET_BAD
 
 {-| __C declaration:__ @CURL_CSELECT_IN@
 
-    __defined at:__ @multi.h:290:9@
+    __defined at:__ @multi.h:291:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -834,7 +917,7 @@ cURL_CSELECT_IN = (1 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_CSELECT_OUT@
 
-    __defined at:__ @multi.h:291:9@
+    __defined at:__ @multi.h:292:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -843,7 +926,7 @@ cURL_CSELECT_OUT = (2 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_CSELECT_ERR@
 
-    __defined at:__ @multi.h:292:9@
+    __defined at:__ @multi.h:293:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -852,30 +935,34 @@ cURL_CSELECT_ERR = (4 :: FC.CInt)
 
 {-| Auxiliary type used by 'Curl_socket_callback'
 
-__defined at:__ @multi.h:294:15@
+__C declaration:__ @curl_socket_callback@
+
+__defined at:__ @multi.h:295:15@
 
 __exported by:__ @curl\/curl.h@
 -}
 newtype Curl_socket_callback_Deref = Curl_socket_callback_Deref
-  { un_Curl_socket_callback_Deref :: (Ptr.Ptr Void) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO FC.CInt
+  { un_Curl_socket_callback_Deref :: (Ptr.Ptr Generated.Curl.Curl.CURL) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO FC.CInt
   }
   deriving newtype (HsBindgen.Runtime.HasBaseForeignType.HasBaseForeignType)
 
-foreign import ccall safe "wrapper" toCurl_socket_callback_Deref ::
+-- __unique:__ @toCurl_socket_callback_Deref@
+foreign import ccall safe "wrapper" hs_bindgen_717ce1c77cc4e341 ::
      Curl_socket_callback_Deref
   -> IO (Ptr.FunPtr Curl_socket_callback_Deref)
 
-foreign import ccall safe "dynamic" fromCurl_socket_callback_Deref ::
+-- __unique:__ @fromCurl_socket_callback_Deref@
+foreign import ccall safe "dynamic" hs_bindgen_14cd48941998d2b5 ::
      Ptr.FunPtr Curl_socket_callback_Deref
   -> Curl_socket_callback_Deref
 
 instance HsBindgen.Runtime.FunPtr.ToFunPtr Curl_socket_callback_Deref where
 
-  toFunPtr = toCurl_socket_callback_Deref
+  toFunPtr = hs_bindgen_717ce1c77cc4e341
 
 instance HsBindgen.Runtime.FunPtr.FromFunPtr Curl_socket_callback_Deref where
 
-  fromFunPtr = fromCurl_socket_callback_Deref
+  fromFunPtr = hs_bindgen_14cd48941998d2b5
 
 instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_socket_callback_Deref) "un_Curl_socket_callback_Deref")
          ) => GHC.Records.HasField "un_Curl_socket_callback_Deref" (Ptr.Ptr Curl_socket_callback_Deref) (Ptr.Ptr ty) where
@@ -886,13 +973,13 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_socket_callback
 instance HsBindgen.Runtime.HasCField.HasCField Curl_socket_callback_Deref "un_Curl_socket_callback_Deref" where
 
   type CFieldType Curl_socket_callback_Deref "un_Curl_socket_callback_Deref" =
-    (Ptr.Ptr Void) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO FC.CInt
+    (Ptr.Ptr Generated.Curl.Curl.CURL) -> Generated.Curl.Curl.Curl_socket_t -> FC.CInt -> (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO FC.CInt
 
   offset# = \_ -> \_ -> 0
 
 {-| __C declaration:__ @curl_socket_callback@
 
-    __defined at:__ @multi.h:294:15@
+    __defined at:__ @multi.h:295:15@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -917,30 +1004,34 @@ instance HsBindgen.Runtime.HasCField.HasCField Curl_socket_callback "un_Curl_soc
 
 {-| Auxiliary type used by 'Curl_multi_timer_callback'
 
-__defined at:__ @multi.h:311:15@
+__C declaration:__ @curl_multi_timer_callback@
+
+__defined at:__ @multi.h:312:15@
 
 __exported by:__ @curl\/curl.h@
 -}
 newtype Curl_multi_timer_callback_Deref = Curl_multi_timer_callback_Deref
-  { un_Curl_multi_timer_callback_Deref :: (Ptr.Ptr Void) -> FC.CLong -> (Ptr.Ptr Void) -> IO FC.CInt
+  { un_Curl_multi_timer_callback_Deref :: (Ptr.Ptr CURLM) -> FC.CLong -> (Ptr.Ptr Void) -> IO FC.CInt
   }
   deriving newtype (HsBindgen.Runtime.HasBaseForeignType.HasBaseForeignType)
 
-foreign import ccall safe "wrapper" toCurl_multi_timer_callback_Deref ::
+-- __unique:__ @toCurl_multi_timer_callback_Deref@
+foreign import ccall safe "wrapper" hs_bindgen_8504e36e073cb71d ::
      Curl_multi_timer_callback_Deref
   -> IO (Ptr.FunPtr Curl_multi_timer_callback_Deref)
 
-foreign import ccall safe "dynamic" fromCurl_multi_timer_callback_Deref ::
+-- __unique:__ @fromCurl_multi_timer_callback_Deref@
+foreign import ccall safe "dynamic" hs_bindgen_9da15322060da085 ::
      Ptr.FunPtr Curl_multi_timer_callback_Deref
   -> Curl_multi_timer_callback_Deref
 
 instance HsBindgen.Runtime.FunPtr.ToFunPtr Curl_multi_timer_callback_Deref where
 
-  toFunPtr = toCurl_multi_timer_callback_Deref
+  toFunPtr = hs_bindgen_8504e36e073cb71d
 
 instance HsBindgen.Runtime.FunPtr.FromFunPtr Curl_multi_timer_callback_Deref where
 
-  fromFunPtr = fromCurl_multi_timer_callback_Deref
+  fromFunPtr = hs_bindgen_9da15322060da085
 
 instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_multi_timer_callback_Deref) "un_Curl_multi_timer_callback_Deref")
          ) => GHC.Records.HasField "un_Curl_multi_timer_callback_Deref" (Ptr.Ptr Curl_multi_timer_callback_Deref) (Ptr.Ptr ty) where
@@ -951,13 +1042,13 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_multi_timer_cal
 instance HsBindgen.Runtime.HasCField.HasCField Curl_multi_timer_callback_Deref "un_Curl_multi_timer_callback_Deref" where
 
   type CFieldType Curl_multi_timer_callback_Deref "un_Curl_multi_timer_callback_Deref" =
-    (Ptr.Ptr Void) -> FC.CLong -> (Ptr.Ptr Void) -> IO FC.CInt
+    (Ptr.Ptr CURLM) -> FC.CLong -> (Ptr.Ptr Void) -> IO FC.CInt
 
   offset# = \_ -> \_ -> 0
 
 {-| __C declaration:__ @curl_multi_timer_callback@
 
-    __defined at:__ @multi.h:311:15@
+    __defined at:__ @multi.h:312:15@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -980,9 +1071,9 @@ instance HsBindgen.Runtime.HasCField.HasCField Curl_multi_timer_callback "un_Cur
 
   offset# = \_ -> \_ -> 0
 
-{-| __C declaration:__ @CURLMoption@
+{-| __C declaration:__ @enum CURLMoption@
 
-    __defined at:__ @multi.h:346:9@
+    __defined at:__ @multi.h:347:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1009,6 +1100,8 @@ instance F.Storable CURLMoption where
         case s1 of
           CURLMoption un_CURLMoption2 ->
             F.pokeByteOff ptr0 (0 :: Int) un_CURLMoption2
+
+deriving via FC.CUInt instance Data.Primitive.Types.Prim CURLMoption
 
 instance HsBindgen.Runtime.CEnum.CEnum CURLMoption where
 
@@ -1062,7 +1155,7 @@ instance Read CURLMoption where
 
 {-| __C declaration:__ @CURLMOPT_SOCKETFUNCTION@
 
-    __defined at:__ @multi.h:348:3@
+    __defined at:__ @multi.h:349:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1071,7 +1164,7 @@ pattern CURLMOPT_SOCKETFUNCTION = CURLMoption 20001
 
 {-| __C declaration:__ @CURLMOPT_SOCKETDATA@
 
-    __defined at:__ @multi.h:351:3@
+    __defined at:__ @multi.h:352:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1080,7 +1173,7 @@ pattern CURLMOPT_SOCKETDATA = CURLMoption 10002
 
 {-| __C declaration:__ @CURLMOPT_PIPELINING@
 
-    __defined at:__ @multi.h:354:3@
+    __defined at:__ @multi.h:355:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1089,7 +1182,7 @@ pattern CURLMOPT_PIPELINING = CURLMoption 3
 
 {-| __C declaration:__ @CURLMOPT_TIMERFUNCTION@
 
-    __defined at:__ @multi.h:357:3@
+    __defined at:__ @multi.h:358:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1098,7 +1191,7 @@ pattern CURLMOPT_TIMERFUNCTION = CURLMoption 20004
 
 {-| __C declaration:__ @CURLMOPT_TIMERDATA@
 
-    __defined at:__ @multi.h:360:3@
+    __defined at:__ @multi.h:361:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1107,7 +1200,7 @@ pattern CURLMOPT_TIMERDATA = CURLMoption 10005
 
 {-| __C declaration:__ @CURLMOPT_MAXCONNECTS@
 
-    __defined at:__ @multi.h:363:3@
+    __defined at:__ @multi.h:364:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1116,7 +1209,7 @@ pattern CURLMOPT_MAXCONNECTS = CURLMoption 6
 
 {-| __C declaration:__ @CURLMOPT_MAX_HOST_CONNECTIONS@
 
-    __defined at:__ @multi.h:366:3@
+    __defined at:__ @multi.h:367:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1125,7 +1218,7 @@ pattern CURLMOPT_MAX_HOST_CONNECTIONS = CURLMoption 7
 
 {-| __C declaration:__ @CURLMOPT_MAX_PIPELINE_LENGTH@
 
-    __defined at:__ @multi.h:369:3@
+    __defined at:__ @multi.h:370:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1134,7 +1227,7 @@ pattern CURLMOPT_MAX_PIPELINE_LENGTH = CURLMoption 8
 
 {-| __C declaration:__ @CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE@
 
-    __defined at:__ @multi.h:373:3@
+    __defined at:__ @multi.h:374:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1143,7 +1236,7 @@ pattern CURLMOPT_CONTENT_LENGTH_PENALTY_SIZE = CURLMoption 30009
 
 {-| __C declaration:__ @CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE@
 
-    __defined at:__ @multi.h:377:3@
+    __defined at:__ @multi.h:378:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1152,7 +1245,7 @@ pattern CURLMOPT_CHUNK_LENGTH_PENALTY_SIZE = CURLMoption 30010
 
 {-| __C declaration:__ @CURLMOPT_PIPELINING_SITE_BL@
 
-    __defined at:__ @multi.h:380:3@
+    __defined at:__ @multi.h:381:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1161,7 +1254,7 @@ pattern CURLMOPT_PIPELINING_SITE_BL = CURLMoption 10011
 
 {-| __C declaration:__ @CURLMOPT_PIPELINING_SERVER_BL@
 
-    __defined at:__ @multi.h:383:3@
+    __defined at:__ @multi.h:384:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1170,7 +1263,7 @@ pattern CURLMOPT_PIPELINING_SERVER_BL = CURLMoption 10012
 
 {-| __C declaration:__ @CURLMOPT_MAX_TOTAL_CONNECTIONS@
 
-    __defined at:__ @multi.h:386:3@
+    __defined at:__ @multi.h:387:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1179,7 +1272,7 @@ pattern CURLMOPT_MAX_TOTAL_CONNECTIONS = CURLMoption 13
 
 {-| __C declaration:__ @CURLMOPT_PUSHFUNCTION@
 
-    __defined at:__ @multi.h:389:3@
+    __defined at:__ @multi.h:390:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1188,7 +1281,7 @@ pattern CURLMOPT_PUSHFUNCTION = CURLMoption 20014
 
 {-| __C declaration:__ @CURLMOPT_PUSHDATA@
 
-    __defined at:__ @multi.h:392:3@
+    __defined at:__ @multi.h:393:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1197,7 +1290,7 @@ pattern CURLMOPT_PUSHDATA = CURLMoption 10015
 
 {-| __C declaration:__ @CURLMOPT_MAX_CONCURRENT_STREAMS@
 
-    __defined at:__ @multi.h:395:3@
+    __defined at:__ @multi.h:396:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1206,7 +1299,7 @@ pattern CURLMOPT_MAX_CONCURRENT_STREAMS = CURLMoption 16
 
 {-| __C declaration:__ @CURLMOPT_NETWORK_CHANGED@
 
-    __defined at:__ @multi.h:398:3@
+    __defined at:__ @multi.h:399:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1215,7 +1308,7 @@ pattern CURLMOPT_NETWORK_CHANGED = CURLMoption 17
 
 {-| __C declaration:__ @CURLMOPT_NOTIFYFUNCTION@
 
-    __defined at:__ @multi.h:401:3@
+    __defined at:__ @multi.h:402:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1224,7 +1317,7 @@ pattern CURLMOPT_NOTIFYFUNCTION = CURLMoption 20018
 
 {-| __C declaration:__ @CURLMOPT_NOTIFYDATA@
 
-    __defined at:__ @multi.h:404:3@
+    __defined at:__ @multi.h:405:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1233,7 +1326,7 @@ pattern CURLMOPT_NOTIFYDATA = CURLMoption 10019
 
 {-| __C declaration:__ @CURLMOPT_LASTENTRY@
 
-    __defined at:__ @multi.h:406:3@
+    __defined at:__ @multi.h:407:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1242,7 +1335,7 @@ pattern CURLMOPT_LASTENTRY = CURLMoption 10020
 
 {-| __C declaration:__ @CURLMNWC_CLEAR_CONNS@
 
-    __defined at:__ @multi.h:414:9@
+    __defined at:__ @multi.h:415:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1252,7 +1345,7 @@ cURLMNWC_CLEAR_CONNS =
 
 {-| __C declaration:__ @CURLMNWC_CLEAR_DNS@
 
-    __defined at:__ @multi.h:419:9@
+    __defined at:__ @multi.h:420:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1260,9 +1353,9 @@ cURLMNWC_CLEAR_DNS :: FC.CLong
 cURLMNWC_CLEAR_DNS =
   (C.<<) (1 :: FC.CLong) (0 :: FC.CInt)
 
-{-| __C declaration:__ @CURLMinfo_offt@
+{-| __C declaration:__ @enum CURLMinfo_offt@
 
-    __defined at:__ @multi.h:457:9@
+    __defined at:__ @multi.h:458:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1289,6 +1382,8 @@ instance F.Storable CURLMinfo_offt where
         case s1 of
           CURLMinfo_offt un_CURLMinfo_offt2 ->
             F.pokeByteOff ptr0 (0 :: Int) un_CURLMinfo_offt2
+
+deriving via FC.CUInt instance Data.Primitive.Types.Prim CURLMinfo_offt
 
 instance HsBindgen.Runtime.CEnum.CEnum CURLMinfo_offt where
 
@@ -1339,7 +1434,7 @@ instance Read CURLMinfo_offt where
 
 {-| __C declaration:__ @CURLMINFO_NONE@
 
-    __defined at:__ @multi.h:458:3@
+    __defined at:__ @multi.h:459:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1348,7 +1443,7 @@ pattern CURLMINFO_NONE = CURLMinfo_offt 0
 
 {-| __C declaration:__ @CURLMINFO_XFERS_CURRENT@
 
-    __defined at:__ @multi.h:461:3@
+    __defined at:__ @multi.h:462:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1357,7 +1452,7 @@ pattern CURLMINFO_XFERS_CURRENT = CURLMinfo_offt 1
 
 {-| __C declaration:__ @CURLMINFO_XFERS_RUNNING@
 
-    __defined at:__ @multi.h:463:3@
+    __defined at:__ @multi.h:464:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1366,7 +1461,7 @@ pattern CURLMINFO_XFERS_RUNNING = CURLMinfo_offt 2
 
 {-| __C declaration:__ @CURLMINFO_XFERS_PENDING@
 
-    __defined at:__ @multi.h:467:3@
+    __defined at:__ @multi.h:468:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1375,7 +1470,7 @@ pattern CURLMINFO_XFERS_PENDING = CURLMinfo_offt 3
 
 {-| __C declaration:__ @CURLMINFO_XFERS_DONE@
 
-    __defined at:__ @multi.h:470:3@
+    __defined at:__ @multi.h:471:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1384,7 +1479,7 @@ pattern CURLMINFO_XFERS_DONE = CURLMinfo_offt 4
 
 {-| __C declaration:__ @CURLMINFO_XFERS_ADDED@
 
-    __defined at:__ @multi.h:472:3@
+    __defined at:__ @multi.h:473:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1393,7 +1488,7 @@ pattern CURLMINFO_XFERS_ADDED = CURLMinfo_offt 5
 
 {-| __C declaration:__ @CURLMINFO_LASTENTRY@
 
-    __defined at:__ @multi.h:474:3@
+    __defined at:__ @multi.h:475:3@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1402,7 +1497,7 @@ pattern CURLMINFO_LASTENTRY = CURLMinfo_offt 6
 
 {-| __C declaration:__ @CURL_PUSH_OK@
 
-    __defined at:__ @multi.h:497:9@
+    __defined at:__ @multi.h:498:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1411,7 +1506,7 @@ cURL_PUSH_OK = (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_PUSH_DENY@
 
-    __defined at:__ @multi.h:498:9@
+    __defined at:__ @multi.h:499:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1420,16 +1515,16 @@ cURL_PUSH_DENY = (1 :: FC.CInt)
 
 {-| __C declaration:__ @CURL_PUSH_ERROROUT@
 
-    __defined at:__ @multi.h:499:9@
+    __defined at:__ @multi.h:500:9@
 
     __exported by:__ @curl\/curl.h@
 -}
 cURL_PUSH_ERROROUT :: FC.CInt
 cURL_PUSH_ERROROUT = (2 :: FC.CInt)
 
-{-| __C declaration:__ @curl_pushheaders@
+{-| __C declaration:__ @struct curl_pushheaders@
 
-    __defined at:__ @multi.h:501:8@
+    __defined at:__ @multi.h:502:8@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1437,30 +1532,34 @@ data Curl_pushheaders
 
 {-| Auxiliary type used by 'Curl_push_callback'
 
-__defined at:__ @multi.h:508:15@
+__C declaration:__ @curl_push_callback@
+
+__defined at:__ @multi.h:509:15@
 
 __exported by:__ @curl\/curl.h@
 -}
 newtype Curl_push_callback_Deref = Curl_push_callback_Deref
-  { un_Curl_push_callback_Deref :: (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> HsBindgen.Runtime.Prelude.CSize -> (Ptr.Ptr Curl_pushheaders) -> (Ptr.Ptr Void) -> IO FC.CInt
+  { un_Curl_push_callback_Deref :: (Ptr.Ptr Generated.Curl.Curl.CURL) -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> HsBindgen.Runtime.Prelude.CSize -> (Ptr.Ptr Curl_pushheaders) -> (Ptr.Ptr Void) -> IO FC.CInt
   }
   deriving newtype (HsBindgen.Runtime.HasBaseForeignType.HasBaseForeignType)
 
-foreign import ccall safe "wrapper" toCurl_push_callback_Deref ::
+-- __unique:__ @toCurl_push_callback_Deref@
+foreign import ccall safe "wrapper" hs_bindgen_a914bed813711eb2 ::
      Curl_push_callback_Deref
   -> IO (Ptr.FunPtr Curl_push_callback_Deref)
 
-foreign import ccall safe "dynamic" fromCurl_push_callback_Deref ::
+-- __unique:__ @fromCurl_push_callback_Deref@
+foreign import ccall safe "dynamic" hs_bindgen_1f10f784a5ef35b4 ::
      Ptr.FunPtr Curl_push_callback_Deref
   -> Curl_push_callback_Deref
 
 instance HsBindgen.Runtime.FunPtr.ToFunPtr Curl_push_callback_Deref where
 
-  toFunPtr = toCurl_push_callback_Deref
+  toFunPtr = hs_bindgen_a914bed813711eb2
 
 instance HsBindgen.Runtime.FunPtr.FromFunPtr Curl_push_callback_Deref where
 
-  fromFunPtr = fromCurl_push_callback_Deref
+  fromFunPtr = hs_bindgen_1f10f784a5ef35b4
 
 instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_push_callback_Deref) "un_Curl_push_callback_Deref")
          ) => GHC.Records.HasField "un_Curl_push_callback_Deref" (Ptr.Ptr Curl_push_callback_Deref) (Ptr.Ptr ty) where
@@ -1471,13 +1570,13 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_push_callback_D
 instance HsBindgen.Runtime.HasCField.HasCField Curl_push_callback_Deref "un_Curl_push_callback_Deref" where
 
   type CFieldType Curl_push_callback_Deref "un_Curl_push_callback_Deref" =
-    (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> HsBindgen.Runtime.Prelude.CSize -> (Ptr.Ptr Curl_pushheaders) -> (Ptr.Ptr Void) -> IO FC.CInt
+    (Ptr.Ptr Generated.Curl.Curl.CURL) -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> HsBindgen.Runtime.Prelude.CSize -> (Ptr.Ptr Curl_pushheaders) -> (Ptr.Ptr Void) -> IO FC.CInt
 
   offset# = \_ -> \_ -> 0
 
 {-| __C declaration:__ @curl_push_callback@
 
-    __defined at:__ @multi.h:508:15@
+    __defined at:__ @multi.h:509:15@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1502,7 +1601,7 @@ instance HsBindgen.Runtime.HasCField.HasCField Curl_push_callback "un_Curl_push_
 
 {-| __C declaration:__ @CURLMNOTIFY_INFO_READ@
 
-    __defined at:__ @multi.h:531:9@
+    __defined at:__ @multi.h:532:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1511,7 +1610,7 @@ cURLMNOTIFY_INFO_READ = (0 :: FC.CInt)
 
 {-| __C declaration:__ @CURLMNOTIFY_EASY_DONE@
 
-    __defined at:__ @multi.h:532:9@
+    __defined at:__ @multi.h:533:9@
 
     __exported by:__ @curl\/curl.h@
 -}
@@ -1520,30 +1619,34 @@ cURLMNOTIFY_EASY_DONE = (1 :: FC.CInt)
 
 {-| Auxiliary type used by 'Curl_notify_callback'
 
-__defined at:__ @multi.h:537:16@
+__C declaration:__ @curl_notify_callback@
+
+__defined at:__ @multi.h:538:16@
 
 __exported by:__ @curl\/curl.h@
 -}
 newtype Curl_notify_callback_Deref = Curl_notify_callback_Deref
-  { un_Curl_notify_callback_Deref :: (Ptr.Ptr Void) -> FC.CUInt -> (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO ()
+  { un_Curl_notify_callback_Deref :: (Ptr.Ptr CURLM) -> FC.CUInt -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> (Ptr.Ptr Void) -> IO ()
   }
   deriving newtype (HsBindgen.Runtime.HasBaseForeignType.HasBaseForeignType)
 
-foreign import ccall safe "wrapper" toCurl_notify_callback_Deref ::
+-- __unique:__ @toCurl_notify_callback_Deref@
+foreign import ccall safe "wrapper" hs_bindgen_ac3eb492bde05179 ::
      Curl_notify_callback_Deref
   -> IO (Ptr.FunPtr Curl_notify_callback_Deref)
 
-foreign import ccall safe "dynamic" fromCurl_notify_callback_Deref ::
+-- __unique:__ @fromCurl_notify_callback_Deref@
+foreign import ccall safe "dynamic" hs_bindgen_9c6288ce7900faf4 ::
      Ptr.FunPtr Curl_notify_callback_Deref
   -> Curl_notify_callback_Deref
 
 instance HsBindgen.Runtime.FunPtr.ToFunPtr Curl_notify_callback_Deref where
 
-  toFunPtr = toCurl_notify_callback_Deref
+  toFunPtr = hs_bindgen_ac3eb492bde05179
 
 instance HsBindgen.Runtime.FunPtr.FromFunPtr Curl_notify_callback_Deref where
 
-  fromFunPtr = fromCurl_notify_callback_Deref
+  fromFunPtr = hs_bindgen_9c6288ce7900faf4
 
 instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_notify_callback_Deref) "un_Curl_notify_callback_Deref")
          ) => GHC.Records.HasField "un_Curl_notify_callback_Deref" (Ptr.Ptr Curl_notify_callback_Deref) (Ptr.Ptr ty) where
@@ -1554,13 +1657,13 @@ instance ( TyEq ty ((HsBindgen.Runtime.HasCField.CFieldType Curl_notify_callback
 instance HsBindgen.Runtime.HasCField.HasCField Curl_notify_callback_Deref "un_Curl_notify_callback_Deref" where
 
   type CFieldType Curl_notify_callback_Deref "un_Curl_notify_callback_Deref" =
-    (Ptr.Ptr Void) -> FC.CUInt -> (Ptr.Ptr Void) -> (Ptr.Ptr Void) -> IO ()
+    (Ptr.Ptr CURLM) -> FC.CUInt -> (Ptr.Ptr Generated.Curl.Curl.CURL) -> (Ptr.Ptr Void) -> IO ()
 
   offset# = \_ -> \_ -> 0
 
 {-| __C declaration:__ @curl_notify_callback@
 
-    __defined at:__ @multi.h:537:16@
+    __defined at:__ @multi.h:538:16@
 
     __exported by:__ @curl\/curl.h@
 -}
