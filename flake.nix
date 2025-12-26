@@ -10,7 +10,7 @@
 
   outputs = { self, nixpkgs, flake-utils, hs-bindgen, }:
     let
-      ghcVer = "ghc967";
+      ghcVer = "ghc910";
       makeOverlay = overlay: super: self: {
         haskell = self.haskell // {
           packages = self.haskell.packages // {

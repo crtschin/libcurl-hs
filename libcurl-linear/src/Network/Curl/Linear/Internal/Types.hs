@@ -3,14 +3,12 @@ module Network.Curl.Linear.Internal.Types where
 import Data.IORef
 import Data.IntMap.Strict qualified as IntMap
 import Data.Map.Strict qualified as M
-import Data.Nat
 import Data.Text (Text)
 import Data.Void (Void)
 import Foreign
 import Foreign.C
 import Generated.Curl.Curl
 import Prelude.Linear as L
-import System.Mem.StableName
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
 

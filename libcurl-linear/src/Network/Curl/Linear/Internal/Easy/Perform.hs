@@ -6,6 +6,7 @@ import Control.Exception (bracket)
 import Control.Functor.Linear qualified as Linear
 import Control.Monad (unless, when)
 import Data.ByteString qualified as BS
+import Data.ByteString.Unsafe qualified as BS
 import Data.IORef
 import Foreign
 import Foreign.C.String (peekCString)
@@ -21,7 +22,6 @@ import Streaming.Linear qualified as Linear
 import System.IO.Linear qualified as Linear
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
-import qualified Data.ByteString.Unsafe as BS
 
 -- | Perform the CURL request.
 perform_ :: CurlEasy %1 -> Linear.IO CurlEasy
@@ -44,7 +44,8 @@ perform = Unsafe.toLinear doPerform
     Linear.pure (handle, result)
 
 data StreamBuffer = StreamBuffer
-  { getStreamBuffer :: Buffer.Buffer
+  { curlHandle :: CurlEasy
+  , getStreamBuffer :: Buffer.Buffer
   , bufferIsEmpty :: TVar Bool
   , requestFinished :: TVar Bool
   , responseHeaders :: TVar (Ur (Maybe CurlHeaders))
@@ -118,13 +119,13 @@ performStream streamOption = do
   doPerform streamOptions handle act = Linear.fromSystemIO $ do
     Buffer.new (bufferSizeBytes streamOptions) $ \payloadBuffer -> do
       buffer <-
-        StreamBuffer payloadBuffer
+        StreamBuffer handle payloadBuffer
           N.<$> newTVarIO True
           N.<*> newTVarIO False
           N.<*> newTVarIO (move Nothing)
 
       bracket (newStablePtr buffer) freeStablePtr $ \stableBuffer -> do
-        let handle' = setWriteFunction @StreamBuffer stableBuffer (performStreamWriteFunction handle) handle
+        let handle' = setWriteFunction @StreamBuffer stableBuffer performStreamWriteFunction handle
             doDownload = do
               result <- Safe.curl_easy_perform (unur (easyHandle handle'))
               atomically (writeTVar (requestFinished buffer) True)
@@ -152,13 +153,13 @@ performStream streamOption = do
             unless isFinished retry
           Linear.pure (handle', result)
 
-performStreamWriteFunction :: CurlEasy -> CurlWriteFunction StreamBuffer
-performStreamWriteFunction handle = CurlWriteFunction $ \content _ bsLen innerBufferPtr -> do
+performStreamWriteFunction :: CurlWriteFunction StreamBuffer
+performStreamWriteFunction = CurlWriteFunction $ \content _ bsLen innerBufferPtr -> do
   buffer <- deRefStablePtr innerBufferPtr
   headers <- readTVarIO (responseHeaders buffer)
   case unur headers of
     Nothing -> do
-      (_, h) <- Linear.toSystemIO $ curlGetLastHeaders handle
+      (_, h) <- Linear.toSystemIO $ curlGetLastHeaders (curlHandle buffer)
       atomically $ writeTVar (responseHeaders buffer) $ move (Just h)
     Just _ -> N.pure ()
 
