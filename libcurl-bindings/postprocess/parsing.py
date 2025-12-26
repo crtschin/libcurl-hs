@@ -8,20 +8,20 @@ from .types import CategoryT, CurlConstant
 
 
 CURLOPT_PATTERN = re.compile(
-    r"^pattern\s+(CURLOPT_\w+)\s*::\s*CURLoption\s*\n"
-    + r"pattern\s+\1\s*=\s*CURLoption\s+(\d+)",
+    r"^pattern\s+(CURLOPT_\w+)\s*::\s*CURLoption\s*\n"  # pyright: ignore[reportImplicitStringConcatenation]
+    r"pattern\s+\1\s*=\s*CURLoption\s+(\d+)",
     re.MULTILINE,
 )
 
 CURLMOPT_PATTERN = re.compile(
-    r"^pattern\s+(CURLMOPT_\w+)\s*::\s*CURLMoption\s*\n"
-    + r"pattern\s+\1\s*=\s*CURLMoption\s+(\d+)",
+    r"^pattern\s+(CURLMOPT_\w+)\s*::\s*CURLMoption\s*\n"  # pyright: ignore[reportImplicitStringConcatenation]
+    r"pattern\s+\1\s*=\s*CURLMoption\s+(\d+)",
     re.MULTILINE,
 )
 
 CURLINFO_PATTERN = re.compile(
-    r"^pattern\s+(CURLINFO_\w+)\s*::\s*CURLINFO\s*\n"
-    + r"pattern\s+\1\s*=\s*CURLINFO\s+(\d+)",
+    r"^pattern\s+(CURLINFO_\w+)\s*::\s*CURLINFO\s*\n"  # pyright: ignore[reportImplicitStringConcatenation]
+    r"pattern\s+\1\s*=\s*CURLINFO\s+(\d+)",
     re.MULTILINE,
 )
 
