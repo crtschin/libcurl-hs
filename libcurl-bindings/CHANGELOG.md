@@ -1,4 +1,4 @@
-# Revision history for libcurl-hs
+# Revision history for libcurl-bindings
 
 ## 0.1.0.0 -- YYYY-mm-dd
 

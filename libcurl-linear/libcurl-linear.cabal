@@ -1,7 +1,7 @@
 cabal-version:   3.8
 name:            libcurl-linear
 version:         0.1.0.0
-license:         MIT
+license:         BSD-3-Clause
 license-file:    LICENSE
 author:          Curtis Chin Jen Sem
 maintainer:      csochinjensem@gmail.com
@@ -24,7 +24,6 @@ common shared
     TypeData
 
   ghc-options:        -Wall
-  -- -Werror
 
 common executable-shared
   ghc-options: -threaded -rtsopts +RTS -N2 -A32M

@@ -1,27 +1,30 @@
 cabal-version:   3.8
 name:            libcurl-bindings
 version:         0.1.0.0
-license:         MIT
+license:         BSD-3-Clause
 license-file:    LICENSE
 author:          Curtis Chin Jen Sem
 maintainer:      csochinjensem@gmail.com
 build-type:      Simple
 extra-doc-files: CHANGELOG.md
-synopsis:        Empty
-description:     Empty
+category:        Foreign, Network
+synopsis:        hs-bindgen generated bindings to libcurl
+description:
+  A set of minimal bindings to libcurl generated from hs-bindgen, augmented
+  with typeclasses to facilitate easy dispatch for the variadic C-functions.
 
 common shared
   default-language: GHC2021
-  ghc-options:      -Wall -Werror
+  ghc-options:      -Wall
 
 library
   import:          shared
-  build-depends:   base
   hs-source-dirs:  src
   extra-libraries: curl
   build-depends:
-    , c-expr-runtime
-    , hs-bindgen-runtime
+    , base               >= 4.17 && < 4.22
+    , c-expr-runtime     < 0.2
+    , hs-bindgen-runtime < 0.2
 
   -- cabal-fmt: expand src
   exposed-modules:
