@@ -2,6 +2,7 @@ module Network.Curl.Linear.Internal.Types where
 
 import Data.IORef
 import Data.Map.Strict qualified as M
+import Data.Nat
 import Data.Text (Text)
 import Data.Void (Void)
 import Foreign
@@ -13,19 +14,24 @@ import Prelude qualified as N
 -- | Global CURL state. Must be initialized before creating easy handles.
 data GlobalCurlHandle = GlobalCurlHandle
 
+-- | A CURL easy handle. Must be used linearly to prevent resource leaks.
+data CurlEasy = CurlEasy
+  { easyHandle :: Ur (Ptr Void)
+  , easyErrorBuffer :: CurlErrorBuffer
+  }
+
+-- | A CURL easy handle. Must be used linearly to prevent resource leaks.
+newtype CurlMulti (n :: Nat) = CurlMulti
+  { multiHandle :: Ur (Ptr Void)
+  }
+
+instance Consumable CurlEasy where
+  consume CurlEasy{..} = consume (easyHandle, easyErrorBuffer)
+
 newtype CurlErrorBuffer = CurlErrorBuffer (Ur (IORef (Maybe CString)))
 
 instance Consumable CurlErrorBuffer where
   consume (CurlErrorBuffer buf) = consume buf
-
--- | A CURL easy handle. Must be used linearly to prevent resource leaks.
-data CurlEasy = CurlEasy
-  { curlHandle :: Ur (Ptr Void)
-  , errorBuffer :: CurlErrorBuffer
-  }
-
-instance Consumable CurlEasy where
-  consume CurlEasy{..} = consume (curlHandle, errorBuffer)
 
 newtype CurlEasyToken = CurlEasyToken (StableName CurlEasy)
 

@@ -21,6 +21,7 @@ import Streaming.Linear qualified as Linear
 import System.IO.Linear qualified as Linear
 import Unsafe.Linear qualified as Unsafe
 import Prelude qualified as N
+import qualified Control.Functor.Linear.Internal.Class as L
 
 -- | Perform the CURL request.
 perform_ :: CurlEasy %1 -> Linear.IO CurlEasy
@@ -49,6 +50,19 @@ data StreamBuffer = StreamBuffer
   , responseHeaders :: TVar (Ur (Maybe CurlHeaders))
   }
 
+newtype StreamResult = StreamResult
+  { getStreamResult :: Ur (Linear.IO CurlEasyResult)
+  }
+
+instance Consumable StreamResult where
+  consume StreamResult{..} = consume getStreamResult
+
+instance Dupable StreamResult where
+  dup2 = Unsafe.toLinear $ \e -> (e, e)
+
+instance Movable StreamResult where
+  move = Unsafe.toLinear Ur
+
 -- | Perform the CURL request and return the result.
 --
 -- Requires 'CurloptErrorbuffer' to be set, otherwise a placeholder error
@@ -58,7 +72,7 @@ performStream
   :: CurlEasy
   %1 -> StreamOptions
   %1 -> ( Ur CurlHeaders
-          %1 -> Linear.Stream (Linear.Of BS.ByteString) Linear.IO CurlEasyResult
+          %1 -> Linear.Stream (Linear.Of BS.ByteString) Linear.IO StreamResult
           %1 -> Linear.IO (Ur r)
         )
   %1 -> Linear.IO (CurlEasy, Ur r)
@@ -69,7 +83,7 @@ performStream = do
     :: Async C.CURLcode
     -> CurlErrorBuffer
     -> StreamBuffer
-    -> Linear.IO (Either CurlEasyResult (Linear.Of BS.ByteString StreamBuffer))
+    -> Linear.IO (Either StreamResult (Linear.Of BS.ByteString StreamBuffer))
   createStream curlThread curlErrorBuffer performBuffer = Linear.fromSystemIO $ do
     -- Check if we should stop: download finished AND buffer has no data
     -- print "shouldStop"
@@ -87,9 +101,10 @@ performStream = do
     if shouldStop
       then do
         -- print "stop"
-        code <- wait curlThread
-        result <- Linear.withLinearIO $ curlResult code curlErrorBuffer
-        N.pure $ Left result
+        N.pure $ Left $ StreamResult $ Ur $ L.do
+          code <- Linear.fromSystemIO $ wait curlThread
+          result <- curlResult code curlErrorBuffer
+          L.pure $ unur result
       else do
         -- print "step"
         contents <- Buffer.toByteString (getStreamBuffer performBuffer)
@@ -101,7 +116,7 @@ performStream = do
     :: CurlEasy
     -> StreamOptions
     -> ( Ur CurlHeaders
-         %1 -> Linear.Stream (Linear.Of BS.ByteString) Linear.IO CurlEasyResult
+         %1 -> Linear.Stream (Linear.Of BS.ByteString) Linear.IO StreamResult
          %1 -> Linear.IO (Ur r)
        )
     -> Linear.IO (CurlEasy, Ur r)
@@ -118,7 +133,7 @@ performStream = do
         let handle' = setWriteFunction @StreamBuffer stableBuffer (performStreamWriteFunction handle) handle
             doDownload = do
               -- print "perform"
-              result <- Safe.curl_easy_perform (unur (curlHandle handle'))
+              result <- Safe.curl_easy_perform (unur (easyHandle handle'))
               atomically (writeTVar (requestFinished buffer) True)
               -- print "finish perform"
               N.pure result
@@ -137,7 +152,7 @@ performStream = do
               $ flip Linear.unfold buffer
               $ Unsafe.toLinear
               $ createStream threadId
-              $ errorBuffer handle'
+              $ easyErrorBuffer handle'
 
           -- NB: the handle doesn't escape while curl_easy_perform is executed.
           -- The thread doing the FFI call will get a `uninterruptibleCancel`,

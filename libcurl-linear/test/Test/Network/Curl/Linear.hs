@@ -107,14 +107,16 @@ performStreamTestSetup setupHandle expect = do
   action :: Ur GlobalCurlHandle %1 -> Linear.IO (Ur (CurlEasyResult, Ur (N.IORef BS.ByteString)))
   action (Ur global) = withCurlEasy global $ \h -> Linear.do
     Ur bufferRef <- newIORef N.mempty
-    (h', result) <- performStream (setupHandle h) (StreamOptions 1024) $ \h' stream -> Linear.do
+    (h', Ur result) <- performStream (setupHandle h) (StreamOptions 1024) $ \h' stream -> Linear.do
       let accumContents :: Linear.Of BS.ByteString a %1 -> Linear.IO a
           accumContents (new Linear.:> buff) = Linear.do
             fromSystemIO $ N.modifyIORef' bufferRef $ \prev -> prev N.<> new
             pure buff
       result <- Linear.mapsM_ @(Linear.Of BS.ByteString) @Linear.IO accumContents stream
       pure $ h' `lseq` move result
-    pure $ lseq h' $ move (unur result, Ur bufferRef)
+    let (StreamResult getResult) = result
+    r <- unur getResult
+    pure $ lseq h' $ move (r, Ur bufferRef)
 
 performBasicTest :: ExampleT ctx N.IO ()
 performBasicTest = performTestSetup id $ \result ->

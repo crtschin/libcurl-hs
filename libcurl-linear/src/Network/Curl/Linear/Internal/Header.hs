@@ -33,7 +33,7 @@ curlGetLastHeaders = Unsafe.toLinear helper
   getHeader = Unsafe.toLinear $ \h -> Linear.fromSystemIO $ do
     headerPtr <-
       Safe.curl_easy_nextheader
-        (unur (curlHandle h))
+        (unur (easyHandle h))
         (fromIntegral C.cURLH_HEADER)
         (-1)
         nullPtr

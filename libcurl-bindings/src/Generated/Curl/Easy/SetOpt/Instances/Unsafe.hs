@@ -5,6 +5,7 @@ module Generated.Curl.Easy.SetOpt.Instances.Unsafe where
 
 import Data.Void
 import Generated.Curl.Easy.SetOpt.Class
+import Generated.Curl.Easy
 import Generated.Curl.Curl
 import qualified Generated.Curl.Easy.SetOpt.Unsafe as SetOpt
 import Foreign.C.Types
@@ -1903,37 +1904,37 @@ instance CurlOption CurloptMailRcptAllowfails where
 data CurloptSslcertBlob = CurloptSslcertBlob
 
 instance CurlOption CurloptSslcertBlob where
-  type CurlOptionArgument CurloptSslcertBlob = Curl_off_t
+  type CurlOptionArgument CurloptSslcertBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_SSLCERT_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptSslkeyBlob = CurloptSslkeyBlob
 
 instance CurlOption CurloptSslkeyBlob where
-  type CurlOptionArgument CurloptSslkeyBlob = Curl_off_t
+  type CurlOptionArgument CurloptSslkeyBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_SSLKEY_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptProxySslcertBlob = CurloptProxySslcertBlob
 
 instance CurlOption CurloptProxySslcertBlob where
-  type CurlOptionArgument CurloptProxySslcertBlob = Curl_off_t
+  type CurlOptionArgument CurloptProxySslcertBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_PROXY_SSLCERT_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptProxySslkeyBlob = CurloptProxySslkeyBlob
 
 instance CurlOption CurloptProxySslkeyBlob where
-  type CurlOptionArgument CurloptProxySslkeyBlob = Curl_off_t
+  type CurlOptionArgument CurloptProxySslkeyBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_PROXY_SSLKEY_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptIssuercertBlob = CurloptIssuercertBlob
 
 instance CurlOption CurloptIssuercertBlob where
-  type CurlOptionArgument CurloptIssuercertBlob = Curl_off_t
+  type CurlOptionArgument CurloptIssuercertBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_ISSUERCERT_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptProxyIssuercert = CurloptProxyIssuercert
 
@@ -1945,9 +1946,9 @@ instance CurlOption CurloptProxyIssuercert where
 data CurloptProxyIssuercertBlob = CurloptProxyIssuercertBlob
 
 instance CurlOption CurloptProxyIssuercertBlob where
-  type CurlOptionArgument CurloptProxyIssuercertBlob = Curl_off_t
+  type CurlOptionArgument CurloptProxyIssuercertBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_PROXY_ISSUERCERT_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptSslEcCurves = CurloptSslEcCurves
 
@@ -2029,16 +2030,16 @@ instance CurlOption CurloptDohSslVerifystatus where
 data CurloptCainfoBlob = CurloptCainfoBlob
 
 instance CurlOption CurloptCainfoBlob where
-  type CurlOptionArgument CurloptCainfoBlob = Curl_off_t
+  type CurlOptionArgument CurloptCainfoBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_CAINFO_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptProxyCainfoBlob = CurloptProxyCainfoBlob
 
 instance CurlOption CurloptProxyCainfoBlob where
-  type CurlOptionArgument CurloptProxyCainfoBlob = Curl_off_t
+  type CurlOptionArgument CurloptProxyCainfoBlob = Ptr Curl_blob
   curlOption _ = CURLOPT_PROXY_CAINFO_BLOB
-  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_off_t handle (curlOption opt) arg
+  curlSetOpt opt handle arg = SetOpt.curl_easy_setopt_blob handle (curlOption opt) arg
 
 data CurloptSshHostPublicKeySha256 = CurloptSshHostPublicKeySha256
 

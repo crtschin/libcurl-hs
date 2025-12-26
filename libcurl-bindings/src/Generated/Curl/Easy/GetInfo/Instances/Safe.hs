@@ -5,6 +5,7 @@ module Generated.Curl.Easy.GetInfo.Instances.Safe where
 
 import Data.Void
 import Generated.Curl.Easy.GetInfo.Class
+import Generated.Curl.Easy
 import Generated.Curl.Curl
 import qualified Generated.Curl.Easy.GetInfo.Safe as GetInfo
 import Foreign.C.Types
@@ -363,9 +364,9 @@ instance CurlInfo CurlinfoTlsSession where
 data CurlinfoActivesocket = CurlinfoActivesocket
 
 instance CurlInfo CurlinfoActivesocket where
-  type CurlInfoResult CurlinfoActivesocket = CLong
+  type CurlInfoResult CurlinfoActivesocket = Curl_socket_t
   curlInfo _ = CURLINFO_ACTIVESOCKET
-  curlGetInfo info handle ptr = GetInfo.curl_easy_getinfo_long handle (curlInfo info) ptr
+  curlGetInfo info handle ptr = GetInfo.curl_easy_getinfo_socket_t handle (curlInfo info) ptr
 
 data CurlinfoTlsSslPtr = CurlinfoTlsSslPtr
 

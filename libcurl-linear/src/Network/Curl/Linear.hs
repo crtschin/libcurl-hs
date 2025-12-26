@@ -37,6 +37,7 @@ module Network.Curl.Linear
 
     -- * curl_easy_perform
   , StreamOptions (..)
+  , StreamResult (..)
   , perform
   , perform_
   , performStream

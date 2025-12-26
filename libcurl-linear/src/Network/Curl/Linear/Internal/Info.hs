@@ -67,7 +67,7 @@ getInfoInternal option result = Unsafe.toLinear helper
  where
   helper h = Unsafe.unsafeDupablePerformIO $ do
     alloca $ \ptr -> do
-      infoResult <- curlGetInfo option (unur (curlHandle h)) ptr
+      infoResult <- curlGetInfo option (unur (easyHandle h)) ptr
       case infoResult of
         C.CURLE_OK -> do
           if ptr N.== nullPtr

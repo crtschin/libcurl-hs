@@ -14,6 +14,7 @@ import System.Directory
 import System.IO
 import System.IO.Linear qualified as Linear
 import Prelude qualified as N
+import Unsafe.Linear (toLinear)
 
 data Options = Options
   { url :: Text
@@ -57,7 +58,8 @@ main = do
             streamOptions
             $ \headers stream -> L.do
               let writeHandle bs = Linear.fromSystemIO $ BS.hPut file bs
-              result <- L.mapM_ writeHandle stream
+              streamResult <- L.mapM_ writeHandle stream
+              result <- Linear.fromSystemIO $ toLinear getStreamResult streamResult
               L.pure $ headers `lseq` Ur.move result
           handle' `lseq` L.pure result
 

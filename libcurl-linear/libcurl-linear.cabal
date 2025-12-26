@@ -13,6 +13,7 @@ description:     Empty
 common shared
   default-language:   GHC2021
   default-extensions:
+    DataKinds
     DeriveGeneric
     DerivingVia
     GADTs
@@ -35,6 +36,7 @@ library
     , async
     , bytestring
     , containers
+    , fin
     , hs-bindgen-runtime
     , libcurl-bindings
     , linear-base

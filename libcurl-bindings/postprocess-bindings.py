@@ -26,6 +26,7 @@ class OptionType(StrEnum):
     OBJECTPOINT = "objectpoint"
     FUNCTIONPOINT = "functionpoint"
     OFF_T = "off_t"
+    BLOB = "blob"
 
 
 class InfoType(StrEnum):
@@ -35,6 +36,7 @@ class InfoType(StrEnum):
     LONG = "long"
     DOUBLE = "double"
     SLIST = "slist"
+    SOCKET = "socket"
     OFF_T = "off_t"
 
 
@@ -74,7 +76,9 @@ class CurlOption(CurlConstant[OptionType]):
             return OptionType.OBJECTPOINT
         if self.value < 30000:
             return OptionType.FUNCTIONPOINT
-        return OptionType.OFF_T
+        if self.value < 40000:
+            return OptionType.OFF_T
+        return OptionType.BLOB
 
     @property
     def arg_type(self) -> str:
@@ -84,6 +88,7 @@ class CurlOption(CurlConstant[OptionType]):
             OptionType.OFF_T: "Curl_off_t",
             OptionType.OBJECTPOINT: "Ptr Void",
             OptionType.FUNCTIONPOINT: "Ptr Void",
+            OptionType.BLOB: "Ptr Curl_blob",
         }[self.category]
 
     @property
@@ -94,6 +99,7 @@ class CurlOption(CurlConstant[OptionType]):
             OptionType.OFF_T: "curl_easy_setopt_off_t",
             OptionType.OBJECTPOINT: "curl_easy_setopt_ptr",
             OptionType.FUNCTIONPOINT: "curl_easy_setopt_ptr",
+            OptionType.BLOB: "curl_easy_setopt_blob",
         }[self.category]
 
 
@@ -111,8 +117,9 @@ class CurlInfo(CurlConstant[InfoType]):
             0x200000: InfoType.LONG,
             0x300000: InfoType.DOUBLE,
             0x400000: InfoType.SLIST,
+            0x500000: InfoType.SOCKET,
             0x600000: InfoType.OFF_T,
-        }.get(type_mask, InfoType.LONG)
+        }[type_mask]
 
     @property
     def result_type(self) -> str:
@@ -122,6 +129,7 @@ class CurlInfo(CurlConstant[InfoType]):
             InfoType.LONG: "CLong",
             InfoType.DOUBLE: "CDouble",
             InfoType.SLIST: "Ptr Curl_slist",
+            InfoType.SOCKET: "Curl_socket_t",
             InfoType.OFF_T: "CLong",
         }[self.category]
 
@@ -133,6 +141,7 @@ class CurlInfo(CurlConstant[InfoType]):
             InfoType.LONG: "curl_easy_getinfo_long",
             InfoType.DOUBLE: "curl_easy_getinfo_double",
             InfoType.SLIST: "curl_easy_getinfo_slist",
+            InfoType.SOCKET: "curl_easy_getinfo_socket_t",
             InfoType.OFF_T: "curl_easy_getinfo_off_t",
         }[self.category]
 
@@ -222,9 +231,11 @@ class ModuleConfig:
         module_name = "Unsafe" if safety == "unsafe" else "Safe"
         lines = [
             "{-# LANGUAGE CApiFFI #-}",
+            "{-# OPTIONS_GHC -Wno-unused-imports #-}",
             f"module Generated.Curl.Easy.{self.module_base}.{module_name} where",
             "",
             "import Generated.Curl.Curl",
+            "import Generated.Curl.Easy",
             "import Data.Void",
             "import Foreign.C.Types",
             "import Foreign.Ptr",
@@ -318,6 +329,7 @@ class ModuleConfig:
             "",
             "import Data.Void",
             f"import Generated.Curl.Easy.{self.module_base}.Class",
+            "import Generated.Curl.Easy",
             "import Generated.Curl.Curl",
             f"import qualified Generated.Curl.Easy.{self.module_base}.{foreign_module} as {self.module_base}",
             "import Foreign.C.Types",
@@ -355,6 +367,13 @@ SETOPT_CONFIG = ModuleConfig(
             "a pointer argument",
             "val",
         ),
+        FFISpec(
+            "curl_easy_setopt_blob",
+            "Ptr Curl_blob",
+            "Ptr Curl_blob",
+            "a curl_blob argument",
+            "val",
+        ),
     ],
 )
 
@@ -385,6 +404,7 @@ GETINFO_CONFIG = ModuleConfig(
             "an slist result",
             "ptr",
         ),
+        FFISpec("curl_easy_getinfo_socket_t", "Curl_socket_t", "Curl_socket_t", "an socket_t result", "ptr"),
         FFISpec("curl_easy_getinfo_off_t", "CLong", "CLong", "an off_t result", "ptr"),
     ],
 )
