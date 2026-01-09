@@ -12,7 +12,7 @@ import Foreign.Ptr
 import Prelude
 
 -- | curl_easy_setopt with a long argument (unsafe)
-foreign import ccall unsafe "curl_easy_setopt"
+foreign import capi unsafe "curl/curl.h curl_easy_setopt"
   curl_easy_setopt_long_c
     :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
@@ -25,7 +25,7 @@ curl_easy_setopt_long handle (CURLoption opt) val =
   CURLcode <$> curl_easy_setopt_long_c handle opt val
 
 -- | curl_easy_setopt with a curl_off_t argument (unsafe)
-foreign import ccall unsafe "curl_easy_setopt"
+foreign import capi unsafe "curl/curl.h curl_easy_setopt"
   curl_easy_setopt_off_t_c
     :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
@@ -38,7 +38,7 @@ curl_easy_setopt_off_t handle (CURLoption opt) val =
   CURLcode <$> curl_easy_setopt_off_t_c handle opt val
 
 -- | curl_easy_setopt with a pointer argument (unsafe)
-foreign import ccall unsafe "curl_easy_setopt"
+foreign import capi unsafe "curl/curl.h curl_easy_setopt"
   curl_easy_setopt_ptr_c
     :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option
@@ -51,7 +51,7 @@ curl_easy_setopt_ptr handle (CURLoption opt) val =
   CURLcode <$> curl_easy_setopt_ptr_c handle opt val
 
 -- | curl_easy_setopt with a curl_blob argument (unsafe)
-foreign import ccall unsafe "curl_easy_setopt"
+foreign import capi unsafe "curl/curl.h curl_easy_setopt"
   curl_easy_setopt_blob_c
     :: Ptr CURL        -- ^ CURL handle
     -> CUInt           -- ^ option

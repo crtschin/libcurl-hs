@@ -100,7 +100,7 @@ class ModuleConfig:
         """Generate FFI import declaration."""
         ffi_lines = [
             f"-- | {self.ffi_config.base_name} with {spec.comment} ({ffi_safety.value})",
-            f'foreign import ccall {ffi_safety.value} "{self.ffi_config.base_name}"',
+            f'foreign import capi {ffi_safety.value} "curl/curl.h {self.ffi_config.base_name}"',
             f"  {spec.name}_c",
             f"    :: Ptr {self.handle_type}        -- ^ CURL handle",
             f"    -> CUInt           -- ^ {self.result_param_name}",
